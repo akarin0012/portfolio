@@ -35,7 +35,7 @@
 
 ## 📄 技術経歴書
 
-**👉 [技術経歴書（PDF）をダウンロード](./KS_スキルシート（練馬高野台）.pdf)**
+**👉 [技術経歴書（PDF）をダウンロード](./public/skill_sheet.pdf)**
 
 詳細な技術経歴、プロジェクト経験、使用技術については上記PDFをご覧ください。
 
@@ -251,7 +251,7 @@ npm run start
 
 - **GitHub**: [@akarin0012](https://github.com/akarin0012)
 - **ポートフォリオ**: [ポートフォリオサイト](https://your-portfolio-url.com)
-- **技術経歴書**: [PDFダウンロード](./KS_スキルシート（練馬高野台）.pdf)
+- **技術経歴書**: [PDFダウンロード](./public/skill_sheet.pdf)
 
 ---
 

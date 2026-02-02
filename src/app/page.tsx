@@ -1,65 +1,102 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-zinc-900 text-zinc-50">
+      {/* ヘッダー */}
+      <header className="border-b border-zinc-800">
+        <div className="container mx-auto px-6 py-6">
+          <h1 className="text-2xl font-bold">ポートフォリオ</h1>
+        </div>
+      </header>
+
+      {/* メインコンテンツ */}
+      <main className="container mx-auto px-6 py-12">
+        {/* 自己紹介セクション */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-zinc-100">自己紹介</h2>
+          <div className="bg-zinc-800 rounded-lg p-8 border border-zinc-700">
+            <p className="text-lg leading-relaxed text-zinc-300 mb-4">
+              3年目のWebエンジニアとして、バックエンドからフロントエンドまで幅広く開発に携わっています。
+            </p>
+            <p className="text-lg leading-relaxed text-zinc-300">
+              ユーザーに価値を提供するシステム開発を心がけ、常に最新技術の習得と実践的なスキルアップに取り組んでいます。
+            </p>
+          </div>
+        </section>
+
+        {/* スキルセクション */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-zinc-100">スキル</h2>
+          <div className="bg-zinc-800 rounded-lg p-8 border border-zinc-700">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-zinc-200">バックエンド</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    C#
+                  </li>
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    VB.NET
+                  </li>
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    ASP.NET
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-4 text-zinc-200">フロントエンド・インフラ</h3>
+                <ul className="space-y-2">
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    TypeScript
+                  </li>
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    Next.js
+                  </li>
+                  <li className="flex items-center text-zinc-300">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                    AWS
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 経歴セクション */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-zinc-100">経歴</h2>
+          <div className="bg-zinc-800 rounded-lg p-8 border border-zinc-700">
+            <div className="space-y-6">
+              <div className="border-l-2 border-blue-500 pl-6">
+                <div className="flex items-center mb-2">
+                  <span className="text-sm font-semibold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full">
+                    現在
+                  </span>
+                  <span className="ml-4 text-zinc-400">3年目</span>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-zinc-200">Webエンジニア</h3>
+                <p className="text-zinc-300 leading-relaxed">
+                  Webアプリケーションの開発・保守に従事。バックエンドAPIの設計・実装からフロントエンド開発まで幅広く担当。
+                  最新のフレームワークやクラウドサービスを活用した効率的な開発を実践しています。
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* フッター */}
+      <footer className="border-t border-zinc-800 mt-16">
+        <div className="container mx-auto px-6 py-6">
+          <p className="text-center text-zinc-400 text-sm">
+            © 2024 Portfolio. All rights reserved.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
     </div>
   );
 }

@@ -21,14 +21,14 @@ export default function Home() {
         {/* ヒーローセクション */}
         <section id="profile" className="mb-20">
           <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold mb-4 text-zinc-100">茅崎 伸一郎</h2>
-            <p className="text-xl text-zinc-400 mb-2">Webエンジニア（3年目）</p>
+            <h2 className="text-5xl font-bold mb-4 text-zinc-100">茅嶋 伸一郎</h2>
+            <p className="text-xl text-zinc-400 mb-2">システムエンジニア（3年目）</p>
             <p className="text-lg text-zinc-500">26歳 | 東京都練馬区</p>
           </div>
           <div className="bg-zinc-800 rounded-lg p-8 border border-zinc-700">
             <h3 className="text-2xl font-semibold mb-4 text-zinc-100">自己紹介</h3>
             <p className="text-lg leading-relaxed text-zinc-300 mb-4">
-              3年目のWebエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
+              3年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
               主にWebアプリケーションの設計から保守運用まで、一貫した開発経験を積んでいます。
             </p>
             <p className="text-lg leading-relaxed text-zinc-300 mb-4">

@@ -1,7 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+
+// 共通アニメーション設定
+const fadeInUp: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
+
+const viewportOptions = {
+  once: true,
+  margin: '-100px' as const,
+};
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -141,14 +162,13 @@ export default function Home() {
       {/* メインコンテンツ */}
       <main className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
         {/* ヒーローセクション */}
-        <motion.section
-          id="profile"
-          className="mb-12 md:mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="mb-8 text-center md:mb-12">
+        <section id="profile" className="mb-12 md:mb-20">
+          <motion.div
+            className="mb-8 text-center md:mb-12"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+          >
             <h2 className="mb-4 text-3xl font-bold text-zinc-100 md:text-5xl">
               茅嶋 伸一郎
             </h2>
@@ -158,8 +178,14 @@ export default function Home() {
             <p className="text-base text-zinc-500 md:text-lg">
               26歳 | 東京都練馬区
             </p>
-          </div>
-          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8">
+          </motion.div>
+          <motion.div
+            className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInUp}
+            transition={{ delay: 0.1 }}
+          >
             <h3 className="mb-4 text-xl font-semibold text-zinc-100 md:text-2xl">
               自己紹介
             </h3>
@@ -175,24 +201,39 @@ export default function Home() {
               今後は、これまでのレガシー技術での実務経験を活かし、GoやTypeScript等のモダンな技術スタックへの
               リプレイス・移行案件に参画し、技術的な知見を拡げていきたいと考えています。
             </p>
-          </div>
-        </motion.section>
+          </motion.div>
+        </section>
 
         {/* スキルセクション */}
-        <motion.section
-          id="skills"
-          className="mb-12 md:mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
+        <section id="skills" className="mb-12 md:mb-20">
+          <motion.h2
+            className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={fadeInUp}
+          >
             スキル
-          </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          </motion.h2>
+          <motion.div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+          >
             {/* バックエンド */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+              variants={fadeInUp}
+            >
               <h3 className="mb-4 flex items-center text-xl font-semibold text-zinc-200">
                 <span className="mr-3 h-3 w-3 rounded-full bg-blue-500"></span>
                 バックエンド
@@ -228,10 +269,13 @@ export default function Home() {
                   </span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* フロントエンド */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+              variants={fadeInUp}
+            >
               <h3 className="mb-4 flex items-center text-xl font-semibold text-zinc-200">
                 <span className="mr-3 h-3 w-3 rounded-full bg-green-500"></span>
                 フロントエンド
@@ -265,10 +309,13 @@ export default function Home() {
                   <span className="ml-auto text-sm text-zinc-500">学習中</span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* データベース */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+              variants={fadeInUp}
+            >
               <h3 className="mb-4 flex items-center text-xl font-semibold text-zinc-200">
                 <span className="mr-3 h-3 w-3 rounded-full bg-purple-500"></span>
                 データベース
@@ -294,10 +341,13 @@ export default function Home() {
                   </span>
                 </li>
               </ul>
-            </div>
+            </motion.div>
 
             {/* その他 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+              variants={fadeInUp}
+            >
               <h3 className="mb-4 flex items-center text-xl font-semibold text-zinc-200">
                 <span className="mr-3 h-3 w-3 rounded-full bg-orange-500"></span>
                 その他
@@ -334,11 +384,17 @@ export default function Home() {
                   <span className="ml-auto text-sm text-zinc-500">学習中</span>
                 </li>
               </ul>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* 資格 */}
-          <div className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800 p-6">
+          <motion.div
+            className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={fadeInUp}
+          >
             <h3 className="mb-4 text-xl font-semibold text-zinc-200">資格</h3>
             <ul className="space-y-2">
               <li className="text-zinc-300">
@@ -346,19 +402,25 @@ export default function Home() {
               </li>
               <li className="text-zinc-300">• 普通自動車免許</li>
             </ul>
-          </div>
-        </motion.section>
+          </motion.div>
+        </section>
 
         {/* プロジェクト経験セクション */}
         <section id="projects" className="mb-12 md:mb-20">
-          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
+          <motion.h2
+            className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={fadeInUp}
+          >
             主なプロジェクト経験
-          </h2>
+          </motion.h2>
           <motion.div
             className="space-y-6"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={viewportOptions}
             variants={{
               visible: {
                 transition: {
@@ -370,20 +432,7 @@ export default function Home() {
             {/* プロジェクト1 */}
             <motion.div
               className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                },
-              }}
+              variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
@@ -434,20 +483,7 @@ export default function Home() {
             {/* プロジェクト2 */}
             <motion.div
               className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                },
-              }}
+              variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
@@ -486,20 +522,7 @@ export default function Home() {
             {/* プロジェクト3 */}
             <motion.div
               className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                },
-              }}
+              variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
@@ -544,20 +567,7 @@ export default function Home() {
             {/* プロジェクト4 */}
             <motion.div
               className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                },
-              }}
+              variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
@@ -596,20 +606,7 @@ export default function Home() {
             {/* プロジェクト5 */}
             <motion.div
               className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  y: 20,
-                },
-                visible: {
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.6,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                },
-              }}
+              variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
@@ -645,28 +642,39 @@ export default function Home() {
         </section>
 
         {/* お問い合わせセクション */}
-        <motion.section
-          id="contact"
-          className="mb-12 md:mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
+        <section id="contact" className="mb-12 md:mb-20">
+          <motion.h2
+            className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={fadeInUp}
+          >
             お問い合わせ
-          </h2>
-          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 text-center md:p-8">
+          </motion.h2>
+          <motion.div
+            className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 text-center md:p-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            variants={fadeInUp}
+            transition={{ delay: 0.1 }}
+          >
             <p className="mb-8 text-base text-zinc-300 md:text-lg">
               ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
             </p>
             <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
               {/* GitHubボタン（黒ベース） */}
-              <a
+              <motion.a
                 href="https://github.com/akarin0012"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-900/50 active:scale-95"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 active:scale-95"
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
+                }}
+                whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <svg
@@ -683,11 +691,16 @@ export default function Home() {
                   </svg>
                   GitHub
                 </span>
-              </a>
+              </motion.a>
               {/* メールボタン（白ベース） */}
-              <a
+              <motion.a
                 href="mailto:your-email@example.com"
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 hover:bg-zinc-100 hover:shadow-lg hover:shadow-white/20 active:scale-95"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 active:scale-95"
+                whileHover={{
+                  scale: 1.02,
+                  boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)',
+                }}
+                whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   <svg
@@ -706,10 +719,17 @@ export default function Home() {
                   </svg>
                   お問い合わせ
                 </span>
-              </a>
+              </motion.a>
             </div>
             {/* 技術経歴書リンク */}
-            <div className="mt-6">
+            <motion.div
+              className="mt-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOptions}
+              variants={fadeInUp}
+              transition={{ delay: 0.2 }}
+            >
               <a
                 href="/skill_sheet.pdf"
                 target="_blank"
@@ -731,9 +751,9 @@ export default function Home() {
                 </svg>
                 技術経歴書（PDF）をダウンロード
               </a>
-            </div>
-          </div>
-        </motion.section>
+            </motion.div>
+          </motion.div>
+        </section>
       </main>
 
       {/* フッター */}

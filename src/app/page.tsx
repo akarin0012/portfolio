@@ -13,6 +13,27 @@ export default function Home() {
     setIsMenuOpen(false);
   };
 
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string,
+  ) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const headerHeight = 100; // ヘッダーの高さ（px）
+      const targetPosition =
+        targetElement.getBoundingClientRect().top +
+        window.pageYOffset -
+        headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }
+    closeMenu();
+  };
+
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-50">
       {/* ヘッダー */}
@@ -24,24 +45,28 @@ export default function Home() {
             <nav className="hidden gap-6 md:flex">
               <a
                 href="#profile"
+                onClick={(e) => handleSmoothScroll(e, 'profile')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 プロフィール
               </a>
               <a
                 href="#skills"
+                onClick={(e) => handleSmoothScroll(e, 'skills')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 スキル
               </a>
               <a
                 href="#projects"
+                onClick={(e) => handleSmoothScroll(e, 'projects')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 プロジェクト
               </a>
               <a
                 href="#contact"
+                onClick={(e) => handleSmoothScroll(e, 'contact')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 お問い合わせ
@@ -81,28 +106,28 @@ export default function Home() {
             <div className="flex flex-col gap-4 py-4">
               <a
                 href="#profile"
-                onClick={closeMenu}
+                onClick={(e) => handleSmoothScroll(e, 'profile')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 プロフィール
               </a>
               <a
                 href="#skills"
-                onClick={closeMenu}
+                onClick={(e) => handleSmoothScroll(e, 'skills')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 スキル
               </a>
               <a
                 href="#projects"
-                onClick={closeMenu}
+                onClick={(e) => handleSmoothScroll(e, 'projects')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 プロジェクト
               </a>
               <a
                 href="#contact"
-                onClick={closeMenu}
+                onClick={(e) => handleSmoothScroll(e, 'contact')}
                 className="text-zinc-400 transition-colors hover:text-zinc-100"
               >
                 お問い合わせ
@@ -238,14 +263,21 @@ export default function Home() {
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-purple-500"></span>
                   <span className="font-medium">SQL Server</span>
+                  <span className="ml-auto text-sm text-zinc-500">8ヶ月</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-purple-500"></span>
                   <span className="font-medium">Oracle</span>
+                  <span className="ml-auto text-sm text-zinc-500">
+                    2年8ヶ月
+                  </span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-purple-500"></span>
                   <span className="font-medium">MySQL</span>
+                  <span className="ml-auto text-sm text-zinc-500">
+                    研修経験
+                  </span>
                 </li>
               </ul>
             </div>
@@ -260,26 +292,32 @@ export default function Home() {
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">Unity（ローコード）</span>
+                  <span className="ml-auto text-sm text-zinc-500">8ヶ月</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">kintone</span>
+                  <span className="ml-auto text-sm text-zinc-500">8ヶ月</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">Python</span>
+                  <span className="ml-auto text-sm text-zinc-500">4ヶ月</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">AWS</span>
+                  <span className="ml-auto text-sm text-zinc-500">学習中</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">Git/GitHub</span>
+                  <span className="ml-auto text-sm text-zinc-500">3年</span>
                 </li>
                 <li className="flex items-center text-zinc-300">
                   <span className="mr-3 h-2 w-2 rounded-full bg-orange-500"></span>
                   <span className="font-medium">GitHub Actions</span>
+                  <span className="ml-auto text-sm text-zinc-500">学習中</span>
                 </li>
               </ul>
             </div>

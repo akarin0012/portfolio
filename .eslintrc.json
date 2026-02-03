@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "no-nested-ternary": "error",
+    "no-unneeded-ternary": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "complexity": ["warn", 8],
+    "max-params": ["warn", 3],
+    "prefer-const": "error",
+    "eqeqeq": ["error", "always"]
+  }
+}

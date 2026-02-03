@@ -1,6 +1,6 @@
 # 💼 エンジニアポートフォリオ
 
-> **茅崎 伸一郎** | 26歳 | Webエンジニア（3年目）  
+> **茅嶋 伸一郎** | 26歳 | システムエンジニア（3年目）  
 > レガシー技術からモダンな技術スタックまで、幅広い開発経験を持つフルスタックエンジニア
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -35,7 +35,7 @@
 
 ## 📄 技術経歴書
 
-**👉 [技術経歴書（PDF）をダウンロード](./public/skill_sheet.pdf)**
+**👉 [技術経歴書（PDF）をダウンロード](/skill_sheet.pdf)**
 
 詳細な技術経歴、プロジェクト経験、使用技術については上記PDFをご覧ください。
 
@@ -158,10 +158,12 @@
 ### ✨ 特徴
 
 - **モダンな技術スタック**: Next.js 16 + TypeScript + Tailwind CSS
+- **型安全性**: Zodを使用した環境変数のバリデーション
 - **静的サイト生成**: AWS S3へのデプロイに対応した静的エクスポート
 - **CI/CD自動化**: GitHub Actionsによる自動デプロイパイプライン
 - **レスポンシブデザイン**: あらゆるデバイスで快適に閲覧可能
 - **ダークモード**: 目に優しいダークテーマを採用
+- **コード品質**: ESLint + Prettierによるコードスタイルの統一
 
 ### 📋 プロジェクト構成
 
@@ -171,12 +173,18 @@ portfolio/
 │   └── workflows/
 │       └── deploy.yml          # AWS S3への自動デプロイ（GitHub Actions）
 ├── src/
-│   └── app/
-│       ├── layout.tsx          # ルートレイアウト
-│       ├── page.tsx             # メインページ
-│       └── globals.css          # グローバルスタイル
+│   ├── app/
+│   │   ├── layout.tsx          # ルートレイアウト
+│   │   ├── page.tsx             # メインページ
+│   │   ├── globals.css          # グローバルスタイル
+│   │   └── favicon.ico          # ファビコン
+│   └── env.ts                   # 環境変数バリデーション（Zod）
+├── public/
+│   └── skill_sheet.pdf          # 技術経歴書PDF
 ├── next.config.ts               # Next.js設定（静的エクスポート）
-└── package.json
+├── tsconfig.json                # TypeScript設定
+├── package.json                 # 依存関係管理
+└── README.md                    # このファイル
 ```
 
 ---
@@ -199,18 +207,16 @@ portfolio/
 
 - **GitHub Actions**: CI/CDパイプラインの自動化
 - **AWS S3**: 静的サイトホスティング
-- **AWS CloudFront**: CDN配信（オプション）
-- **AWS CLI**: S3へのファイル同期
+- **jakejarvis/s3-sync-action**: S3へのファイル同期アクション
 
 ### 必要な環境変数
 
 GitHubリポジトリのシークレットに以下を設定：
 
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
-- `AWS_REGION`
-- `AWS_S3_BUCKET_NAME`
-- `AWS_CLOUDFRONT_DISTRIBUTION_ID` (オプション)
+- `AWS_ACCESS_KEY_ID`: AWSアクセスキーID
+- `AWS_SECRET_ACCESS_KEY`: AWSシークレットアクセスキー
+- `AWS_S3_BUCKET`: S3バケット名
+- `AWS_REGION`: AWSリージョン（デフォルト: `ap-northeast-1`）
 
 ---
 
@@ -256,7 +262,7 @@ npm run start
 
 - **GitHub**: [@akarin0012](https://github.com/akarin0012)
 - **ポートフォリオ**: [ポートフォリオサイト](https://your-portfolio-url.com)
-- **技術経歴書**: [PDFダウンロード](./public/skill_sheet.pdf)
+- **技術経歴書**: [PDFダウンロード](/skill_sheet.pdf)
 
 ---
 

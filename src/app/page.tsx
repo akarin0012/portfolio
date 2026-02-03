@@ -1,11 +1,26 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-50">
       {/* ヘッダー */}
-      <header className="sticky top-0 z-10 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold">ポートフォリオ</h1>
+            {/* デスクトップメニュー */}
             <nav className="hidden gap-6 md:flex">
               <a
                 href="#profile"
@@ -32,36 +47,99 @@ export default function Home() {
                 お問い合わせ
               </a>
             </nav>
+            {/* ハンバーガーボタン（モバイル） */}
+            <button
+              type="button"
+              onClick={toggleMenu}
+              className="flex flex-col gap-1.5 md:hidden"
+              aria-label="メニューを開く"
+              aria-expanded={isMenuOpen}
+            >
+              <span
+                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
+                  isMenuOpen ? 'translate-y-2 rotate-45' : ''
+                }`}
+              />
+              <span
+                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
+                  isMenuOpen ? 'opacity-0' : ''
+                }`}
+              />
+              <span
+                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
+                  isMenuOpen ? '-translate-y-2 -rotate-45' : ''
+                }`}
+              />
+            </button>
           </div>
+          {/* モバイルメニュー */}
+          <nav
+            className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+              isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+            }`}
+          >
+            <div className="flex flex-col gap-4 py-4">
+              <a
+                href="#profile"
+                onClick={closeMenu}
+                className="text-zinc-400 transition-colors hover:text-zinc-100"
+              >
+                プロフィール
+              </a>
+              <a
+                href="#skills"
+                onClick={closeMenu}
+                className="text-zinc-400 transition-colors hover:text-zinc-100"
+              >
+                スキル
+              </a>
+              <a
+                href="#projects"
+                onClick={closeMenu}
+                className="text-zinc-400 transition-colors hover:text-zinc-100"
+              >
+                プロジェクト
+              </a>
+              <a
+                href="#contact"
+                onClick={closeMenu}
+                className="text-zinc-400 transition-colors hover:text-zinc-100"
+              >
+                お問い合わせ
+              </a>
+            </div>
+          </nav>
         </div>
       </header>
 
       {/* メインコンテンツ */}
-      <main className="container mx-auto max-w-6xl px-6 py-12">
+      <main className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
         {/* ヒーローセクション */}
-        <section id="profile" className="mb-20">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-5xl font-bold text-zinc-100">
+        <section id="profile" className="mb-12 md:mb-20">
+          <div className="mb-8 text-center md:mb-12">
+            <h2 className="mb-4 text-3xl font-bold text-zinc-100 md:text-5xl">
               茅嶋 伸一郎
             </h2>
-            <p className="mb-2 text-xl text-zinc-400">
+            <p className="mb-2 text-lg text-zinc-400 md:text-xl">
               システムエンジニア（3年目）
             </p>
-            <p className="text-lg text-zinc-500">26歳 | 東京都練馬区</p>
+            <p className="text-base text-zinc-500 md:text-lg">
+              26歳 | 東京都練馬区
+            </p>
           </div>
-          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-8">
-            <h3 className="mb-4 text-2xl font-semibold text-zinc-100">
+          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8">
+            <h3 className="mb-4 text-xl font-semibold text-zinc-100 md:text-2xl">
               自己紹介
             </h3>
-            <p className="mb-4 text-lg leading-relaxed text-zinc-300">
+            <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
               3年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
               主にWebアプリケーションの設計から保守運用まで、一貫した開発経験を積んでいます。
             </p>
-            <p className="mb-4 text-lg leading-relaxed text-zinc-300">
+            <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
               レガシー技術（VBScript、C#、VB.NET）を用いた既存システムの開発・保守経験があり、
               オンプレミス環境での本番デプロイや運用も実務経験があります。
             </p>
-            <p className="text-lg leading-relaxed text-zinc-300">
+            <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
               今後は、これまでのレガシー技術での実務経験を活かし、GoやTypeScript等のモダンな技術スタックへの
               リプレイス・移行案件に参画し、技術的な知見を拡げていきたいと考えています。
             </p>
@@ -69,8 +147,10 @@ export default function Home() {
         </section>
 
         {/* スキルセクション */}
-        <section id="skills" className="mb-20">
-          <h2 className="mb-8 text-4xl font-bold text-zinc-100">スキル</h2>
+        <section id="skills" className="mb-12 md:mb-20">
+          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
+            スキル
+          </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {/* バックエンド */}
             <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6">
@@ -218,8 +298,8 @@ export default function Home() {
         </section>
 
         {/* プロジェクト経験セクション */}
-        <section id="projects" className="mb-20">
-          <h2 className="mb-8 text-4xl font-bold text-zinc-100">
+        <section id="projects" className="mb-12 md:mb-20">
+          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
             主なプロジェクト経験
           </h2>
           <div className="space-y-6">
@@ -421,12 +501,12 @@ export default function Home() {
         </section>
 
         {/* お問い合わせセクション */}
-        <section id="contact" className="mb-20">
-          <h2 className="mb-8 text-4xl font-bold text-zinc-100">
+        <section id="contact" className="mb-12 md:mb-20">
+          <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
             お問い合わせ
           </h2>
-          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-8 text-center">
-            <p className="mb-6 text-lg text-zinc-300">
+          <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 text-center md:p-8">
+            <p className="mb-6 text-base text-zinc-300 md:text-lg">
               ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
             </p>
             <div className="flex flex-col justify-center gap-4 md:flex-row">

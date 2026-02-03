@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'エンジニアポートフォリオ',
-  description: 'Webエンジニアのポートフォリオサイト',
+  title: "Akarin | Software Engineer",
+  description: "C# / .NET / Next.js を軸に、洗練されたプロダクトを開発するエンジニアのポートフォリオ。",
 };
 
 export default function RootLayout({

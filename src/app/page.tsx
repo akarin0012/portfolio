@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -140,7 +141,13 @@ export default function Home() {
       {/* メインコンテンツ */}
       <main className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
         {/* ヒーローセクション */}
-        <section id="profile" className="mb-12 md:mb-20">
+        <motion.section
+          id="profile"
+          className="mb-12 md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div className="mb-8 text-center md:mb-12">
             <h2 className="mb-4 text-3xl font-bold text-zinc-100 md:text-5xl">
               茅嶋 伸一郎
@@ -169,10 +176,17 @@ export default function Home() {
               リプレイス・移行案件に参画し、技術的な知見を拡げていきたいと考えています。
             </p>
           </div>
-        </section>
+        </motion.section>
 
         {/* スキルセクション */}
-        <section id="skills" className="mb-12 md:mb-20">
+        <motion.section
+          id="skills"
+          className="mb-12 md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
             スキル
           </h2>
@@ -333,16 +347,44 @@ export default function Home() {
               <li className="text-zinc-300">• 普通自動車免許</li>
             </ul>
           </div>
-        </section>
+        </motion.section>
 
         {/* プロジェクト経験セクション */}
         <section id="projects" className="mb-12 md:mb-20">
           <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
             主なプロジェクト経験
           </h2>
-          <div className="space-y-6">
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.15,
+                },
+              },
+            }}
+          >
             {/* プロジェクト1 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
                   建設業向け帳票管理システム
@@ -387,10 +429,26 @@ export default function Home() {
                   SQL Server
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* プロジェクト2 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
                   建設業向け資機材管理システム
@@ -423,10 +481,26 @@ export default function Home() {
                   Oracle
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* プロジェクト3 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
                   営業管理システム
@@ -465,10 +539,26 @@ export default function Home() {
                   SQL Server
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* プロジェクト4 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
                   通信業プロビジョニングシステム保守
@@ -501,10 +591,26 @@ export default function Home() {
                   Linux
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* プロジェクト5 */}
-            <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50">
+            <motion.div
+              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              variants={{
+                hidden: {
+                  opacity: 0,
+                  y: 20,
+                },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: {
+                    duration: 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
+                },
+              }}
+            >
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
                   社内用資材工程管理アプリ
@@ -534,39 +640,100 @@ export default function Home() {
                   Oracle
                 </span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* お問い合わせセクション */}
-        <section id="contact" className="mb-12 md:mb-20">
+        <motion.section
+          id="contact"
+          className="mb-12 md:mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
           <h2 className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl">
             お問い合わせ
           </h2>
           <div className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 text-center md:p-8">
-            <p className="mb-6 text-base text-zinc-300 md:text-lg">
+            <p className="mb-8 text-base text-zinc-300 md:text-lg">
               ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
             </p>
-            <div className="flex flex-col justify-center gap-4 md:flex-row">
+            <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
+              {/* GitHubボタン（黒ベース） */}
               <a
                 href="https://github.com/akarin0012"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg bg-zinc-700 px-6 py-3 text-zinc-100 transition-colors hover:bg-zinc-600"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-900/50 active:scale-95"
               >
-                GitHub
+                <span className="relative z-10 flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  GitHub
+                </span>
               </a>
+              {/* メールボタン（白ベース） */}
+              <a
+                href="mailto:your-email@example.com"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 hover:bg-zinc-100 hover:shadow-lg hover:shadow-white/20 active:scale-95"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  お問い合わせ
+                </span>
+              </a>
+            </div>
+            {/* 技術経歴書リンク */}
+            <div className="mt-6">
               <a
                 href="/skill_sheet.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
+                className="inline-flex items-center text-sm text-zinc-400 transition-colors hover:text-zinc-300"
               >
-                技術経歴書（PDF）
+                <svg
+                  className="mr-2 h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
+                </svg>
+                技術経歴書（PDF）をダウンロード
               </a>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
 
       {/* フッター */}

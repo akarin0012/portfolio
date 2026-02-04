@@ -21,6 +21,8 @@ export type ProjectTag =
   | 'React'
   | 'Tailwind CSS'
   | 'Node.js'
+  | 'JavaScript'
+  | 'TypeScript'
   | 'ASP.NET Core'
   | 'Unity'
   | 'Prisma'

@@ -760,7 +760,7 @@ export default function Home() {
       <footer className="mt-16 border-t border-zinc-800">
         <div className="container mx-auto px-6 py-6">
           <p className="text-center text-sm text-zinc-400">
-            © 2024 茅崎 伸一郎. All rights reserved.
+            © 2024 茅嶋 伸一郎. All rights reserved.
           </p>
         </div>
       </footer>

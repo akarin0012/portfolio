@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { motion, Variants } from 'framer-motion';
 
 // 共通アニメーション設定
@@ -25,137 +24,12 @@ const viewportOptions = {
 };
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string,
-  ) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      const headerHeight = 100; // ヘッダーの高さ（px）
-      const targetPosition =
-        targetElement.getBoundingClientRect().top +
-        window.pageYOffset -
-        headerHeight;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth',
-      });
-    }
-    closeMenu();
-  };
-
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-50">
       {/* ヘッダー */}
-      <header className="sticky top-0 z-50 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
-        <div className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">ポートフォリオ</h1>
-            {/* デスクトップメニュー */}
-            <nav className="hidden gap-6 md:flex">
-              <a
-                href="#profile"
-                onClick={(e) => handleSmoothScroll(e, 'profile')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                プロフィール
-              </a>
-              <a
-                href="#skills"
-                onClick={(e) => handleSmoothScroll(e, 'skills')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                スキル
-              </a>
-              <a
-                href="#projects"
-                onClick={(e) => handleSmoothScroll(e, 'projects')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                プロジェクト
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleSmoothScroll(e, 'contact')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                お問い合わせ
-              </a>
-            </nav>
-            {/* ハンバーガーボタン（モバイル） */}
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="flex flex-col gap-1.5 md:hidden"
-              aria-label="メニューを開く"
-              aria-expanded={isMenuOpen}
-            >
-              <span
-                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
-                  isMenuOpen ? 'translate-y-2 rotate-45' : ''
-                }`}
-              />
-              <span
-                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
-                  isMenuOpen ? 'opacity-0' : ''
-                }`}
-              />
-              <span
-                className={`h-0.5 w-6 bg-zinc-400 transition-all ${
-                  isMenuOpen ? '-translate-y-2 -rotate-45' : ''
-                }`}
-              />
-            </button>
-          </div>
-          {/* モバイルメニュー */}
-          <nav
-            className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
-              isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-            }`}
-          >
-            <div className="flex flex-col gap-4 py-4">
-              <a
-                href="#profile"
-                onClick={(e) => handleSmoothScroll(e, 'profile')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                プロフィール
-              </a>
-              <a
-                href="#skills"
-                onClick={(e) => handleSmoothScroll(e, 'skills')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                スキル
-              </a>
-              <a
-                href="#projects"
-                onClick={(e) => handleSmoothScroll(e, 'projects')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                プロジェクト
-              </a>
-              <a
-                href="#contact"
-                onClick={(e) => handleSmoothScroll(e, 'contact')}
-                className="text-zinc-400 transition-colors hover:text-zinc-100"
-              >
-                お問い合わせ
-              </a>
-            </div>
-          </nav>
+      <header className="sticky top-0 z-30 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-6 md:px-6">
+          <h1 className="text-2xl font-bold">ポートフォリオ</h1>
         </div>
       </header>
 
@@ -721,37 +595,6 @@ export default function Home() {
                 </span>
               </motion.a>
             </div>
-            {/* 技術経歴書リンク */}
-            <motion.div
-              className="mt-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOptions}
-              variants={fadeInUp}
-              transition={{ delay: 0.2 }}
-            >
-              <a
-                href="/skill_sheet.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm text-zinc-400 transition-colors hover:text-zinc-300"
-              >
-                <svg
-                  className="mr-2 h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                  />
-                </svg>
-                技術経歴書（PDF）をダウンロード
-              </a>
-            </motion.div>
           </motion.div>
         </section>
       </main>

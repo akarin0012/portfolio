@@ -1,19 +1,75 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects';
-import { ProjectDetailHeader } from '@/components/projects/ProjectDetailHeader';
-import { ProjectContentSection } from '@/components/projects/ProjectContentSection';
-import { ProjectMermaidDiagram } from '@/components/projects/ProjectMermaidDiagram';
-import { ProjectLiveDemo } from '@/components/projects/ProjectLiveDemo';
 import { ProjectDetailContent } from '@/components/projects/ProjectDetailContent';
+import { siteConfig, absoluteUrl } from '@/config/site';
 
 type Props = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function ProjectDetailPage({ params }: Props) {
-  const project = projects.find((p) => p.id === params.id);
+/**
+ * 動的にMetadataを生成
+ * プロジェクトのタイトルと概要を元に、各詳細ページのOGPを設定
+ */
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
+
+  if (!project) {
+    return {
+      title: 'プロジェクトが見つかりません',
+    };
+  }
+
+  const title = project.title;
+  const description = project.summary;
+  const url = absoluteUrl(`/projects/${project.id}`);
+  // サムネイルがあればそれを使用、なければデフォルトのOGP画像
+  const ogImage = project.thumbnailUrl
+    ? absoluteUrl(project.thumbnailUrl)
+    : absoluteUrl(siteConfig.ogImage);
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/projects/${project.id}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      type: 'article',
+      publishedTime: project.createdAt,
+      modifiedTime: project.updatedAt,
+      authors: [siteConfig.author.name],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
+}
+
+export default async function ProjectDetailPage({ params }: Props) {
+  const { id } = await params;
+  const project = projects.find((p) => p.id === id);
+
   if (!project) {
     notFound();
   }
@@ -32,4 +88,3 @@ export function generateStaticParams() {
     id: project.id,
   }));
 }
-

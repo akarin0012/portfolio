@@ -1,0 +1,37 @@
+import type { MetadataRoute } from 'next';
+import { projects } from '@/data/projects';
+import { siteConfig } from '@/config/site';
+
+/**
+ * sitemap.xml を自動生成
+ * ビルド時に /sitemap.xml として出力される
+ */
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = siteConfig.url;
+
+  // 静的ページ
+  const staticPages: MetadataRoute.Sitemap = [
+    {
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/projects`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+  ];
+
+  // プロジェクト詳細ページ（動的に生成）
+  const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${baseUrl}/projects/${project.id}`,
+    lastModified: project.updatedAt ? new Date(project.updatedAt) : new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
+  return [...staticPages, ...projectPages];
+}

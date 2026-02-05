@@ -1,6 +1,16 @@
 import type { Metadata } from 'next';
-import { ProjectsPageClient } from '@/components/projects/ProjectsPageClient';
+import dynamic from 'next/dynamic';
 import { siteConfig, absoluteUrl } from '@/config/site';
+
+// Framer Motionを含むコンポーネントを遅延読み込み
+const ProjectsPageClient = dynamic(
+  () => import('@/components/projects/ProjectsPageClient').then((mod) => mod.ProjectsPageClient),
+  {
+    loading: () => (
+      <div className="min-h-screen bg-zinc-900 animate-pulse" />
+    ),
+  }
+);
 
 /**
  * 制作物一覧ページのMetadata

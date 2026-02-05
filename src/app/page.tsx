@@ -1,5 +1,16 @@
-import { HomePageClient } from '@/components/HomePageClient';
+import dynamic from 'next/dynamic';
 import { siteConfig, absoluteUrl } from '@/config/site';
+
+// Framer Motionを含むコンポーネントを遅延読み込み
+// これにより初期ロードのJSバンドルサイズを削減
+const HomePageClient = dynamic(
+  () => import('@/components/HomePageClient').then((mod) => mod.HomePageClient),
+  {
+    loading: () => (
+      <div className="min-h-screen bg-zinc-900 animate-pulse" />
+    ),
+  }
+);
 
 /**
  * JSON-LD 構造化データ

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OGP画像生成ツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
+      background: #09090b;
+      color: #fafafa;
+      padding: 40px;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+      color: #3b82f6;
+    }
+    
+    .instructions {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 40px;
+      max-width: 800px;
+    }
+    
+    .instructions h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #a1a1aa;
+    }
+    
+    .instructions ol {
+      padding-left: 24px;
+      line-height: 1.8;
+      color: #d4d4d8;
+    }
+    
+    .instructions code {
+      background: #27272a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    /* OGP画像プレビュー */
+    .og-image-container {
+      display: inline-block;
+      border: 2px solid #3b82f6;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .og-image {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(135deg, #18181b 0%, #1f1f23 50%, #18181b 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* グリッドパターン */
+    .og-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(#27272a 1px, transparent 1px),
+        linear-gradient(90deg, #27272a 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+    }
+    
+    /* アクセントライン */
+    .accent-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+    }
+    
+    /* 装飾的な円 */
+    .decoration-circle-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: #3b82f6;
+      opacity: 0.1;
+    }
+    
+    .decoration-circle-2 {
+      position: absolute;
+      bottom: -50px;
+      left: -50px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      opacity: 0.1;
+    }
+    
+    /* コンテンツ */
+    .og-content {
+      position: relative;
+      z-index: 1;
+      padding: 120px 80px;
+    }
+    
+    .subtitle {
+      font-size: 20px;
+      font-weight: 600;
+      color: #3b82f6;
+      letter-spacing: 0.2em;
+      margin-bottom: 40px;
+    }
+    
+    .main-title {
+      font-size: 72px;
+      font-weight: 700;
+      color: #fafafa;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    
+    .job-title {
+      font-size: 32px;
+      font-weight: 400;
+      color: #a1a1aa;
+      margin-bottom: 40px;
+    }
+    
+    .description {
+      font-size: 24px;
+      color: #71717a;
+      margin-bottom: 40px;
+    }
+    
+    .tech-badges {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    
+    .tech-badge {
+      background: #27272a;
+      color: #fafafa;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    
+    /* コードブラケット装飾 */
+    .code-decoration {
+      position: absolute;
+      top: 150px;
+      right: 80px;
+      font-family: monospace;
+      font-size: 200px;
+      font-weight: 300;
+      color: #3b82f6;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    
+    /* フッター */
+    .og-footer {
+      position: absolute;
+      bottom: 40px;
+      left: 80px;
+      font-size: 18px;
+      color: #52525b;
+    }
+    
+    /* ダウンロードボタン */
+    .download-section {
+      margin-top: 20px;
+    }
+    
+    .download-btn {
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    
+    .download-btn:hover {
+      opacity: 0.9;
+    }
+    
+    .note {
+      margin-top: 16px;
+      color: #71717a;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📸 OGP画像生成ツール</h1>
+  
+  <div class="instructions">
+    <h2>PNG画像として保存する方法</h2>
+    <ol>
+      <li>下のプレビュー画像を右クリック → <code>検証</code> または <code>DevTools</code></li>
+      <li><code>og-image</code> クラスの要素を右クリック → <code>Capture node screenshot</code></li>
+      <li>または、ブラウザの拡張機能（GoFullPage等）でスクリーンショットを撮影</li>
+      <li>保存したファイルを <code>public/og-image.png</code> に配置</li>
+    </ol>
+  </div>
+  
+  <div class="og-image-container">
+    <div class="og-image" id="og-image">
+      <div class="accent-line"></div>
+      <div class="decoration-circle-1"></div>
+      <div class="decoration-circle-2"></div>
+      
+      <div class="code-decoration">&lt;/&gt;</div>
+      
+      <div class="og-content">
+        <div class="subtitle">PORTFOLIO</div>
+        <h1 class="main-title">茅嶋 伸一郎</h1>
+        <p class="job-title">システムエンジニア</p>
+        <p class="description">C# / .NET / Next.js を軸に、洗練されたプロダクトを開発</p>
+        
+        <div class="tech-badges">
+          <span class="tech-badge">C#</span>
+          <span class="tech-badge">.NET</span>
+          <span class="tech-badge">TypeScript</span>
+          <span class="tech-badge">Next.js</span>
+          <span class="tech-badge">React</span>
+        </div>
+      </div>
+      
+      <div class="og-footer">d19uazred58exm.cloudfront.net</div>
+    </div>
+  </div>
+  
+  <div class="download-section">
+    <button class="download-btn" onclick="downloadImage()">📥 PNG画像をダウンロード</button>
+    <p class="note">※ html2canvas ライブラリを使用してダウンロードします（CDN読み込み）</p>
+  </div>
+  
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    async function downloadImage() {
+      const element = document.getElementById('og-image');
+      const canvas = await html2canvas(element, {
+        scale: 1,
+        useCORS: true,
+        backgroundColor: '#18181b'
+      });
+      
+      const link = document.createElement('a');
+      link.download = 'og-image.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     'C# / .NET / Next.js を軸に、洗練されたプロダクトを開発するエンジニアのポートフォリオ。',
   /** サイトのURL（末尾スラッシュなし） */
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://d19uazred58exm.cloudfront.net',
   /** OGP画像のパス */
   ogImage: '/og-image.png',
   /** 著者情報 */

@@ -8,9 +8,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -24,13 +29,89 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          args: --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: 'ap-northeast-1'
-          SOURCE_DIR: 'out'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }} \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "*.html" \
+            --exclude "*.json"
+
+          aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }} \
+            --cache-control "public, max-age=0, must-revalidate" \
+            --include "*.html" \
+            --include "*.json" \
+            --exclude "*" \
+            --include "*.html" \
+            --include "*.json"
+
+      - name: Get changed files for invalidation
+        id: changed-files
+        run: |
+          # 変更されたファイルを取得（_next/static/ は除外）
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- 'src/' 'public/' 2>/dev/null || echo "")
+          
+          # 初回デプロイまたはgit履歴がない場合は全削除
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "paths=/*" >> $GITHUB_OUTPUT
+            echo "strategy=full" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # outディレクトリ内の対応するパスに変換
+          INVALIDATION_PATHS=""
+          PATH_COUNT=0
+          
+          for file in $CHANGED_FILES; do
+            # src/app/ 配下のページファイルを対応するHTMLパスに変換
+            if [[ "$file" == src/app/* ]]; then
+              # page.tsx -> 対応するHTMLパス
+              path=$(echo "$file" | sed 's|src/app||' | sed 's|/page\.tsx||' | sed 's|^$|/|')
+              if [ "$path" = "/" ]; then
+                INVALIDATION_PATHS="$INVALIDATION_PATHS /index.html"
+              else
+                INVALIDATION_PATHS="$INVALIDATION_PATHS ${path}.html ${path}/index.html"
+              fi
+              PATH_COUNT=$((PATH_COUNT + 2))
+            fi
+            
+            # publicディレクトリのファイル
+            if [[ "$file" == public/* ]]; then
+              path=$(echo "$file" | sed 's|public||')
+              # _next/static/ は除外（ハッシュ付きのため不要）
+              if [[ "$path" != /_next/static/* ]]; then
+                INVALIDATION_PATHS="$INVALIDATION_PATHS $path"
+                PATH_COUNT=$((PATH_COUNT + 1))
+              fi
+            fi
+          done
+          
+          # パス数が50を超える場合は全削除にフォールバック
+          if [ $PATH_COUNT -gt 50 ]; then
+            echo "paths=/*" >> $GITHUB_OUTPUT
+            echo "strategy=full" >> $GITHUB_OUTPUT
+          elif [ -z "$INVALIDATION_PATHS" ]; then
+            echo "paths=/*" >> $GITHUB_OUTPUT
+            echo "strategy=full" >> $GITHUB_OUTPUT
+          else
+            # 重複を除去してスペース区切りで出力
+            UNIQUE_PATHS=$(echo "$INVALIDATION_PATHS" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+            echo "paths=$UNIQUE_PATHS" >> $GITHUB_OUTPUT
+            echo "strategy=selective" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Invalidate CloudFront cache
+        run: |
+          echo "Invalidation strategy: ${{ steps.changed-files.outputs.strategy }}"
+          echo "Paths to invalidate: ${{ steps.changed-files.outputs.paths }}"
+          
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DIST_ID }} \
+            --paths ${{ steps.changed-files.outputs.paths }}

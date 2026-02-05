@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { projects } from '@/data/projects';
 import { siteConfig } from '@/config/site';
 
+// 静的書き出し（output: 'export'）に必要な設定
+export const dynamic = 'force-static';
+
 /**
  * sitemap.xml を自動生成
  * ビルド時に /sitemap.xml として出力される

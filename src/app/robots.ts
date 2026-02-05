@@ -1,6 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/config/site';
 
+// 静的書き出し（output: 'export'）に必要な設定
+export const dynamic = 'force-static';
+
 /**
  * robots.txt を自動生成
  * ビルド時に /robots.txt として出力される

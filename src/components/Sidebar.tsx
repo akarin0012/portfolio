@@ -174,10 +174,10 @@ export function Sidebar() {
         }}
       >
         <div className="flex h-full flex-col">
-          <div className="border-b border-zinc-800 p-4">
+          <div className="overflow-hidden border-b border-zinc-800 p-4">
             <h2
-              className={`overflow-hidden whitespace-nowrap font-bold text-zinc-100 transition-opacity ${
-                isDesktopExpanded ? 'opacity-100' : 'opacity-0'
+              className={`overflow-hidden whitespace-nowrap font-bold text-zinc-100 transition-all duration-300 ${
+                isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
               }`}
             >
               ポートフォリオ
@@ -200,7 +200,7 @@ export function Sidebar() {
                           handleSmoothScroll(e, item.href.replace('/#', ''))
                       : undefined
                   }
-                  className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                  className={`group relative flex items-center gap-3 overflow-hidden rounded-lg px-3 py-2.5 text-sm transition-colors ${
                     active
                       ? 'bg-zinc-800 text-zinc-100'
                       : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-100'
@@ -209,8 +209,8 @@ export function Sidebar() {
                 >
                   <Icon className="h-4 w-4 flex-shrink-0" />
                   <span
-                    className={`overflow-hidden whitespace-nowrap transition-opacity ${
-                      isDesktopExpanded ? 'opacity-100' : 'opacity-0'
+                    className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
+                      isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
                     }`}
                   >
                     {item.label}
@@ -229,13 +229,13 @@ export function Sidebar() {
               href="/skill_sheet.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-zinc-400 transition-colors hover:bg-zinc-800/50 hover:text-zinc-300"
+              className="group relative flex items-center gap-3 overflow-hidden rounded-lg px-3 py-2.5 text-sm text-zinc-400 transition-colors hover:bg-zinc-800/50 hover:text-zinc-300"
               title={!isDesktopExpanded ? '技術経歴書（PDF）' : undefined}
             >
               <FileText className="h-4 w-4 flex-shrink-0" />
               <span
-                className={`overflow-hidden whitespace-nowrap transition-opacity ${
-                  isDesktopExpanded ? 'opacity-100' : 'opacity-0'
+                className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
+                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
                 }`}
               >
                 技術経歴書（PDF）

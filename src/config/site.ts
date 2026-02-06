@@ -19,7 +19,7 @@ export const siteConfig = {
     jobTitle: 'システムエンジニア',
     jobTitleEn: 'Software Engineer',
     url: 'https://github.com/akarin0012',
-    email: '', // 公開する場合は設定
+    email: 'owatakbc@gmail.com',
     location: '東京都',
     experienceYears: 3,
   },

@@ -568,7 +568,7 @@ export function HomePageClient() {
               </motion.a>
               {/* メールボタン（白ベース） */}
               <motion.a
-                href="mailto:your-email@example.com"
+                href="mailto:owatakbc@gmail.com"
                 className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 active:scale-95"
                 whileHover={{
                   scale: 1.02,

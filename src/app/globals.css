@@ -16,10 +16,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 /* スムーズスクロールとヘッダーオフセット */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  overflow-x: hidden;
 }

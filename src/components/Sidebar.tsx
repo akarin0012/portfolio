@@ -166,7 +166,7 @@ export function Sidebar() {
 
       {/* デスクトップ: サイドバー */}
       <aside
-        className="fixed left-0 top-0 z-40 hidden h-screen border-r border-zinc-800 bg-zinc-900/95 backdrop-blur-sm transition-all duration-300 md:block"
+        className="fixed left-0 top-0 z-40 hidden h-screen overflow-hidden border-r border-zinc-800 bg-zinc-900/95 backdrop-blur-sm transition-all duration-300 md:block"
         onMouseEnter={() => setIsDesktopExpanded(true)}
         onMouseLeave={() => setIsDesktopExpanded(false)}
         style={{

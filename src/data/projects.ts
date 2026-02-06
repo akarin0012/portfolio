@@ -171,5 +171,52 @@ export const projects: Project[] = [
     featured: true,
     order: 3,
   },
+  {
+    id: 'password-generator',
+    title: 'パスワードジェネレータ',
+    summary:
+      'TypeScript で実装した、暗号学的に安全なパスワードを生成できる Web アプリケーション。強度インジケーターと履歴機能付き。',
+    description:
+      'Web Crypto API を活用し、暗号学的に安全な乱数でパスワードを生成するツールです。' +
+      '文字数（8〜64文字）、文字種（大文字・小文字・数字・記号）をカスタマイズでき、' +
+      '生成されたパスワードの強度をリアルタイムで表示します。' +
+      '履歴機能により、直近5件のパスワードを保持し、ワンクリックでコピーできます。' +
+      '型安全な TypeScript で実装し、DOM操作やイベントハンドリングのベストプラクティスを適用しています。',
+    category: 'tool',
+    primaryLanguage: 'TypeScript',
+    techStack: ['TypeScript', 'HTML5', 'CSS3', 'Web Crypto API', 'Clipboard API'],
+    tags: ['TypeScript', 'Frontend', 'Tool'],
+    repoUrl: 'https://github.com/akarin0012',
+    demoUrl: '/demos/password-generator/index.html',
+    liveDemoType: 'iframe',
+    thumbnailUrl: '/window.svg',
+    mermaidDiagram: `graph TD
+  User[ユーザー設定] --> Options[オプション取得]
+  Options --> Length[文字数: 8-64]
+  Options --> CharSet[文字種選択]
+  CharSet --> Upper[大文字 A-Z]
+  CharSet --> Lower[小文字 a-z]
+  CharSet --> Num[数字 0-9]
+  CharSet --> Sym[記号 !@#$]
+  Length --> Generate[パスワード生成]
+  CharSet --> Generate
+  Generate --> Crypto[Web Crypto API]
+  Crypto --> Shuffle[Fisher-Yates シャッフル]
+  Shuffle --> Display[画面表示]
+  Display --> Strength[強度計算]
+  Display --> History[履歴保存]
+  Display --> Copy[クリップボードコピー]`,
+    challenges:
+      '暗号学的に安全な乱数生成のため、Math.random() ではなく Web Crypto API (crypto.getRandomValues) を使用しました。' +
+      'また、各文字種から最低1文字を含めることを保証しつつ、最終的にシャッフルして偏りのないパスワードを生成するロジックの実装が課題でした。',
+    learnings:
+      'TypeScript の型システムを活用することで、DOM 操作や設定オブジェクトの型安全性を確保できました。' +
+      'また、Fisher-Yates シャッフルアルゴリズムや Web Crypto API の使い方を学び、' +
+      'セキュリティを考慮したフロントエンド実装の知見を得られました。',
+    createdAt: '2026-02-01',
+    updatedAt: '2026-02-06',
+    featured: true,
+    order: 4,
+  },
 ];
 

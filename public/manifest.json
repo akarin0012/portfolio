@@ -1,0 +1,27 @@
+{
+  "name": "Akarin Portfolio - 茅嶋伸一郎",
+  "short_name": "Akarin Portfolio",
+  "description": "C#/.NET/Next.jsを中心に、Webアプリケーション開発からシステム設計まで携わるシステムエンジニアのポートフォリオ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18181b",
+  "theme_color": "#18181b",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ja",
+  "categories": ["portfolio", "technology", "business"],
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

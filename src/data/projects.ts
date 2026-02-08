@@ -218,5 +218,54 @@ export const projects: Project[] = [
     featured: true,
     order: 4,
   },
+  {
+    id: 'pomodoro-timer',
+    title: 'ポモドーロタイマー',
+    summary:
+      'React で構築した、集中と休息のリズムを管理するポモドーロテクニック用タイマーアプリ。円形プログレスバーとセッション管理機能付き。',
+    description:
+      'React（CDN版）を使用して構築したポモドーロタイマーです。' +
+      '25分の作業セッション、5分の小休憩、15分の長休憩を自動で切り替え、' +
+      '円形のプログレスバーでタイマーの残り時間を視覚的に表示します。' +
+      '4セッションで1サイクルとし、セッション数・合計作業時間・完了サイクル数を記録します。' +
+      'Web Audio API による通知音、モード切替、スキップ機能など、実用的な機能を備えています。' +
+      'React の useState / useEffect / useCallback / useMemo / useRef を活用し、' +
+      'コンポーネント分割と状態管理のベストプラクティスを適用しています。',
+    category: 'tool',
+    primaryLanguage: 'JavaScript',
+    techStack: ['React', 'JavaScript', 'HTML5', 'CSS3', 'Web Audio API'],
+    tags: ['React', 'Frontend', 'Tool'],
+    repoUrl: 'https://github.com/akarin0012',
+    demoUrl: '/demos/pomodoro-timer/index.html',
+    liveDemoType: 'iframe',
+    thumbnailUrl: '/window.svg',
+    mermaidDiagram: `graph TD
+  User[ユーザー操作] --> Mode{モード選択}
+  Mode -->|作業| Work[25分タイマー]
+  Mode -->|小休憩| Short[5分タイマー]
+  Mode -->|長休憩| Long[15分タイマー]
+  Work --> Countdown[カウントダウン]
+  Short --> Countdown
+  Long --> Countdown
+  Countdown --> Complete[タイマー完了]
+  Complete --> Audio[Web Audio API 通知音]
+  Complete --> Check{セッション判定}
+  Check -->|4回未満| NextShort[小休憩へ遷移]
+  Check -->|4回完了| NextLong[長休憩へ遷移]
+  NextShort --> Countdown
+  NextLong --> Countdown`,
+    challenges:
+      'useEffect 内でのタイマー管理と、タイマー完了時の状態遷移ロジックの整合性を保つことが課題でした。' +
+      'setInterval のクリーンアップと useCallback による関数の安定参照を適切に組み合わせることで、' +
+      '意図しない再レンダリングやタイマーの二重起動を防止しています。',
+    learnings:
+      'React Hooks（useState, useEffect, useCallback, useMemo, useRef）を組み合わせた状態管理のパターンを深く理解できました。' +
+      'また、Web Audio API を使ったブラウザ上での音声生成や、SVG を活用した円形プログレスバーの実装経験が得られました。' +
+      'CDN 版 React でも十分にコンポーネント指向の設計ができることを実感しました。',
+    createdAt: '2026-02-08',
+    updatedAt: '2026-02-08',
+    featured: true,
+    order: 5,
+  },
 ];
 

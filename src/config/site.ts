@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     '茅嶋伸一郎のポートフォリオサイト。C#/.NET/ASP.NET Core/Next.js/TypeScriptを中心に、Webアプリケーション開発からシステム設計まで一貫して携わるシステムエンジニア。3年の実務経験を活かしたプロジェクト実績を掲載。',
   /** サイトのURL（末尾スラッシュなし） */
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://d19uazred58exm.cloudfront.net',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://akarin0012.com',
   /** OGP画像のパス */
   ogImage: '/og-image.png',
   /** 著者情報 */

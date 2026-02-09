@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -34,6 +34,13 @@ export function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
   const pathname = usePathname();
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+
+  /** モバイルメニューを閉じてフォーカスをトリガーボタンに戻す */
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileOpen(false);
+    mobileMenuButtonRef.current?.focus();
+  }, []);
 
   // モバイルメニューを閉じる（ページ遷移時）
   useEffect(() => {
@@ -70,13 +77,14 @@ export function Sidebar() {
         behavior: 'smooth',
       });
     }
-    setIsMobileOpen(false);
+    closeMobileMenu();
   };
 
   return (
     <>
       {/* モバイル: ハンバーガーボタン */}
       <button
+        ref={mobileMenuButtonRef}
         type="button"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="fixed left-4 top-20 z-50 flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/95 p-2 text-zinc-400 backdrop-blur-sm transition-colors hover:border-zinc-700 hover:text-zinc-100 md:hidden"
@@ -100,7 +108,7 @@ export function Sidebar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-40 bg-zinc-900/80 backdrop-blur-sm md:hidden"
-              onClick={() => setIsMobileOpen(false)}
+              onClick={closeMobileMenu}
             />
             <motion.div
               initial={{ x: -280 }}
@@ -135,6 +143,7 @@ export function Sidebar() {
                                 )
                             : undefined
                         }
+                        aria-current={active ? 'page' : undefined}
                         className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
                           active
                             ? 'bg-zinc-800 text-zinc-100'
@@ -200,6 +209,7 @@ export function Sidebar() {
                           handleSmoothScroll(e, item.href.replace('/#', ''))
                       : undefined
                   }
+                  aria-current={active ? 'page' : undefined}
                   className={`group relative flex items-center gap-3 overflow-hidden rounded-lg px-3 py-2.5 text-sm transition-colors ${
                     active
                       ? 'bg-zinc-800 text-zinc-100'

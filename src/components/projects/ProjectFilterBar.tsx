@@ -91,6 +91,8 @@ function FilterPillGroup<T extends string>({
               type="button"
               whileTap={{ scale: 0.95 }}
               onClick={() => onChange(value)}
+              aria-label={`${label}: ${renderLabel(value)}`}
+              aria-pressed={isActive}
               className={[
                 'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
                 isActive

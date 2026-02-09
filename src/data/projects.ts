@@ -79,8 +79,8 @@ export const projects: Project[] = [
     primaryLanguage: 'TypeScript',
     techStack: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion', 'Lucide Icons'],
     tags: ['Next.js', 'React', 'Tailwind CSS', 'Frontend', 'Fullstack'],
-    repoUrl: 'https://github.com/akarin0012', // 実プロジェクトのリポジトリ URL に差し替え
-    demoUrl: 'https://example.com', // デプロイ先に差し替え
+    repoUrl: 'https://github.com/akarin0012/portfolio',
+    demoUrl: 'https://akarin0012.com',
     liveDemoType: 'external-link',
     thumbnailUrl: '/window.svg',
     mermaidDiagram: `graph TD
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     primaryLanguage: 'JavaScript',
     techStack: ['HTML5', 'CSS3', 'Vanilla JavaScript', 'Clipboard API'],
     tags: ['Frontend', 'JavaScript', 'Tool'],
-    repoUrl: 'https://github.com/akarin0012', // 実際のリポジトリ URL に差し替え
+    repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/color-palette-generator',
     demoUrl: '/demos/color-palette-generator/index.html',
     liveDemoType: 'iframe',
     thumbnailUrl: '/window.svg',
@@ -186,7 +186,7 @@ export const projects: Project[] = [
     primaryLanguage: 'TypeScript',
     techStack: ['TypeScript', 'HTML5', 'CSS3', 'Web Crypto API', 'Clipboard API'],
     tags: ['TypeScript', 'Frontend', 'Tool'],
-    repoUrl: 'https://github.com/akarin0012',
+    repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/password-generator',
     demoUrl: '/demos/password-generator/index.html',
     liveDemoType: 'iframe',
     thumbnailUrl: '/window.svg',
@@ -235,7 +235,7 @@ export const projects: Project[] = [
     primaryLanguage: 'JavaScript',
     techStack: ['React', 'JavaScript', 'HTML5', 'CSS3', 'Web Audio API'],
     tags: ['React', 'Frontend', 'Tool'],
-    repoUrl: 'https://github.com/akarin0012',
+    repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/pomodoro-timer',
     demoUrl: '/demos/pomodoro-timer/index.html',
     liveDemoType: 'iframe',
     thumbnailUrl: '/window.svg',

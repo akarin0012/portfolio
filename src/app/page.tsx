@@ -7,6 +7,7 @@ import {
   getCopyrightYears,
   getSiteDescription,
 } from '@/config/site';
+import { getAllSkillNames, certifications } from '@/data/skills';
 
 // Below-fold セクション（スキル・プロジェクト・お問い合わせ）を遅延読み込み
 // ヒーローセクションはServer Componentとして即座にレンダリング
@@ -19,13 +20,8 @@ const HomePageClient = dynamic(
  * Google検索のリッチリザルトに対応
  */
 function JsonLd() {
-  // 全スキルを結合
-  const allSkills = [
-    ...siteConfig.skills.backend,
-    ...siteConfig.skills.frontend,
-    ...siteConfig.skills.database,
-    ...siteConfig.skills.other,
-  ];
+  // skills.ts の単一データソースからスキル名を取得
+  const allSkills = getAllSkillNames();
 
   // WebSite 構造化データ
   const websiteJsonLd = {
@@ -71,13 +67,11 @@ function JsonLd() {
         alternateName: 'ja',
       },
     ],
-    hasCredential: [
-      {
-        '@type': 'EducationalOccupationalCredential',
-        name: 'HTML5プロフェッショナル認定 レベル1',
-        credentialCategory: 'certification',
-      },
-    ],
+    hasCredential: certifications.map((cert) => ({
+      '@type': 'EducationalOccupationalCredential',
+      name: cert.name,
+      credentialCategory: 'certification',
+    })),
     hasOccupation: {
       '@type': 'Occupation',
       name: siteConfig.author.jobTitle,

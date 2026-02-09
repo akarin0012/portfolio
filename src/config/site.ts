@@ -90,13 +90,7 @@ export const siteConfig = {
     'フルスタック',
     '東京',
   ] as string[],
-  /** 技術スタック（構造化データ用） */
-  skills: {
-    backend: ['C#', 'VB.NET', 'ASP.NET', 'ASP.NET Core MVC', 'VBScript'],
-    frontend: ['TypeScript', 'JavaScript', 'React', 'Next.js', 'HTML', 'CSS', 'jQuery', 'Tailwind CSS'],
-    database: ['SQL Server', 'Oracle', 'MySQL'],
-    other: ['Git', 'GitHub', 'GitHub Actions', 'AWS', 'Unity', 'kintone', 'Python'],
-  },
+  /** 技術スタックは src/data/skills.ts に集約（getAllSkillNames() で取得） */
 } as const;
 
 /** サイトの完全なURL（パスを追加可能） */

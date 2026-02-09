@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from 'next';
+import Script from 'next/script';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
+import { ScrollToTop } from '@/components/ScrollToTop';
 import { siteConfig, absoluteUrl, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
@@ -132,11 +134,9 @@ export const metadata: Metadata = {
     },
   },
 
-  // 認証・検証用（必要に応じてIDを設定）
+  // 認証・検証用（環境変数で設定）
   verification: {
-    // google: 'Google Search Console の認証コード',
-    // yandex: 'Yandex Webmaster の認証コード',
-    // bing: 'Bing Webmaster の認証コード',
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
   },
 
   // アイコン設定
@@ -167,6 +167,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+/** Google Analytics Measurement ID（環境変数 NEXT_PUBLIC_GA_ID で設定） */
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -189,6 +192,19 @@ export default function RootLayout({
         <div className="md:pl-[72px]">
           {children}
         </div>
+        <ScrollToTop />
+        {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ有効） */}
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

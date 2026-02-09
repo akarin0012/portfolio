@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
-import { siteConfig, absoluteUrl } from '@/config/site';
+import { siteConfig, absoluteUrl, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: `${siteConfig.name} | ${siteConfig.author.name} - ${siteConfig.author.jobTitle}`,
     template: `%s | ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description: getSiteDescription(),
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.author.name, url: siteConfig.author.url }],
   creator: siteConfig.author.name,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     'author': siteConfig.author.name,
     'designer': siteConfig.author.name,
     'owner': siteConfig.author.name,
-    'copyright': `© ${new Date().getFullYear()} ${siteConfig.author.name}`,
+    'copyright': `© ${getCopyrightYears()} ${siteConfig.author.name}`,
 
     // 地理・言語情報
     'geo.region': 'JP-13', // 東京都
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     locale: siteConfig.locale,
     url: siteConfig.url,
     title: `${siteConfig.author.name} | ${siteConfig.author.jobTitle}のポートフォリオ`,
-    description: siteConfig.description,
+    description: getSiteDescription(),
     siteName: siteConfig.name,
     countryName: 'Japan',
     images: [
@@ -111,7 +111,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.author.name} | ${siteConfig.author.jobTitle}`,
-    description: siteConfig.description,
+    description: getSiteDescription(),
     images: [absoluteUrl(siteConfig.ogImage)],
     creator: siteConfig.links.twitter || undefined,
     site: siteConfig.links.twitter || undefined,

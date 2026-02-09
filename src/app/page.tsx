@@ -1,5 +1,12 @@
 import dynamic from 'next/dynamic';
-import { siteConfig, absoluteUrl } from '@/config/site';
+import {
+  siteConfig,
+  absoluteUrl,
+  getAuthorAge,
+  getCareerYear,
+  getCopyrightYears,
+  getSiteDescription,
+} from '@/config/site';
 
 // Below-fold セクション（スキル・プロジェクト・お問い合わせ）を遅延読み込み
 // ヒーローセクションはServer Componentとして即座にレンダリング
@@ -26,7 +33,7 @@ function JsonLd() {
     '@type': 'WebSite',
     '@id': `${siteConfig.url}/#website`,
     name: siteConfig.name,
-    description: siteConfig.description,
+    description: getSiteDescription(),
     url: siteConfig.url,
     author: {
       '@type': 'Person',
@@ -183,10 +190,10 @@ export default function Home() {
                 茅嶋 伸一郎
               </h2>
               <p className="mb-2 text-lg text-zinc-400 md:text-xl">
-                システムエンジニア（3年目）
+                システムエンジニア（{getCareerYear()}年目）
               </p>
               <p className="text-base text-zinc-400 md:text-lg">
-                26歳 | 東京都練馬区
+                {getAuthorAge()}歳 | 東京都練馬区
               </p>
             </div>
             <div className="animate-fade-in-up animation-delay-100 rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8">
@@ -194,7 +201,7 @@ export default function Home() {
                 自己紹介
               </h3>
               <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
-                3年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
+                {getCareerYear()}年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
                 主にWebアプリケーションの設計から保守運用まで、一貫した開発経験を積んでいます。
               </p>
               <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
@@ -216,7 +223,7 @@ export default function Home() {
         <footer className="mt-16 border-t border-zinc-800">
           <div className="container mx-auto px-6 py-6">
             <p className="text-center text-sm text-zinc-400">
-              © 2024 茅嶋 伸一郎. All rights reserved.
+              © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
             </p>
           </div>
         </footer>

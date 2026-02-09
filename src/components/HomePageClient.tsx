@@ -23,62 +23,14 @@ const viewportOptions = {
   margin: '-100px' as const,
 };
 
+/**
+ * Below-fold セクション（スキル・プロジェクト・お問い合わせ）
+ * ヒーローセクションはServer Componentとして page.tsx で即座にレンダリング
+ */
 export function HomePageClient() {
   return (
-    <div className="min-h-screen bg-zinc-900 text-zinc-50">
-      {/* ヘッダー */}
-      <header className="sticky top-0 z-30 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-6 md:px-6">
-          <h1 className="text-2xl font-bold">ポートフォリオ</h1>
-        </div>
-      </header>
-
-      {/* メインコンテンツ */}
-      <main className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
-        {/* ヒーローセクション */}
-        <section id="profile" className="mb-12 md:mb-20">
-          <motion.div
-            className="mb-8 text-center md:mb-12"
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-          >
-            <h2 className="mb-4 text-3xl font-bold text-zinc-100 md:text-5xl">
-              茅嶋 伸一郎
-            </h2>
-            <p className="mb-2 text-lg text-zinc-400 md:text-xl">
-              システムエンジニア（3年目）
-            </p>
-            <p className="text-base text-zinc-500 md:text-lg">
-              26歳 | 東京都練馬区
-            </p>
-          </motion.div>
-          <motion.div
-            className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8"
-            initial="hidden"
-            animate="visible"
-            variants={fadeInUp}
-            transition={{ delay: 0.1 }}
-          >
-            <h3 className="mb-4 text-xl font-semibold text-zinc-100 md:text-2xl">
-              自己紹介
-            </h3>
-            <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
-              3年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
-              主にWebアプリケーションの設計から保守運用まで、一貫した開発経験を積んでいます。
-            </p>
-            <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
-              レガシー技術（VBScript、C#、VB.NET）を用いた既存システムの開発・保守経験があり、
-              オンプレミス環境での本番デプロイや運用も実務経験があります。
-            </p>
-            <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
-              今後は、これまでのレガシー技術での実務経験を活かし、GoやTypeScript等のモダンな技術スタックへの
-              リプレイス・移行案件に参画し、技術的な知見を拡げていきたいと考えています。
-            </p>
-          </motion.div>
-        </section>
-
-        {/* スキルセクション */}
+    <>
+      {/* スキルセクション */}
         <section id="skills" className="mb-12 md:mb-20">
           <motion.h2
             className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
@@ -515,8 +467,8 @@ export function HomePageClient() {
           </motion.div>
         </section>
 
-        {/* お問い合わせセクション */}
-        <section id="contact" className="mb-12 md:mb-20">
+      {/* お問い合わせセクション */}
+      <section id="contact" className="mb-12 md:mb-20">
           <motion.h2
             className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
             initial="hidden"
@@ -596,17 +548,7 @@ export function HomePageClient() {
               </motion.a>
             </div>
           </motion.div>
-        </section>
-      </main>
-
-      {/* フッター */}
-      <footer className="mt-16 border-t border-zinc-800">
-        <div className="container mx-auto px-6 py-6">
-          <p className="text-center text-sm text-zinc-400">
-            © 2024 茅嶋 伸一郎. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
+      </section>
+    </>
   );
 }

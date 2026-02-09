@@ -174,12 +174,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <head>
-        {/* パフォーマンス最適化: 外部リソースへの事前接続 */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      </head>
+      {/*
+        注: Google Fonts への preconnect/dns-prefetch は削除済み
+        next/font/google がフォントをビルド時にダウンロード・インライン化するため不要
+        （Lighthouse: 未使用 preconnect ヒントとして検出されていた）
+      */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-900 text-zinc-50`}
       >

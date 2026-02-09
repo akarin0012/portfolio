@@ -70,16 +70,39 @@ jobs:
           PATH_COUNT=0
           
           for file in $CHANGED_FILES; do
-            # src/app/ 配下のページファイルを対応するHTMLパスに変換
-            if [[ "$file" == src/app/* ]]; then
+            # src/app/ 配下のファイルを対応するHTMLパスに変換
+            if [[ "$file" == src/app/*/page.tsx ]] || [[ "$file" == src/app/page.tsx ]]; then
               # page.tsx -> 対応するHTMLパス
               path=$(echo "$file" | sed 's|src/app||' | sed 's|/page\.tsx||' | sed 's|^$|/|')
-              if [ "$path" = "/" ]; then
+              # 動的ルートセグメント [param] を含む場合はワイルドカードに変換
+              if [[ "$path" == *"["* ]]; then
+                path=$(echo "$path" | sed 's|/\[[^]]*\].*|/*|')
+                INVALIDATION_PATHS="$INVALIDATION_PATHS ${path}"
+                PATH_COUNT=$((PATH_COUNT + 1))
+              elif [ "$path" = "/" ]; then
                 INVALIDATION_PATHS="$INVALIDATION_PATHS /index.html"
+                PATH_COUNT=$((PATH_COUNT + 1))
               else
                 INVALIDATION_PATHS="$INVALIDATION_PATHS ${path}.html ${path}/index.html"
+                PATH_COUNT=$((PATH_COUNT + 2))
               fi
-              PATH_COUNT=$((PATH_COUNT + 2))
+            elif [[ "$file" == src/app/* ]]; then
+              # layout.tsx, error.tsx, loading.tsx, not-found.tsx などの非ページファイル
+              # これらの変更は複数ページに影響するため、ディレクトリ単位で無効化
+              dir=$(echo "$file" | sed 's|src/app/\?||' | sed 's|/[^/]*$||')
+              if [ "$dir" = "$(basename "$file")" ] || [ -z "$dir" ]; then
+                # ルートレベルの非ページファイル → 全体無効化にフォールバック
+                echo "paths=/*" >> $GITHUB_OUTPUT
+                echo "strategy=full" >> $GITHUB_OUTPUT
+                exit 0
+              else
+                # 動的ルートセグメント [param] を含む場合はその手前まで
+                if [[ "$dir" == *"["* ]]; then
+                  dir=$(echo "$dir" | sed 's|/\[[^]]*\].*||')
+                fi
+                INVALIDATION_PATHS="$INVALIDATION_PATHS /${dir}/*"
+                PATH_COUNT=$((PATH_COUNT + 1))
+              fi
             fi
             
             # publicディレクトリのファイル

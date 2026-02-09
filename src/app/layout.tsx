@@ -189,8 +189,17 @@ export default function RootLayout({
           メインコンテンツへスキップ
         </a>
         <Sidebar />
-        <div className="md:pl-[72px]">
-          {children}
+        <div className="flex min-h-screen flex-col md:pl-[var(--sidebar-collapsed-width)]">
+          <div className="flex-1">
+            {children}
+          </div>
+          <footer className="border-t border-zinc-800">
+            <div className="container mx-auto px-6 py-6">
+              <p className="text-center text-sm text-zinc-400">
+                © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
+              </p>
+            </div>
+          </footer>
         </div>
         <ScrollToTop />
         {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ有効） */}

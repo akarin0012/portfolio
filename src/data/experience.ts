@@ -20,23 +20,24 @@ export interface WorkExperience {
  */
 export const workExperiences: WorkExperience[] = [
   {
-    projectName: '建設業向け帳票管理システム',
-    period: '2023年7月 - 2025年10月（2年4ヶ月）',
-    roleInfo: 'SE | チーム規模: 21名',
-    title: 'Webアプリケーション開発・保守',
+    projectName: '社内用資材工程管理アプリ',
+    period: '2025年11月 - 2026年2月（4ヶ月）',
+    roleInfo: 'SE | チーム規模: 3名',
+    title: 'Windowsフォームアプリ開発',
     description:
-      'データ参照・出力機能の追加、Dropbox対応化機能の追加、DB移行に伴うデータ連携用パッチファイルの開発・改修、' +
-      'システムマニュアルの作成・更新、本番環境へのデプロイ・運用を担当。',
-    techStack: [
-      'ASP.NET',
-      'VB.NET',
-      'VBScript',
-      'HTML/CSS',
-      'JavaScript',
-      'jQuery',
-      'Oracle',
-      'SQL Server',
-    ],
+      '設計書の新規作成・更新（要件定義書、基本設計書、詳細設計書）、' +
+      'Windowsフォームを用いたUI開発（マルチコンボボックス等）、既存コードのリファクタリングを担当。',
+    techStack: ['VB.NET', 'Windows Forms', 'Oracle'],
+  },
+  {
+    projectName: '通信業プロビジョニングシステム保守',
+    period: '2024年12月 - 2025年3月（4ヶ月）',
+    roleInfo: 'オペレータ | チーム規模: 13名',
+    title: 'システム保守・運用',
+    description:
+      '新規サービス追加・既存サービス変更対応、RPA操作・エビデンス作成プログラム開発、' +
+      '脆弱性調査・対策資料作成、定期メンテナンス対応（Windowsアップデート、障害確認）を担当。',
+    techStack: ['JavaScript', 'Python', 'Windows', 'Linux'],
   },
   {
     projectName: '建設業向け資機材管理システム',
@@ -66,23 +67,22 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
   {
-    projectName: '通信業プロビジョニングシステム保守',
-    period: '2024年12月 - 2025年3月（4ヶ月）',
-    roleInfo: 'オペレータ | チーム規模: 13名',
-    title: 'システム保守・運用',
+    projectName: '建設業向け帳票管理システム',
+    period: '2023年7月 - 2025年10月（2年4ヶ月）',
+    roleInfo: 'SE | チーム規模: 21名',
+    title: 'Webアプリケーション開発・保守',
     description:
-      '新規サービス追加・既存サービス変更対応、RPA操作・エビデンス作成プログラム開発、' +
-      '脆弱性調査・対策資料作成、定期メンテナンス対応（Windowsアップデート、障害確認）を担当。',
-    techStack: ['JavaScript', 'Python', 'Windows', 'Linux'],
-  },
-  {
-    projectName: '社内用資材工程管理アプリ',
-    period: '2025年11月 - 2026年2月（4ヶ月・予定）',
-    roleInfo: 'SE | チーム規模: 3名',
-    title: 'Windowsフォームアプリ開発',
-    description:
-      '設計書の新規作成・更新（要件定義書、基本設計書、詳細設計書）、' +
-      'Windowsフォームを用いたUI開発（マルチコンボボックス等）、既存コードのリファクタリングを担当。',
-    techStack: ['VB.NET', 'Windows Forms', 'Oracle'],
+      'データ参照・出力機能の追加、Dropbox対応化機能の追加、DB移行に伴うデータ連携用パッチファイルの開発・改修、' +
+      'システムマニュアルの作成・更新、本番環境へのデプロイ・運用を担当。',
+    techStack: [
+      'ASP.NET',
+      'VB.NET',
+      'VBScript',
+      'HTML/CSS',
+      'JavaScript',
+      'jQuery',
+      'Oracle',
+      'SQL Server',
+    ],
   },
 ];

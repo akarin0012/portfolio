@@ -170,7 +170,7 @@ export function Sidebar() {
         onMouseEnter={() => setIsDesktopExpanded(true)}
         onMouseLeave={() => setIsDesktopExpanded(false)}
         style={{
-          width: isDesktopExpanded ? '240px' : '72px',
+          width: isDesktopExpanded ? '240px' : 'var(--sidebar-collapsed-width)',
         }}
       >
         <div className="flex h-full flex-col">

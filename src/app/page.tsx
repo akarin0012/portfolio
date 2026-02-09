@@ -3,8 +3,8 @@ import {
   siteConfig,
   absoluteUrl,
   getCareerYear,
-  getCopyrightYears,
   getSiteDescription,
+  SITE_ESTABLISHED_YEAR,
 } from '@/config/site';
 import { getAllSkillNames, certifications } from '@/data/skills';
 
@@ -12,6 +12,30 @@ import { getAllSkillNames, certifications } from '@/data/skills';
 // ヒーローセクションはServer Componentとして即座にレンダリング
 const HomePageClient = dynamic(
   () => import('@/components/HomePageClient').then((mod) => mod.HomePageClient),
+  {
+    loading: () => (
+      <div className="space-y-12 md:space-y-20">
+        {/* スキルセクション スケルトン */}
+        <div>
+          <div className="mb-6 h-9 w-24 animate-pulse rounded bg-zinc-800 md:mb-8" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="h-52 animate-pulse rounded-lg border border-zinc-800 bg-zinc-800/50" />
+            ))}
+          </div>
+        </div>
+        {/* プロジェクト経験セクション スケルトン */}
+        <div>
+          <div className="mb-6 h-9 w-56 animate-pulse rounded bg-zinc-800 md:mb-8" />
+          <div className="space-y-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-40 animate-pulse rounded-lg border border-zinc-800 bg-zinc-800/50" />
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+  },
 );
 
 /**
@@ -84,7 +108,7 @@ function JsonLd() {
         '@type': 'ProfilePage',
         '@id': `${siteConfig.url}/#profilepage`,
         mainEntity: { '@id': `${siteConfig.url}/#person` },
-        dateCreated: '2024-01-01',
+        dateCreated: `${SITE_ESTABLISHED_YEAR}-01-01`,
         dateModified: new Date().toISOString().split('T')[0],
         about: { '@id': `${siteConfig.url}/#person` },
       },
@@ -173,14 +197,6 @@ export default function Home() {
           <HomePageClient />
         </main>
 
-        {/* フッター（Server Component） */}
-        <footer className="mt-16 border-t border-zinc-800">
-          <div className="container mx-auto px-6 py-6">
-            <p className="text-center text-sm text-zinc-400">
-              © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
-            </p>
-          </div>
-        </footer>
       </div>
     </>
   );

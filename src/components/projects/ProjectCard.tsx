@@ -19,7 +19,6 @@ export function ProjectCard({ project }: Props) {
     >
       {project.thumbnailUrl && (
         <div className="relative h-40 w-full overflow-hidden bg-zinc-900/80">
-          {/* ここでは簡易プレースホルダー。必要に応じて next/image に差し替え */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={project.thumbnailUrl}

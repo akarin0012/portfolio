@@ -41,8 +41,6 @@ export const siteConfig = {
     url: 'https://github.com/akarin0012',
     email: 'owatakbc@gmail.com',
     location: '東京都',
-    /** 生年月日（年齢の自動計算に使用） */
-    birthDate: '1999-06-12',
     /** キャリア開始日（経験年数の自動計算に使用） */
     careerStartDate: '2023-04-01',
   },
@@ -96,11 +94,6 @@ export const siteConfig = {
 /** サイトの完全なURL（パスを追加可能） */
 export function absoluteUrl(path: string = ''): string {
   return `${siteConfig.url}${path}`;
-}
-
-/** 著者の現在の年齢を取得 */
-export function getAuthorAge(): number {
-  return calcYearsSince(siteConfig.author.birthDate);
 }
 
 /** 著者のキャリア経験年数（N年目）を取得 */

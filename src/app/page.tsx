@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic';
 import {
   siteConfig,
   absoluteUrl,
-  getAuthorAge,
   getCareerYear,
   getCopyrightYears,
   getSiteDescription,
@@ -176,7 +175,7 @@ export default function Home() {
         </header>
 
         {/* メインコンテンツ */}
-        <main className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
+        <main id="main-content" className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
           {/* ヒーローセクション（Server Component + CSSアニメーション: LCP最適化） */}
           <section id="profile" className="mb-12 md:mb-20">
             <div className="animate-fade-in-up mb-8 text-center md:mb-12">
@@ -187,7 +186,7 @@ export default function Home() {
                 システムエンジニア（{getCareerYear()}年目）
               </p>
               <p className="text-base text-zinc-400 md:text-lg">
-                {getAuthorAge()}歳 | 東京都練馬区
+                東京都在住
               </p>
             </div>
             <div className="animate-fade-in-up animation-delay-100 rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8">

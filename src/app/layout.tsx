@@ -182,6 +182,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-900 text-zinc-50`}
       >
+        <a href="#main-content" className="skip-nav">
+          メインコンテンツへスキップ
+        </a>
         <Sidebar />
         <div className="md:pl-[72px]">
           {children}

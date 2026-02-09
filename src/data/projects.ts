@@ -82,7 +82,7 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/akarin0012/portfolio',
     demoUrl: 'https://akarin0012.com',
     liveDemoType: 'external-link',
-    thumbnailUrl: '/window.svg',
+    thumbnailUrl: '/thumbnails/portfolio-showcase.svg',
     mermaidDiagram: `graph TD
   A[Client] --> B[Next.js App Router]
   B --> C[Showcase Projects]
@@ -114,7 +114,7 @@ export const projects: Project[] = [
     tags: ['ASP.NET Core', 'Backend', 'Frontend', 'Fullstack'],
     repoUrl: undefined, // クローズドな業務案件の場合は undefined のまま
     liveDemoType: 'code-snippet',
-    thumbnailUrl: '/window.svg',
+    thumbnailUrl: '/thumbnails/sales-system.svg',
     mermaidDiagram: `graph LR
   Browser --> MVC[ASP.NET Core MVC]
   MVC --> Controller
@@ -148,7 +148,7 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/color-palette-generator',
     demoUrl: '/demos/color-palette-generator/index.html',
     liveDemoType: 'iframe',
-    thumbnailUrl: '/window.svg',
+    thumbnailUrl: '/thumbnails/color-palette.svg',
     mermaidDiagram: `graph TD
   User[ユーザー操作] --> Generate[パレット生成]
   Generate --> Random[ランダムカラー生成]
@@ -189,7 +189,7 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/password-generator',
     demoUrl: '/demos/password-generator/index.html',
     liveDemoType: 'iframe',
-    thumbnailUrl: '/window.svg',
+    thumbnailUrl: '/thumbnails/password-generator.svg',
     mermaidDiagram: `graph TD
   User[ユーザー設定] --> Options[オプション取得]
   Options --> Length[文字数: 8-64]
@@ -238,7 +238,7 @@ export const projects: Project[] = [
     repoUrl: 'https://github.com/akarin0012/portfolio/tree/main/public/demos/pomodoro-timer',
     demoUrl: '/demos/pomodoro-timer/index.html',
     liveDemoType: 'iframe',
-    thumbnailUrl: '/window.svg',
+    thumbnailUrl: '/thumbnails/pomodoro-timer.svg',
     mermaidDiagram: `graph TD
   User[ユーザー操作] --> Mode{モード選択}
   Mode -->|作業| Work[25分タイマー]

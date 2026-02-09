@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, Variants } from 'framer-motion';
+import { useCallback } from 'react';
+import { motion, Variants, MotionConfig } from 'framer-motion';
 import { skillCategories, certifications } from '@/data/skills';
 import { workExperiences } from '@/data/experience';
 import { siteConfig } from '@/config/site';
@@ -49,8 +50,15 @@ const staggerParentSlow: Variants = {
  * ヒーローセクションはServer Componentとして page.tsx で即座にレンダリング
  */
 export function HomePageClient() {
+  const handleEmailClick = useCallback(() => {
+    // メールアドレスをHTML上に直接公開しないためのbot対策
+    const u = 'owatakbc';
+    const d = 'gmail.com';
+    window.location.href = `mailto:${u}@${d}`;
+  }, []);
+
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {/* スキルセクション */}
       <section id="skills" className="mb-12 md:mb-20">
         <motion.h2
@@ -222,9 +230,10 @@ export function HomePageClient() {
                 GitHub
               </span>
             </motion.a>
-            {/* メールボタン（白ベース） */}
-            <motion.a
-              href={`mailto:${siteConfig.author.email}`}
+            {/* メールボタン（白ベース・bot対策のためonClickで構成） */}
+            <motion.button
+              type="button"
+              onClick={handleEmailClick}
               className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 active:scale-95"
               whileHover={{
                 scale: 1.02,
@@ -249,10 +258,10 @@ export function HomePageClient() {
                 </svg>
                 お問い合わせ
               </span>
-            </motion.a>
+            </motion.button>
           </div>
         </motion.div>
       </section>
-    </>
+    </MotionConfig>
   );
 }

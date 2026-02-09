@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#292524"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <!-- Decorative circles -->
+  <circle cx="680" cy="80" r="100" fill="#f97316" opacity="0.04"/>
+  <circle cx="120" cy="380" r="80" fill="#fb923c" opacity="0.03"/>
+  <!-- Outer ring (background) -->
+  <circle cx="400" cy="210" r="130" fill="none" stroke="#3f3f46" stroke-width="10" opacity="0.3"/>
+  <!-- Progress arc (~70% complete) -->
+  <circle cx="400" cy="210" r="130" fill="none" stroke="url(#ring)" stroke-width="10" opacity="0.6"
+    stroke-dasharray="817" stroke-dashoffset="245" stroke-linecap="round"
+    transform="rotate(-90 400 210)"/>
+  <!-- Inner glow -->
+  <circle cx="400" cy="210" r="100" fill="#f97316" opacity="0.03"/>
+  <!-- Timer text -->
+  <text x="400" y="200" text-anchor="middle" font-family="monospace" font-size="48" font-weight="bold" fill="#fdba74" opacity="0.7">17:32</text>
+  <text x="400" y="235" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#a1a1aa" opacity="0.5">FOCUS</text>
+  <!-- Session dots -->
+  <circle cx="355" cy="270" r="6" fill="#f97316" opacity="0.5"/>
+  <circle cx="380" cy="270" r="6" fill="#f97316" opacity="0.5"/>
+  <circle cx="405" cy="270" r="6" fill="#f97316" opacity="0.2"/>
+  <circle cx="430" cy="270" r="6" fill="#f97316" opacity="0.1"/>
+  <!-- Control buttons -->
+  <rect x="310" y="380" width="80" height="32" rx="16" fill="#f97316" opacity="0.12" stroke="#f97316" stroke-width="1" stroke-opacity="0.2"/>
+  <rect x="410" y="380" width="80" height="32" rx="16" fill="#3f3f46" opacity="0.2" stroke="#3f3f46" stroke-width="1" stroke-opacity="0.2"/>
+  <!-- Play icon -->
+  <polygon points="342,390 342,406 356,398" fill="#fb923c" opacity="0.5"/>
+  <!-- Skip icon -->
+  <line x1="442" y1="391" x2="452" y2="398" stroke="#a1a1aa" stroke-width="2" opacity="0.3"/>
+  <line x1="452" y1="398" x2="442" y2="405" stroke="#a1a1aa" stroke-width="2" opacity="0.3"/>
+  <line x1="454" y1="391" x2="454" y2="405" stroke="#a1a1aa" stroke-width="2" opacity="0.3"/>
+</svg>

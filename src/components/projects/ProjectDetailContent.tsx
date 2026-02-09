@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import type { Project } from '@/data/projects';
 import { ProjectDetailHeader } from './ProjectDetailHeader';
 import { ProjectContentSection } from './ProjectContentSection';
@@ -13,6 +13,7 @@ type Props = {
 
 export function ProjectDetailContent({ project }: Props) {
   return (
+    <MotionConfig reducedMotion="user">
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
@@ -49,5 +50,6 @@ export function ProjectDetailContent({ project }: Props) {
         </div>
       </div>
     </motion.div>
+    </MotionConfig>
   );
 }

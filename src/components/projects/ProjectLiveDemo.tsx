@@ -28,6 +28,7 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
             className="h-[420px] w-full border-0"
             loading="lazy"
             title="Live demo"
+            sandbox="allow-scripts allow-same-origin allow-popups"
           />
         </div>
       )}

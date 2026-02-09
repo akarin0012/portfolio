@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import {
   projects,
   type ProjectCategory,
@@ -43,8 +43,9 @@ export function ProjectsPageClient() {
   );
 
   return (
+    <MotionConfig reducedMotion="user">
     <div className="min-h-screen bg-zinc-900 text-zinc-50">
-      <main className="container mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
+      <main id="main-content" className="container mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
         <motion.section
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -59,7 +60,6 @@ export function ProjectsPageClient() {
             </h1>
             <p className="max-w-2xl text-sm text-zinc-400 md:text-base">
               個人開発や業務を通じて取り組んできたプロジェクトを、技術的な観点から整理して掲載しています。
-              新しい制作物を追加する際は、`src/data/projects.ts` にデータを追加するだけで自動的にカードと詳細ページが生成されます。
             </p>
           </header>
 
@@ -76,5 +76,6 @@ export function ProjectsPageClient() {
         </motion.section>
       </main>
     </div>
+    </MotionConfig>
   );
 }

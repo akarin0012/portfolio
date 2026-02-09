@@ -62,7 +62,7 @@ export function Sidebar() {
       const headerHeight = 100;
       const targetPosition =
         targetElement.getBoundingClientRect().top +
-        window.pageYOffset -
+        window.scrollY -
         headerHeight;
 
       window.scrollTo({
@@ -115,7 +115,7 @@ export function Sidebar() {
                     ポートフォリオ
                   </h2>
                 </div>
-                <nav className="flex-1 space-y-1 overflow-y-auto p-4">
+                <nav aria-label="メインナビゲーション" className="flex-1 space-y-1 overflow-y-auto p-4">
                   {navItems.map((item) => {
                     const Icon = item.icon;
                     const active = isActive(item.href);
@@ -183,7 +183,7 @@ export function Sidebar() {
               ポートフォリオ
             </h2>
           </div>
-          <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+          <nav aria-label="メインナビゲーション" className="flex-1 space-y-1 overflow-y-auto p-3">
             {navItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.href);

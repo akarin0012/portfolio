@@ -45,3 +45,45 @@ html {
 .animation-delay-100 {
   animation-delay: 0.1s;
 }
+
+/* アクセシビリティ: モーション軽減設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* スキップナビゲーション */
+.skip-nav {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.skip-nav:focus {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: auto;
+  padding: 12px 24px;
+  background: #fafafa;
+  color: #18181b;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}

@@ -133,7 +133,9 @@ jobs:
           fi
 
       - name: Invalidate CloudFront cache
-        if: ${{ secrets.CLOUDFRONT_DIST_ID != '' }}
+        if: ${{ env.CLOUDFRONT_DIST_ID != '' }}
+        env:
+          CLOUDFRONT_DIST_ID: ${{ secrets.CLOUDFRONT_DIST_ID }}
         run: |
           set -euo pipefail
 
@@ -141,5 +143,5 @@ jobs:
           echo "Paths to invalidate: ${{ steps.changed-files.outputs.paths }}"
           
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DIST_ID }} \
+            --distribution-id "$CLOUDFRONT_DIST_ID" \
             --paths ${{ steps.changed-files.outputs.paths }}

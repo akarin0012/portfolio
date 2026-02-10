@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import type { ProjectCategory, ProgrammingLanguage } from '@/data/projects';
@@ -17,6 +18,7 @@ type Props = {
   languages: ProgrammingLanguage[];
   activeCategory: ProjectCategory | 'all';
   activeLanguage: ProgrammingLanguage | 'all';
+  searchQuery: string;
   onCategoryChange: (value: ProjectCategory | 'all') => void;
   onLanguageChange: (value: ProgrammingLanguage | 'all') => void;
   onClearAll: () => void;
@@ -27,11 +29,13 @@ export function ProjectFilterBar({
   languages,
   activeCategory,
   activeLanguage,
+  searchQuery,
   onCategoryChange,
   onLanguageChange,
   onClearAll,
 }: Props) {
-  const hasActiveFilter = activeCategory !== 'all' || activeLanguage !== 'all';
+  const hasActiveFilter =
+    activeCategory !== 'all' || activeLanguage !== 'all' || searchQuery !== '';
 
   return (
     <div className="mb-6 flex flex-col gap-4 rounded-xl border border-divider-subtle/80 bg-surface/70 p-4 shadow-sm ring-1 ring-divider-subtle/40 backdrop-blur md:flex-row md:items-center md:justify-between">
@@ -111,12 +115,12 @@ function FilterPillGroup<T extends string>({
               onClick={() => onChange(value)}
               aria-label={`${label}: ${renderLabel(value)}`}
               aria-pressed={isActive}
-              className={[
+              className={clsx(
                 'min-h-9 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
                 isActive
                   ? 'border-accent/80 bg-accent/10 text-accent'
                   : 'border-divider bg-surface/60 text-caption hover:border-muted hover:text-heading',
-              ].join(' ')}
+              )}
             >
               {renderLabel(value)}
             </motion.button>

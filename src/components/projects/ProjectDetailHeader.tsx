@@ -70,7 +70,7 @@ export function ProjectDetailHeader({ project }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${project.title}のGitHubリポジトリを開く（新しいタブ）`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-medium text-zinc-900 shadow-sm transition hover:bg-zinc-200"
+              className="inline-flex items-center gap-1.5 rounded-full border border-divider bg-surface-alt px-3 py-1.5 text-xs font-medium text-heading shadow-sm transition hover:bg-surface-deep"
             >
               <Github className="h-3.5 w-3.5" />
               <span>GitHub</span>

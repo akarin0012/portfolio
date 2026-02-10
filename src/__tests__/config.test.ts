@@ -16,7 +16,8 @@ describe('siteConfig', () => {
     expect(siteConfig.author.name).toBeTruthy();
     expect(siteConfig.author.nameEn).toBeTruthy();
     expect(siteConfig.author.jobTitle).toBeTruthy();
-    expect(siteConfig.author.email).toBeTruthy();
+    expect(siteConfig.author.emailUser).toBeTruthy();
+    expect(siteConfig.author.emailDomain).toBeTruthy();
     expect(siteConfig.author.careerStartDate).toBeTruthy();
     expect(siteConfig.locale).toBe('ja_JP');
     expect(siteConfig.language).toBe('ja');
@@ -37,8 +38,9 @@ describe('siteConfig', () => {
     expect(siteConfig.keywords.length).toBeGreaterThan(0);
   });
 
-  it('メールアドレスが有効な形式', () => {
-    expect(siteConfig.author.email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  it('メールアドレスパーツが有効な形式', () => {
+    expect(siteConfig.author.emailUser).toMatch(/^[^\s@]+$/);
+    expect(siteConfig.author.emailDomain).toMatch(/^[^\s@]+\.[^\s@]+$/);
   });
 });
 
@@ -95,7 +97,9 @@ describe('getSiteDescription', () => {
   });
 
   it('著者名を含む', () => {
-    expect(getSiteDescription()).toContain('茅嶋');
+    // getSiteDescription はスペースを除去した著者名を使用
+    const nameWithoutSpaces = siteConfig.author.name.replace(/\s/g, '');
+    expect(getSiteDescription()).toContain(nameWithoutSpaces);
   });
 });
 
@@ -105,7 +109,8 @@ describe('obfuscateEmail', () => {
     expect(email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
   });
 
-  it('siteConfig のメールと一致する', () => {
-    expect(obfuscateEmail()).toBe(siteConfig.author.email);
+  it('siteConfig のメールパーツから組み立てたアドレスと一致する', () => {
+    const expected = `${siteConfig.author.emailUser}@${siteConfig.author.emailDomain}`;
+    expect(obfuscateEmail()).toBe(expected);
   });
 });

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -165,11 +166,12 @@ export function Sidebar() {
                             : undefined
                         }
                         aria-current={active ? 'page' : undefined}
-                        className={`flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors ${
+                        className={clsx(
+                          'flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors',
                           active
                             ? 'bg-surface-alt text-heading'
-                            : 'text-caption hover:bg-surface-alt/50 hover:text-heading'
-                        }`}
+                            : 'text-caption hover:bg-surface-alt/50 hover:text-heading',
+                        )}
                       >
                         <Icon className="h-4 w-4 flex-shrink-0" />
                         <span>{item.label}</span>
@@ -221,9 +223,10 @@ export function Sidebar() {
         <div className="flex h-full flex-col">
           <div className="overflow-hidden border-b border-divider-subtle p-4">
             <h2
-              className={`overflow-hidden whitespace-nowrap font-bold text-heading transition-all duration-300 ${
-                isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
-              }`}
+              className={clsx(
+                'overflow-hidden whitespace-nowrap font-bold text-heading transition-all duration-300',
+                isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
+              )}
             >
               ポートフォリオ
             </h2>
@@ -246,18 +249,20 @@ export function Sidebar() {
                       : undefined
                   }
                   aria-current={active ? 'page' : undefined}
-                  className={`flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors ${
+                  className={clsx(
+                    'flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors',
                     active
                       ? 'bg-surface-alt text-heading'
-                      : 'text-caption hover:bg-surface-alt/50 hover:text-heading'
-                  }`}
+                      : 'text-caption hover:bg-surface-alt/50 hover:text-heading',
+                  )}
                   title={!isDesktopExpanded ? item.label : undefined}
                 >
                   <Icon className="h-4 w-4 flex-shrink-0" />
                   <span
-                    className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
-                      isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
-                    }`}
+                    className={clsx(
+                      'overflow-hidden whitespace-nowrap transition-all duration-300',
+                      isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
+                    )}
                   >
                     {item.label}
                   </span>
@@ -275,9 +280,10 @@ export function Sidebar() {
             >
               <FileText className="h-4 w-4 flex-shrink-0" />
               <span
-                className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
-                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
-                }`}
+                className={clsx(
+                  'overflow-hidden whitespace-nowrap transition-all duration-300',
+                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
+                )}
               >
                 技術経歴書（PDF）
               </span>
@@ -295,9 +301,10 @@ export function Sidebar() {
                 <Moon className="h-4 w-4 flex-shrink-0" />
               )}
               <span
-                className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
-                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
-                }`}
+                className={clsx(
+                  'overflow-hidden whitespace-nowrap transition-all duration-300',
+                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
+                )}
               >
                 {isDark ? 'ライトモード' : 'ダークモード'}
               </span>

@@ -46,6 +46,7 @@ export function ProjectDetailContent({ project }: Props) {
           <ProjectLiveDemo
             type={project.liveDemoType}
             demoUrl={project.demoUrl}
+            repoUrl={project.repoUrl}
           />
           <ProjectMermaidDiagram diagram={project.mermaidDiagram} />
         </div>

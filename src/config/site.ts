@@ -39,7 +39,9 @@ export const siteConfig = {
     jobTitle: 'システムエンジニア',
     jobTitleEn: 'Software Engineer',
     url: 'https://github.com/akarin0012',
-    email: 'owatakbc@gmail.com',
+    /** メールアドレスのパーツ（スクレイピング対策: ソースコード上では分割して保持） */
+    emailUser: 'owatakbc',
+    emailDomain: 'gmail.com',
     location: '東京都',
     /** キャリア開始日（経験年数の自動計算に使用） */
     careerStartDate: '2023-04-01',
@@ -94,11 +96,12 @@ export const siteConfig = {
 
 /**
  * メールアドレスをランタイムで組み立てる（スクレイピング対策）
- * ソースコード上では分割して保持し、呼び出し時に結合する
+ * ソースコード上では user / domain を分割して保持し、呼び出し時に結合する
+ * これにより、単純な正規表現によるスクレイピングを防止
  */
 export function obfuscateEmail(): string {
-  const [user, domain] = siteConfig.author.email.split('@');
-  return `${user}@${domain}`;
+  const { emailUser, emailDomain } = siteConfig.author;
+  return [emailUser, emailDomain].join('\u0040');
 }
 
 /** サイトの完全なURL（パスを追加可能） */
@@ -123,5 +126,6 @@ export function getCopyrightYears(): string {
 /** サイトの説明文を動的に生成（経験年数を含む） */
 export function getSiteDescription(): string {
   const years = getCareerYear() - 1;
-  return `茅嶋伸一郎のポートフォリオサイト。C#/.NET/ASP.NET Core/Next.js/TypeScriptを中心に、Webアプリケーション開発からシステム設計まで一貫して携わるシステムエンジニア。${years}年の実務経験を活かしたプロジェクト実績を掲載。`;
+  const name = siteConfig.author.name.replace(/\s/g, '');
+  return `${name}のポートフォリオサイト。C#/.NET/ASP.NET Core/Next.js/TypeScriptを中心に、Webアプリケーション開発からシステム設計まで一貫して携わるシステムエンジニア。${years}年の実務経験を活かしたプロジェクト実績を掲載。`;
 }

@@ -55,6 +55,7 @@ export function ProjectsPageClient() {
   const handleClearAll = useCallback(() => {
     setCategory('all');
     setLanguage('all');
+    setSearchQuery('');
   }, []);
 
   return (
@@ -108,6 +109,7 @@ export function ProjectsPageClient() {
             languages={availableLanguages}
             activeCategory={category}
             activeLanguage={language}
+            searchQuery={searchQuery}
             onCategoryChange={setCategory}
             onLanguageChange={setLanguage}
             onClearAll={handleClearAll}

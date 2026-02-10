@@ -1,12 +1,14 @@
-import { MonitorSmartphone, Code2, ExternalLink } from 'lucide-react';
+import { MonitorSmartphone, Code2, ExternalLink, Lock } from 'lucide-react';
 import type { LiveDemoType } from '@/data/projects';
 
 type Props = {
   type?: LiveDemoType;
   demoUrl?: string;
+  /** code-snippet 表示時のリポジトリURL（GitHub リンク表示に使用） */
+  repoUrl?: string;
 };
 
-export function ProjectLiveDemo({ type, demoUrl }: Props) {
+export function ProjectLiveDemo({ type, demoUrl, repoUrl }: Props) {
   if (!type) return null;
 
   const showIframe = type === 'iframe' && demoUrl;
@@ -46,12 +48,26 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
       )}
 
       {type === 'code-snippet' && (
-        <div className="flex items-start gap-3 rounded-lg border border-divider-subtle bg-surface/80 p-4 text-xs text-body">
-          <Code2 className="mt-0.5 h-4 w-4 text-amber-300" />
-          <p>
-            このプロジェクトは業務システムなどの都合で直接デモを公開できないため、コードレベルでの解説や設計図を中心に紹介しています。
-            必要に応じて GitHub 上のサンプル実装やコードスニペットを追加してください。
-          </p>
+        <div className="space-y-3 rounded-lg border border-divider-subtle bg-surface/80 p-4">
+          <div className="flex items-start gap-3 text-xs text-body">
+            <Lock className="mt-0.5 h-4 w-4 flex-shrink-0 text-muted" />
+            <p>
+              このプロジェクトは業務システムのため直接デモを公開できません。
+              設計図やコードレベルの解説を中心に紹介しています。
+            </p>
+          </div>
+          {repoUrl && (
+            <a
+              href={repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs font-medium text-subheading transition hover:border-accent/60 hover:text-accent"
+            >
+              <Code2 className="h-3.5 w-3.5" />
+              <span>GitHub でコードを見る</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          )}
         </div>
       )}
     </section>

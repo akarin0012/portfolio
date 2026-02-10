@@ -4,7 +4,9 @@
       "staticDistDir": "./out",
       "url": [
         "/",
-        "/projects/index.html"
+        "/projects/index.html",
+        "/projects/next-portfolio-showcase/index.html",
+        "/projects/color-palette-generator/index.html"
       ]
     },
     "assert": {

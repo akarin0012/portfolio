@@ -1,24 +1,38 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ArrowUp } from 'lucide-react';
 
 /**
  * ページトップに戻るフローティングボタン
- * スクロール位置が400pxを超えるとフェードインする
+ * スクロール位置が400pxを超えるとフェードインし、
+ * フッターが画面内に見えている時は非表示にする
  */
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY > 400);
-    };
+  const updateVisibility = useCallback(() => {
+    const scrolledEnough = window.scrollY > 400;
 
-    const opts: AddEventListenerOptions = { passive: true };
-    window.addEventListener('scroll', handleScroll, opts);
-    return () => window.removeEventListener('scroll', handleScroll, opts);
+    // フッターが画面内に見えているかチェック
+    const footer = document.querySelector('footer[role="contentinfo"]');
+    let footerInView = false;
+    if (footer) {
+      const rect = footer.getBoundingClientRect();
+      // フッターの上端がビューポート内に入ったらボタンと重なる
+      footerInView = rect.top < window.innerHeight;
+    }
+
+    setIsVisible(scrolledEnough && !footerInView);
   }, []);
+
+  useEffect(() => {
+    const opts: AddEventListenerOptions = { passive: true };
+    window.addEventListener('scroll', updateVisibility, opts);
+    // 初回チェック
+    updateVisibility();
+    return () => window.removeEventListener('scroll', updateVisibility, opts);
+  }, [updateVisibility]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

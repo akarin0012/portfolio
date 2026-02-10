@@ -5,7 +5,6 @@ import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { siteConfig, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
@@ -228,7 +227,6 @@ export default function RootLayout({
               </div>
             </footer>
           </div>
-          <ThemeToggle />
           <ScrollToTop />
         {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ有効） */}
         {gaId && (

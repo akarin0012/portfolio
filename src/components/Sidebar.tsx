@@ -13,7 +13,10 @@ import {
   Menu,
   X,
   FileText,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { useTheme } from './ThemeProvider';
 
 type NavItem = {
   href: string;
@@ -44,6 +47,8 @@ export function Sidebar() {
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
   const pathname = usePathname();
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
 
   /** モバイルメニューを閉じてフォーカスをトリガーボタンに戻す */
   const closeMobileMenu = useCallback(() => {
@@ -182,6 +187,19 @@ export function Sidebar() {
                     <FileText className="h-4 w-4 flex-shrink-0" />
                     <span>技術経歴書（PDF）</span>
                   </a>
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
+                    aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
+                  >
+                    {isDark ? (
+                      <Sun className="h-4 w-4 flex-shrink-0" />
+                    ) : (
+                      <Moon className="h-4 w-4 flex-shrink-0" />
+                    )}
+                    <span>{isDark ? 'ライトモード' : 'ダークモード'}</span>
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -264,6 +282,26 @@ export function Sidebar() {
                 技術経歴書（PDF）
               </span>
             </a>
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="flex min-h-11 w-full items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
+              title={!isDesktopExpanded ? (isDark ? 'ライトモード' : 'ダークモード') : undefined}
+              aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
+            >
+              {isDark ? (
+                <Sun className="h-4 w-4 flex-shrink-0" />
+              ) : (
+                <Moon className="h-4 w-4 flex-shrink-0" />
+              )}
+              <span
+                className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${
+                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0'
+                }`}
+              >
+                {isDark ? 'ライトモード' : 'ダークモード'}
+              </span>
+            </button>
           </div>
         </div>
       </aside>

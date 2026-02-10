@@ -71,14 +71,14 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
           <p className="text-xs text-zinc-500">
             ダイアグラムのレンダリングに失敗しました。Mermaid 記法をテキストとして表示しています。
           </p>
-          <pre className="overflow-x-auto rounded-lg bg-zinc-950/90 p-4 text-xs leading-relaxed text-emerald-200">
+          <pre className="keep-dark overflow-x-auto rounded-lg bg-zinc-950/90 p-4 text-xs leading-relaxed text-emerald-200">
             <code>{diagram}</code>
           </pre>
         </>
       ) : (
         <div
           ref={containerRef}
-          className="overflow-x-auto rounded-lg bg-zinc-950/90 p-4 [&_svg]:mx-auto [&_svg]:max-w-full"
+          className="keep-dark overflow-x-auto rounded-lg bg-zinc-950/90 p-4 [&_svg]:mx-auto [&_svg]:max-w-full"
         >
           {/* mermaid レンダリング中のスケルトン（レンダリング完了後は非表示） */}
           {!rendered && (

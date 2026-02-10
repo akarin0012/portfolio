@@ -22,24 +22,184 @@ html.light body {
   color: var(--foreground);
 }
 
-/* ライトモード用のカラー上書き */
+/* ========================================
+   ライトモード: 背景色の反転
+   ======================================== */
 html.light .bg-zinc-900 { background-color: #ffffff; }
 html.light .bg-zinc-900\/95 { background-color: rgb(255 255 255 / 0.95); }
+html.light .bg-zinc-900\/80 { background-color: rgb(255 255 255 / 0.8); }
 html.light .bg-zinc-900\/70 { background-color: rgb(255 255 255 / 0.7); }
+html.light .bg-zinc-900\/60 { background-color: rgb(255 255 255 / 0.6); }
 html.light .bg-zinc-800 { background-color: #f4f4f5; }
+html.light .bg-zinc-800\/90 { background-color: rgb(244 244 245 / 0.9); }
+html.light .bg-zinc-800\/80 { background-color: rgb(244 244 245 / 0.8); }
 html.light .bg-zinc-800\/50 { background-color: rgb(244 244 245 / 0.5); }
+html.light .bg-zinc-700 { background-color: #e4e4e7; }
 html.light .bg-zinc-950\/50 { background-color: rgb(250 250 250 / 0.5); }
 html.light .bg-zinc-950\/90 { background-color: rgb(250 250 250 / 0.9); }
+html.light .bg-zinc-950 { background-color: #fafafa; }
+html.light .bg-zinc-950\/60 { background-color: rgb(250 250 250 / 0.6); }
+
+/* ========================================
+   ライトモード: テキスト色の反転
+   ======================================== */
 html.light .text-zinc-50 { color: #18181b; }
 html.light .text-zinc-100 { color: #27272a; }
 html.light .text-zinc-200 { color: #3f3f46; }
 html.light .text-zinc-300 { color: #52525b; }
 html.light .text-zinc-400 { color: #71717a; }
 html.light .text-zinc-500 { color: #a1a1aa; }
+html.light .text-zinc-600 { color: #71717a; }
+html.light .text-zinc-700 { color: #d4d4d8; }
+html.light .text-white { color: #ffffff; }
+html.light .placeholder-zinc-500::placeholder { color: #a1a1aa; }
+
+/* ========================================
+   ライトモード: ボーダー色の反転
+   ======================================== */
 html.light .border-zinc-700 { border-color: #d4d4d8; }
+html.light .border-zinc-700\/80 { border-color: rgb(212 212 216 / 0.8); }
 html.light .border-zinc-800 { border-color: #e4e4e7; }
 html.light .border-zinc-800\/80 { border-color: rgb(228 228 231 / 0.8); }
+html.light .border-zinc-200 { border-color: #e4e4e7; }
 html.light .ring-zinc-800\/40 { --tw-ring-color: rgb(228 228 231 / 0.4); }
+
+/* ========================================
+   ライトモード: 青系テキスト（暗くして読みやすく）
+   ======================================== */
+html.light .text-blue-100 { color: #1e40af; }
+html.light .text-blue-200 { color: #1d4ed8; }
+html.light .text-blue-300 { color: #2563eb; }
+html.light .text-blue-400 { color: #2563eb; }
+html.light .text-blue-400\/80 { color: rgb(37 99 235 / 0.8); }
+
+/* ========================================
+   ライトモード: 赤系テキスト（暗くして読みやすく）
+   ======================================== */
+html.light .text-red-300 { color: #dc2626; }
+html.light .text-red-400 { color: #dc2626; }
+
+/* ========================================
+   ライトモード: エメラルド系テキスト
+   ======================================== */
+html.light .text-emerald-200 { color: #059669; }
+html.light .text-emerald-950 { color: #064e3b; }
+
+/* ========================================
+   ライトモード: hover状態の色
+   ======================================== */
+html.light .hover\:bg-zinc-800\/50:hover { background-color: rgb(244 244 245 / 0.5); }
+html.light .hover\:bg-zinc-200:hover { background-color: #e4e4e7; }
+html.light .hover\:bg-zinc-100:hover { background-color: #f4f4f5; }
+html.light .hover\:border-zinc-700:hover { border-color: #a1a1aa; }
+html.light .hover\:border-zinc-500:hover { border-color: #71717a; }
+html.light .hover\:border-zinc-400:hover { border-color: #a1a1aa; }
+html.light .hover\:text-zinc-100:hover { color: #18181b; }
+html.light .hover\:text-zinc-50:hover { color: #18181b; }
+html.light .hover\:text-zinc-300:hover { color: #3f3f46; }
+html.light .hover\:border-blue-500\/50:hover { border-color: rgb(59 130 246 / 0.5); }
+html.light .hover\:border-blue-500\/60:hover { border-color: rgb(59 130 246 / 0.6); }
+html.light .hover\:text-blue-100:hover { color: #1e40af; }
+html.light .hover\:text-blue-300:hover { color: #1d4ed8; }
+html.light .group:hover .group-hover\:text-blue-300 { color: #2563eb; }
+
+/* ========================================
+   ライトモード: prose (文章コンテンツ) の色反転解除
+   ======================================== */
+html.light .prose-invert {
+  --tw-prose-body: #3f3f46;
+  --tw-prose-headings: #18181b;
+  --tw-prose-lead: #52525b;
+  --tw-prose-links: #2563eb;
+  --tw-prose-bold: #18181b;
+  --tw-prose-counters: #71717a;
+  --tw-prose-bullets: #a1a1aa;
+  --tw-prose-hr: #e4e4e7;
+  --tw-prose-quotes: #27272a;
+  --tw-prose-quote-borders: #d4d4d8;
+  --tw-prose-captions: #71717a;
+  --tw-prose-kbd: #18181b;
+  --tw-prose-kbd-shadows: 24 24 27;
+  --tw-prose-code: #18181b;
+  --tw-prose-pre-code: #e4e4e7;
+  --tw-prose-pre-bg: #18181b;
+  --tw-prose-th-borders: #d4d4d8;
+  --tw-prose-td-borders: #e4e4e7;
+}
+html.light .prose-strong\:text-zinc-100 strong { color: #18181b; }
+html.light .prose-a\:text-blue-300 a { color: #2563eb; }
+
+/* ========================================
+   ライトモード: ダーク維持する要素（コードブロック等）
+   ======================================== */
+html.light .keep-dark {
+  background-color: rgb(9 9 11 / 0.9) !important;
+  color: #fafafa !important;
+}
+html.light .keep-dark * {
+  color: inherit;
+}
+
+/* ========================================
+   ライトモード: ボタンの特殊処理
+   ボタンは意図的な色のため、反転ではなく調整
+   ======================================== */
+
+/* 黒背景ボタン（GitHub等）→ ライトでも黒のまま維持 */
+html.light .btn-dark,
+html.light a.bg-zinc-900[href*="github"],
+html.light a.bg-zinc-950 {
+  background-color: #18181b !important;
+  color: #ffffff !important;
+}
+
+/* 白背景ボタン（送信・お問い合わせ）→ ライトではボーダー付きに */
+html.light .bg-white {
+  background-color: #ffffff;
+  border: 1px solid #d4d4d8;
+}
+html.light .hover\:bg-zinc-200:hover {
+  background-color: #e4e4e7;
+}
+
+/* ========================================
+   ライトモード: フォーム入力欄
+   ======================================== */
+html.light input,
+html.light textarea {
+  background-color: #fafafa !important;
+  border-color: #d4d4d8 !important;
+  color: #18181b !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #a1a1aa !important;
+}
+html.light input:focus,
+html.light textarea:focus {
+  border-color: rgb(59 130 246 / 0.6) !important;
+}
+
+/* ========================================
+   ライトモード: サイドバー・フローティングUI
+   ======================================== */
+html.light .fixed.bg-zinc-900\/80 {
+  background-color: rgb(0 0 0 / 0.3);
+}
+
+/* ========================================
+   ライトモード: プロジェクトカード・シャドウ
+   ======================================== */
+html.light .shadow-sm { box-shadow: 0 1px 3px rgb(0 0 0 / 0.08); }
+html.light .shadow-lg { box-shadow: 0 4px 12px rgb(0 0 0 / 0.1); }
+
+/* ========================================
+   ライトモード: スキップナビゲーション
+   ======================================== */
+html.light .skip-nav:focus {
+  background: #18181b;
+  color: #fafafa;
+}
 
 @theme inline {
   --color-background: var(--background);

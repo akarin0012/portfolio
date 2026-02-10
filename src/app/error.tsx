@@ -56,7 +56,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
           <button
             type="button"
             onClick={reset}
-            className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-200"
+            className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-8 py-3 text-sm font-medium text-zinc-900 shadow-sm transition-colors hover:bg-zinc-100"
           >
             もう一度試す
           </button>

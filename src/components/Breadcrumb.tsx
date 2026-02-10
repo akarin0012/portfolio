@@ -13,11 +13,11 @@ type Props = {
 export function Breadcrumb({ items }: Props) {
   return (
     <nav aria-label="パンくずリスト" className="mb-6">
-      <ol className="flex flex-wrap items-center gap-1.5 text-xs text-zinc-400">
+      <ol className="flex flex-wrap items-center gap-1.5 text-xs text-caption">
         <li>
           <Link
             href="/"
-            className="inline-flex items-center gap-1 transition-colors hover:text-zinc-100"
+            className="inline-flex items-center gap-1 transition-colors hover:text-heading"
             aria-label="ホーム"
           >
             <Home className="h-3.5 w-3.5" />
@@ -27,15 +27,15 @@ export function Breadcrumb({ items }: Props) {
           const isLast = index === items.length - 1;
           return (
             <li key={item.label} className="flex items-center gap-1.5">
-              <ChevronRight className="h-3 w-3 text-zinc-600" aria-hidden="true" />
+              <ChevronRight className="h-3 w-3 text-muted" aria-hidden="true" />
               {isLast || !item.href ? (
-                <span className="text-zinc-200" aria-current="page">
+                <span className="text-subheading" aria-current="page">
                   {item.label}
                 </span>
               ) : (
                 <Link
                   href={item.href}
-                  className="transition-colors hover:text-zinc-100"
+                  className="transition-colors hover:text-heading"
                 >
                   {item.label}
                 </Link>

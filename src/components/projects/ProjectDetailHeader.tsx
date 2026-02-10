@@ -20,20 +20,20 @@ export function ProjectDetailHeader({ project }: Props) {
         className="flex items-center justify-between gap-4"
       >
         <div className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400/80">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">
             Project
           </p>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-50 md:text-3xl">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
             {project.title}
           </h1>
-          <p className="max-w-2xl text-sm text-zinc-400 md:text-base">
+          <p className="max-w-2xl text-sm text-caption md:text-base">
             {project.summary}
           </p>
         </div>
 
         <Link
           href="/projects"
-          className="hidden items-center gap-2 rounded-full border border-zinc-700/80 bg-zinc-900/70 px-3 py-1.5 text-xs text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-50 md:inline-flex"
+          className="hidden items-center gap-2 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs text-body transition-colors hover:border-muted hover:text-foreground md:inline-flex"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           一覧に戻る
@@ -44,18 +44,18 @@ export function ProjectDetailHeader({ project }: Props) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-        className="flex flex-col gap-4 rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 ring-1 ring-zinc-800/40 backdrop-blur md:flex-row md:items-center md:justify-between"
+        className="flex flex-col gap-4 rounded-xl border border-divider-subtle/80 bg-surface/60 p-4 ring-1 ring-divider-subtle/40 backdrop-blur md:flex-row md:items-center md:justify-between"
       >
         <div className="space-y-2">
           <ProjectTechBadges
             primaryLanguage={project.primaryLanguage}
             techStack={project.techStack}
           />
-          <div className="flex flex-wrap gap-1.5 text-[11px] text-zinc-500">
+          <div className="flex flex-wrap gap-1.5 text-xs text-muted">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-zinc-800/80 px-2 py-0.5 text-[10px] text-zinc-400"
+                className="rounded-full bg-surface-alt/80 px-2 py-0.5 text-xs text-caption"
               >
                 {tag}
               </span>
@@ -84,7 +84,7 @@ export function ProjectDetailHeader({ project }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${project.title}のLive Demoを開く（新しいタブ）`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-zinc-700/80 bg-zinc-900/70 px-3 py-1.5 text-xs font-medium text-zinc-200 transition hover:border-blue-500/60 hover:text-blue-100"
+              className="inline-flex items-center gap-1.5 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs font-medium text-subheading transition hover:border-accent/60 hover:text-accent"
             >
               <ExternalLink className="h-3.5 w-3.5" />
               <span>Live Demo</span>
@@ -95,4 +95,3 @@ export function ProjectDetailHeader({ project }: Props) {
     </header>
   );
 }
-

@@ -13,16 +13,16 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
   const showExternal = type === 'external-link' && demoUrl;
 
   return (
-    <section className="space-y-3 rounded-xl border border-zinc-800/80 bg-zinc-950/50 p-5">
+    <section className="space-y-3 rounded-xl border border-divider-subtle/80 bg-surface-inset/50 p-5">
       <div className="flex items-center gap-2">
-        <MonitorSmartphone className="h-4 w-4 text-blue-400" />
-        <h2 className="text-sm font-semibold text-zinc-100 md:text-base">
+        <MonitorSmartphone className="h-4 w-4 text-accent" />
+        <h2 className="text-sm font-semibold text-heading md:text-base">
           Live Demo / プレビュー
         </h2>
       </div>
 
       {showIframe && (
-        <div className="overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
+        <div className="overflow-hidden rounded-lg border border-divider-subtle bg-surface">
           <iframe
             src={demoUrl}
             className="h-[420px] w-full border-0"
@@ -38,7 +38,7 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
           href={demoUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 rounded-full border border-zinc-700/80 bg-zinc-900/70 px-3 py-1.5 text-xs font-medium text-zinc-200 transition hover:border-blue-500/60 hover:text-blue-100"
+          className="inline-flex items-center gap-1.5 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs font-medium text-subheading transition hover:border-accent/60 hover:text-accent"
         >
           <ExternalLink className="h-3.5 w-3.5" />
           <span>別タブでデモを開く</span>
@@ -46,7 +46,7 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
       )}
 
       {type === 'code-snippet' && (
-        <div className="flex items-start gap-3 rounded-lg border border-zinc-800 bg-zinc-900/80 p-4 text-xs text-zinc-300">
+        <div className="flex items-start gap-3 rounded-lg border border-divider-subtle bg-surface/80 p-4 text-xs text-body">
           <Code2 className="mt-0.5 h-4 w-4 text-amber-300" />
           <p>
             このプロジェクトは業務システムなどの都合で直接デモを公開できないため、コードレベルでの解説や設計図を中心に紹介しています。
@@ -57,4 +57,3 @@ export function ProjectLiveDemo({ type, demoUrl }: Props) {
     </section>
   );
 }
-

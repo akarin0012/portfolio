@@ -8,20 +8,20 @@ const ProjectsPageClient = dynamic(
   () => import('@/components/projects/ProjectsPageClient').then((mod) => mod.ProjectsPageClient),
   {
     loading: () => (
-      <div className="min-h-screen bg-zinc-900 text-zinc-50">
+      <div className="min-h-screen bg-surface text-foreground">
         <main className="container mx-auto max-w-6xl px-4 py-10 md:px-6 md:py-14">
           {/* ヘッダー スケルトン */}
           <div className="mb-8 space-y-3 md:mb-10">
-            <div className="h-4 w-16 animate-pulse rounded bg-zinc-800" />
-            <div className="h-9 w-48 animate-pulse rounded bg-zinc-800" />
-            <div className="h-5 w-96 max-w-full animate-pulse rounded bg-zinc-800" />
+            <div className="h-4 w-16 animate-pulse rounded bg-surface-alt" />
+            <div className="h-9 w-48 animate-pulse rounded bg-surface-alt" />
+            <div className="h-5 w-96 max-w-full animate-pulse rounded bg-surface-alt" />
           </div>
           {/* フィルター スケルトン */}
-          <div className="mb-6 h-24 animate-pulse rounded-xl border border-zinc-800/80 bg-zinc-900/70" />
+          <div className="mb-6 h-24 animate-pulse rounded-xl border border-divider-subtle/80 bg-surface/70" />
           {/* グリッド スケルトン */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-64 animate-pulse rounded-lg border border-zinc-800 bg-zinc-800/50" />
+              <div key={i} className="h-64 animate-pulse rounded-lg border border-divider-subtle bg-surface-alt/50" />
             ))}
           </div>
         </main>

@@ -16,10 +16,10 @@ export function ProjectCard({ project }: Props) {
     <motion.article
       whileHover={{ y: -4, scale: 1.01 }}
       transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-      className="group flex flex-col overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/70 shadow-sm ring-1 ring-zinc-800/40 backdrop-blur"
+      className="group flex flex-col overflow-hidden rounded-xl border border-divider-subtle/80 bg-surface/70 shadow-sm ring-1 ring-divider-subtle/40 backdrop-blur"
     >
       {project.thumbnailUrl && (
-        <div className="relative h-40 w-full overflow-hidden bg-zinc-900/80">
+        <div className="relative h-40 w-full overflow-hidden bg-surface/80">
           <Image
             src={project.thumbnailUrl}
             alt={`${project.title}のサムネイル画像`}
@@ -39,15 +39,15 @@ export function ProjectCard({ project }: Props) {
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h3 className="text-base font-semibold text-zinc-100">
+            <h3 className="text-base font-semibold text-heading">
               <Link href={href} className="inline-flex items-center gap-1" aria-label={`${project.title}の詳細を見る`}>
-                <span className="transition-colors group-hover:text-blue-300">
+                <span className="transition-colors group-hover:text-accent">
                   {project.title}
                 </span>
-                <ArrowUpRight className="h-4 w-4 text-zinc-500 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-300" />
+                <ArrowUpRight className="h-4 w-4 text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
               </Link>
             </h3>
-            <p className="mt-1 line-clamp-2 text-xs text-zinc-400">
+            <p className="mt-1 line-clamp-2 text-xs text-caption">
               {project.summary}
             </p>
           </div>
@@ -58,18 +58,18 @@ export function ProjectCard({ project }: Props) {
           techStack={project.techStack}
         />
 
-        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-zinc-500">
+        <div className="mt-auto flex items-center justify-between pt-2 text-xs text-muted">
           <div className="flex flex-wrap gap-1.5">
             {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-zinc-800/80 px-2 py-0.5 text-[10px] text-zinc-400"
+                className="rounded-full bg-surface-alt/80 px-2 py-0.5 text-xs text-caption"
               >
                 {tag}
               </span>
             ))}
             {project.tags.length > 3 && (
-              <span className="rounded-full bg-zinc-800/80 px-2 py-0.5 text-[10px] text-zinc-500">
+              <span className="rounded-full bg-surface-alt/80 px-2 py-0.5 text-xs text-muted">
                 +{project.tags.length - 3}
               </span>
             )}
@@ -81,7 +81,7 @@ export function ProjectCard({ project }: Props) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`${project.title}のGitHubリポジトリを開く（新しいタブ）`}
-              className="inline-flex items-center gap-1 text-[11px] text-zinc-400 transition-colors hover:text-zinc-100"
+              className="inline-flex items-center gap-1 text-xs text-caption transition-colors hover:text-heading"
             >
               <Github className="h-3.5 w-3.5" />
               <span>Source</span>
@@ -92,4 +92,3 @@ export function ProjectCard({ project }: Props) {
     </motion.article>
   );
 }
-

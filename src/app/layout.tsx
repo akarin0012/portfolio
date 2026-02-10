@@ -181,7 +181,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-900 text-zinc-50 transition-colors duration-300`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-surface text-foreground transition-colors duration-300`}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-nav">
@@ -192,9 +192,9 @@ export default function RootLayout({
             <div className="flex-1">
               {children}
             </div>
-            <footer className="border-t border-zinc-800">
+            <footer className="border-t border-divider-subtle" role="contentinfo">
               <div className="container mx-auto px-6 py-6">
-                <p className="text-center text-sm text-zinc-400">
+                <p className="text-center text-sm text-caption">
                   © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
                 </p>
               </div>

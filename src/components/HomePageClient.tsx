@@ -17,7 +17,7 @@ const fadeInUp: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.5,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -89,9 +89,10 @@ export function HomePageClient() {
   return (
     <MotionConfig reducedMotion="user">
       {/* スキルセクション */}
-      <section id="skills" className="mb-12 md:mb-20">
+      <section id="skills" aria-labelledby="skills-heading" className="mb-12 md:mb-20">
         <motion.h2
-          className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+          id="skills-heading"
+          className="mb-6 text-3xl font-bold text-heading md:mb-8 md:text-4xl"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
@@ -109,10 +110,10 @@ export function HomePageClient() {
           {skillCategories.map((category) => (
             <motion.div
               key={category.title}
-              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+              className="rounded-lg border border-divider bg-surface-alt p-6"
               variants={fadeInUp}
             >
-              <h3 className="mb-4 flex items-center text-xl font-semibold text-zinc-200">
+              <h3 className="mb-4 flex items-center text-xl font-semibold text-subheading">
                 <span
                   className={`mr-3 h-3 w-3 rounded-full ${category.dotColor}`}
                 />
@@ -122,26 +123,26 @@ export function HomePageClient() {
                 {category.skills.map((skill) => (
                   <li
                     key={skill.name}
-                    className="text-zinc-300"
+                    className="text-body"
                   >
                     <div className="flex items-center">
                       <span
                         className={`mr-3 h-2 w-2 rounded-full ${category.dotColor}`}
                       />
                       <span className="font-medium">{skill.name}</span>
-                      <span className="ml-auto text-sm text-zinc-500">
+                      <span className="ml-auto text-sm text-muted">
                         {skill.duration}
                       </span>
                     </div>
                     {skill.progress !== undefined && (
                       <div className="ml-5 mt-1.5 flex items-center gap-2">
-                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-zinc-700">
+                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-deep">
                           <div
                             className={`h-full rounded-full ${category.dotColor} transition-all duration-500`}
                             style={{ width: `${skill.progress}%` }}
                           />
                         </div>
-                        <span className="text-[10px] tabular-nums text-zinc-500">
+                        <span className="text-xs tabular-nums text-muted">
                           {skill.progress}%
                         </span>
                       </div>
@@ -155,17 +156,17 @@ export function HomePageClient() {
 
         {/* 資格 */}
         <motion.div
-          className="mt-6 rounded-lg border border-zinc-700 bg-zinc-800 p-6"
+          className="mt-6 rounded-lg border border-divider bg-surface-alt p-6"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
           variants={fadeInUp}
         >
-          <h3 className="mb-4 text-xl font-semibold text-zinc-200">資格</h3>
+          <h3 className="mb-4 text-xl font-semibold text-subheading">資格</h3>
           <ul className="space-y-2">
             {certifications.map((cert) => (
-              <li key={cert.name} className="flex items-center text-zinc-300">
-                <span className="mr-3 h-2 w-2 rounded-full bg-zinc-500" />
+              <li key={cert.name} className="flex items-center text-body">
+                <span className="mr-3 h-2 w-2 rounded-full bg-muted" />
                 {cert.name}
               </li>
             ))}
@@ -174,9 +175,10 @@ export function HomePageClient() {
       </section>
 
       {/* プロジェクト経験セクション */}
-      <section id="projects" className="mb-12 md:mb-20">
+      <section id="projects" aria-labelledby="projects-heading" className="mb-12 md:mb-20">
         <motion.h2
-          className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+          id="projects-heading"
+          className="mb-6 text-3xl font-bold text-heading md:mb-8 md:text-4xl"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
@@ -194,25 +196,25 @@ export function HomePageClient() {
           {workExperiences.map((exp) => (
             <motion.div
               key={exp.projectName}
-              className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 transition-colors hover:border-blue-500/50"
+              className="rounded-lg border border-divider bg-surface-alt p-6 transition-colors hover:border-accent/50"
               variants={fadeInUp}
             >
               <div className="mb-4 flex flex-wrap items-center gap-3">
-                <span className="rounded-full bg-blue-500/10 px-3 py-1 text-sm font-semibold text-blue-400">
+                <span className="rounded-full bg-accent/10 px-3 py-1 text-sm font-semibold text-accent">
                   {exp.projectName}
                 </span>
-                <span className="text-sm text-zinc-400">{exp.period}</span>
-                <span className="text-sm text-zinc-400">{exp.roleInfo}</span>
+                <span className="text-sm text-caption">{exp.period}</span>
+                <span className="text-sm text-caption">{exp.roleInfo}</span>
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-zinc-200">
+              <h3 className="mb-3 text-xl font-semibold text-subheading">
                 {exp.title}
               </h3>
-              <p className="mb-4 text-zinc-300">{exp.description}</p>
+              <p className="mb-4 text-body">{exp.description}</p>
               <div className="flex flex-wrap gap-2">
                 {exp.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="rounded bg-zinc-700 px-2 py-1 text-xs text-zinc-300"
+                    className="rounded bg-surface-deep px-2 py-1 text-xs text-body"
                   >
                     {tech}
                   </span>
@@ -224,9 +226,10 @@ export function HomePageClient() {
       </section>
 
       {/* お問い合わせセクション */}
-      <section id="contact" className="mb-12 md:mb-20">
+      <section id="contact" aria-labelledby="contact-heading" className="mb-12 md:mb-20">
         <motion.h2
-          className="mb-6 text-3xl font-bold text-zinc-100 md:mb-8 md:text-4xl"
+          id="contact-heading"
+          className="mb-6 text-3xl font-bold text-heading md:mb-8 md:text-4xl"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
@@ -235,79 +238,83 @@ export function HomePageClient() {
           お問い合わせ
         </motion.h2>
         <motion.div
-          className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8"
+          className="rounded-lg border border-divider bg-surface-alt p-6 md:p-8"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
           variants={fadeInUp}
           transition={{ delay: 0.1 }}
         >
-          <p className="mb-6 text-center text-base text-zinc-300 md:text-lg">
+          <p className="mb-6 text-center text-base text-body md:text-lg">
             ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
           </p>
 
           {formStatus === 'success' ? (
-            <div className="flex flex-col items-center gap-3 py-8 text-center">
-              <CheckCircle2 className="h-10 w-10 text-emerald-400" />
-              <p className="text-lg font-medium text-zinc-100">
+            <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 py-8 text-center">
+              <CheckCircle2 className="h-10 w-10 text-success" aria-hidden="true" />
+              <p className="text-lg font-medium text-heading">
                 送信ありがとうございます
               </p>
-              <p className="text-sm text-zinc-400">
+              <p className="text-sm text-caption">
                 内容を確認の上、ご連絡いたします。
               </p>
               <button
                 type="button"
                 onClick={() => setFormStatus('idle')}
-                className="mt-2 text-sm text-blue-400 transition-colors hover:text-blue-300"
+                className="mt-2 text-sm text-accent transition-colors hover:text-accent-hover"
               >
                 新しいメッセージを送る
               </button>
             </div>
           ) : FORMSPREE_ID ? (
-            <form onSubmit={handleSubmit} className="mx-auto max-w-lg space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              className="mx-auto max-w-lg space-y-4"
+              aria-busy={formStatus === 'sending'}
+            >
               <div>
-                <label htmlFor="contact-name" className="mb-1 block text-sm font-medium text-zinc-300">
-                  お名前 <span className="text-red-400">*</span>
+                <label htmlFor="contact-name" className="mb-1 block text-sm font-medium text-body">
+                  お名前 <span className="text-danger">*</span>
                 </label>
                 <input
                   id="contact-name"
                   name="name"
                   type="text"
                   required
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  className="w-full rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
                   placeholder="山田 太郎"
                 />
               </div>
               <div>
-                <label htmlFor="contact-email" className="mb-1 block text-sm font-medium text-zinc-300">
-                  メールアドレス <span className="text-red-400">*</span>
+                <label htmlFor="contact-email" className="mb-1 block text-sm font-medium text-body">
+                  メールアドレス <span className="text-danger">*</span>
                 </label>
                 <input
                   id="contact-email"
                   name="email"
                   type="email"
                   required
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  className="w-full rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
                   placeholder="example@email.com"
                 />
               </div>
               <div>
-                <label htmlFor="contact-message" className="mb-1 block text-sm font-medium text-zinc-300">
-                  メッセージ <span className="text-red-400">*</span>
+                <label htmlFor="contact-message" className="mb-1 block text-sm font-medium text-body">
+                  メッセージ <span className="text-danger">*</span>
                 </label>
                 <textarea
                   id="contact-message"
                   name="message"
                   required
                   rows={5}
-                  className="w-full resize-none rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  className="w-full resize-none rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
                   placeholder="お問い合わせ内容をお書きください"
                 />
               </div>
 
               {formStatus === 'error' && (
-                <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-sm text-red-300">
-                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                <div role="alert" aria-live="assertive" className="flex items-center gap-2 rounded-lg border border-danger/30 bg-danger/10 px-4 py-2.5 text-sm text-danger">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
                   送信に失敗しました。しばらく経ってから再度お試しください。
                 </div>
               )}
@@ -325,7 +332,7 @@ export function HomePageClient() {
                   href={siteConfig.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-dark inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z" clipRule="evenodd" />
@@ -341,7 +348,7 @@ export function HomePageClient() {
                 href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-dark inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z" clipRule="evenodd" />

@@ -8,13 +8,13 @@ type Props = {
 export function ProjectTechBadges({ primaryLanguage, techStack }: Props) {
   return (
     <div className="flex flex-wrap gap-2">
-      <span className="rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-300">
+      <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
         {primaryLanguage}
       </span>
       {techStack.map((tech) => (
         <span
           key={tech}
-          className="rounded-full bg-zinc-800 px-2.5 py-1 text-xs text-zinc-300"
+          className="rounded-full bg-surface-alt px-2.5 py-1 text-xs text-body"
         >
           {tech}
         </span>
@@ -22,4 +22,3 @@ export function ProjectTechBadges({ primaryLanguage, techStack }: Props) {
     </div>
   );
 }
-

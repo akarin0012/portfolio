@@ -17,19 +17,19 @@ const HomePageClient = dynamic(
       <div className="space-y-12 md:space-y-20">
         {/* スキルセクション スケルトン */}
         <div>
-          <div className="mb-6 h-9 w-24 animate-pulse rounded bg-zinc-800 md:mb-8" />
+          <div className="mb-6 h-9 w-24 animate-pulse rounded bg-surface-alt md:mb-8" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-52 animate-pulse rounded-lg border border-zinc-800 bg-zinc-800/50" />
+              <div key={i} className="h-52 animate-pulse rounded-lg border border-divider-subtle bg-surface-alt/50" />
             ))}
           </div>
         </div>
         {/* プロジェクト経験セクション スケルトン */}
         <div>
-          <div className="mb-6 h-9 w-56 animate-pulse rounded bg-zinc-800 md:mb-8" />
+          <div className="mb-6 h-9 w-56 animate-pulse rounded bg-surface-alt md:mb-8" />
           <div className="space-y-6">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="h-40 animate-pulse rounded-lg border border-zinc-800 bg-zinc-800/50" />
+              <div key={i} className="h-40 animate-pulse rounded-lg border border-divider-subtle bg-surface-alt/50" />
             ))}
           </div>
         </div>
@@ -151,9 +151,12 @@ export default function Home() {
   return (
     <>
       <JsonLd />
-      <div className="min-h-screen bg-zinc-900 text-zinc-50">
+      <div className="min-h-screen bg-surface text-foreground">
         {/* ヘッダー（Server Component: 即座にレンダリング） */}
-        <header className="sticky top-0 z-30 border-b border-zinc-800 bg-zinc-900/95 backdrop-blur-sm">
+        <header
+          data-header
+          className="sticky top-0 z-30 border-b border-divider-subtle bg-surface/95 backdrop-blur-sm"
+        >
           <div className="container mx-auto px-4 py-6 md:px-6">
             <span className="text-2xl font-bold">ポートフォリオ</span>
           </div>
@@ -162,31 +165,31 @@ export default function Home() {
         {/* メインコンテンツ */}
         <main id="main-content" className="container mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-12">
           {/* ヒーローセクション（Server Component + CSSアニメーション: LCP最適化） */}
-          <section id="profile" className="mb-12 md:mb-20">
+          <section id="profile" aria-labelledby="profile-heading" className="mb-12 md:mb-20">
             <div className="animate-fade-in-up mb-8 text-center md:mb-12">
-              <h1 className="mb-4 text-3xl font-bold text-zinc-100 md:text-5xl">
+              <h1 id="profile-heading" className="mb-4 text-3xl font-bold text-heading md:text-5xl">
                 茅嶋 伸一郎
               </h1>
-              <p className="mb-2 text-lg text-zinc-400 md:text-xl">
+              <p className="mb-2 text-lg text-caption md:text-xl">
                 システムエンジニア（{getCareerYear()}年目）
               </p>
-              <p className="text-base text-zinc-400 md:text-lg">
+              <p className="text-base text-caption md:text-lg">
                 東京都在住
               </p>
             </div>
-            <div className="animate-fade-in-up animation-delay-100 rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8">
-              <h2 className="mb-4 text-xl font-semibold text-zinc-100 md:text-2xl">
+            <div className="animate-fade-in-up animation-delay-100 rounded-lg border border-divider bg-surface-alt p-6 md:p-8">
+              <h2 className="mb-4 text-xl font-semibold text-heading md:text-2xl">
                 自己紹介
               </h2>
-              <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
+              <p className="mb-4 text-base leading-relaxed text-body md:text-lg">
                 {getCareerYear()}年目のシステムエンジニアとして、レガシー技術からモダンな技術スタックまで幅広く開発に携わっています。
                 主にWebアプリケーションの設計から保守運用まで、一貫した開発経験を積んでいます。
               </p>
-              <p className="mb-4 text-base leading-relaxed text-zinc-300 md:text-lg">
+              <p className="mb-4 text-base leading-relaxed text-body md:text-lg">
                 レガシー技術（VBScript、C#、VB.NET）を用いた既存システムの開発・保守経験があり、
                 オンプレミス環境での本番デプロイや運用も実務経験があります。
               </p>
-              <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
+              <p className="text-base leading-relaxed text-body md:text-lg">
                 今後は、これまでのレガシー技術での実務経験を活かし、GoやTypeScript等のモダンな技術スタックへの
                 リプレイス・移行案件に参画し、技術的な知見を拡げていきたいと考えています。
               </p>

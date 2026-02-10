@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
-import { useTheme } from './ThemeProvider';
 
 /**
  * ページトップに戻るフローティングボタン
@@ -10,7 +9,6 @@ import { useTheme } from './ThemeProvider';
  */
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,17 +24,11 @@ export function ScrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const isDark = theme === 'dark';
-
   return (
     <button
       type="button"
       onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full shadow-lg backdrop-blur-sm transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
-        isDark
-          ? 'border border-zinc-700 bg-zinc-800/90 text-zinc-400 hover:border-zinc-500 hover:text-zinc-100'
-          : 'border border-zinc-300 bg-white/90 text-zinc-500 hover:border-zinc-400 hover:text-zinc-900'
-      } ${
+      className={`fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-divider bg-white/90 text-body shadow-lg backdrop-blur-sm transition-all duration-300 hover:text-heading focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:bg-surface-alt/90 dark:text-caption ${
         isVisible
           ? 'translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-4 opacity-0'

@@ -61,8 +61,8 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
 
   return (
     <div className="flex items-center gap-2">
-      <Share2 className="h-3.5 w-3.5 text-zinc-500" />
-      <span className="text-xs text-zinc-500">シェア:</span>
+      <Share2 className="h-3.5 w-3.5 text-muted" />
+      <span className="text-xs text-muted">シェア:</span>
       {shareLinks.map((link) => (
         <a
           key={link.name}
@@ -70,7 +70,7 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${link.name}でシェアする`}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700/80 bg-zinc-900/70 text-zinc-400 transition-colors hover:border-zinc-500 hover:text-zinc-100"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-divider/80 bg-surface/70 text-caption transition-colors hover:border-muted hover:text-heading"
         >
           {link.icon}
         </a>
@@ -79,10 +79,10 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
         type="button"
         onClick={handleCopyLink}
         aria-label="リンクをコピー"
-        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-zinc-700/80 bg-zinc-900/70 text-zinc-400 transition-colors hover:border-zinc-500 hover:text-zinc-100"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-divider/80 bg-surface/70 text-caption transition-colors hover:border-muted hover:text-heading"
       >
         {copied ? (
-          <Check className="h-3.5 w-3.5 text-emerald-400" />
+          <Check className="h-3.5 w-3.5 text-success" />
         ) : (
           <LinkIcon className="h-3.5 w-3.5" />
         )}

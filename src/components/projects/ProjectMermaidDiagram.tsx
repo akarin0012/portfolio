@@ -88,20 +88,20 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
   const isDark = theme === 'dark';
 
   return (
-    <section className="space-y-3 rounded-xl border border-zinc-800/80 bg-zinc-950/50 p-5">
+    <section className="space-y-3 rounded-xl border border-divider-subtle/80 bg-surface-inset/50 p-5">
       <div className="flex items-center gap-2">
-        <Code2 className="h-4 w-4 text-emerald-400" />
-        <h2 className="text-sm font-semibold text-zinc-100 md:text-base">
+        <Code2 className="h-4 w-4 text-success" />
+        <h2 className="text-sm font-semibold text-heading md:text-base">
           技術構成図（Mermaid）
         </h2>
       </div>
 
       {error ? (
         <>
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-muted">
             ダイアグラムのレンダリングに失敗しました。Mermaid 記法をテキストとして表示しています。
           </p>
-          <pre className="keep-dark overflow-x-auto rounded-lg bg-zinc-950/90 p-4 text-xs leading-relaxed text-emerald-200">
+          <pre className="keep-dark overflow-x-auto rounded-lg bg-surface-inset/90 p-4 text-xs leading-relaxed text-emerald-200">
             <code>{diagram}</code>
           </pre>
         </>
@@ -109,13 +109,13 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
         <div
           ref={containerRef}
           className={`overflow-x-auto rounded-lg p-4 [&_svg]:mx-auto [&_svg]:max-w-full ${
-            isDark ? 'keep-dark bg-zinc-950/90' : 'bg-zinc-100 border border-zinc-200'
+            isDark ? 'keep-dark bg-surface-inset/90' : 'border border-divider-subtle bg-surface-alt'
           }`}
         >
           {/* mermaid レンダリング中のスケルトン（レンダリング完了後は非表示） */}
           {!rendered && (
             <div className="flex h-32 items-center justify-center">
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-700 border-t-emerald-400" />
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-divider border-t-success" />
             </div>
           )}
         </div>

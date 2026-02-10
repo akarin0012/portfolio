@@ -1,5 +1,16 @@
 import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import type { ProjectCategory, ProgrammingLanguage } from '@/data/projects';
+
+/** カテゴリラベルの定義（三項演算子ネスト回避） */
+const categoryLabels: Record<string, string> = {
+  all: 'すべて',
+  'web-app': 'Web App',
+  library: 'Library',
+  game: 'Game',
+  utility: 'Utility',
+  tool: 'Tool',
+};
 
 type Props = {
   categories: ProjectCategory[];
@@ -8,6 +19,7 @@ type Props = {
   activeLanguage: ProgrammingLanguage | 'all';
   onCategoryChange: (value: ProjectCategory | 'all') => void;
   onLanguageChange: (value: ProgrammingLanguage | 'all') => void;
+  onClearAll: () => void;
 };
 
 export function ProjectFilterBar({
@@ -17,39 +29,28 @@ export function ProjectFilterBar({
   activeLanguage,
   onCategoryChange,
   onLanguageChange,
+  onClearAll,
 }: Props) {
+  const hasActiveFilter = activeCategory !== 'all' || activeLanguage !== 'all';
+
   return (
-    <div className="mb-6 flex flex-col gap-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70 p-4 shadow-sm ring-1 ring-zinc-800/40 backdrop-blur md:flex-row md:items-center md:justify-between">
+    <div className="mb-6 flex flex-col gap-4 rounded-xl border border-divider-subtle/80 bg-surface/70 p-4 shadow-sm ring-1 ring-divider-subtle/40 backdrop-blur md:flex-row md:items-center md:justify-between">
       <div className="space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted">
           フィルター
         </p>
-        <p className="text-sm text-zinc-400">
+        <p className="text-sm text-caption">
           種別と主要言語で制作物を絞り込めます。
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-3 md:justify-end">
+      <div className="flex flex-wrap items-center gap-3 md:justify-end">
         <FilterPillGroup<ProjectCategory | 'all'>
           label="カテゴリ"
           options={['all', ...categories]}
           active={activeCategory}
           onChange={onCategoryChange}
-          renderLabel={(value) =>
-            value === 'all'
-              ? 'すべて'
-              : value === 'web-app'
-                ? 'Web App'
-                : value === 'library'
-                  ? 'Library'
-                  : value === 'game'
-                    ? 'Game'
-                    : value === 'utility'
-                      ? 'Utility'
-                      : value === 'tool'
-                        ? 'Tool'
-                        : 'Other'
-          }
+          renderLabel={(value) => categoryLabels[value] ?? 'Other'}
         />
 
         <FilterPillGroup<ProgrammingLanguage | 'all'>
@@ -59,6 +60,23 @@ export function ProjectFilterBar({
           onChange={onLanguageChange}
           renderLabel={(value) => (value === 'all' ? 'すべて' : value)}
         />
+
+        {/* すべてクリアボタン */}
+        {hasActiveFilter && (
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onClearAll}
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-danger/40 bg-danger/10 px-3 py-1.5 text-xs font-medium text-danger transition-colors hover:border-danger/60 hover:bg-danger/20"
+            aria-label="すべてのフィルターをクリア"
+          >
+            <X className="h-3 w-3" aria-hidden="true" />
+            すべてクリア
+          </motion.button>
+        )}
       </div>
     </div>
   );
@@ -81,7 +99,7 @@ function FilterPillGroup<T extends string>({
 }: FilterPillGroupProps<T>) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-xs text-zinc-500">{label}</span>
+      <span className="text-xs text-muted">{label}</span>
       <div className="flex flex-wrap gap-1.5">
         {options.map((value) => {
           const isActive = value === active;
@@ -94,10 +112,10 @@ function FilterPillGroup<T extends string>({
               aria-label={`${label}: ${renderLabel(value)}`}
               aria-pressed={isActive}
               className={[
-                'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
+                'min-h-9 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
                 isActive
-                  ? 'border-blue-500/80 bg-blue-500/10 text-blue-200'
-                  : 'border-zinc-700 bg-zinc-900/60 text-zinc-400 hover:border-zinc-500 hover:text-zinc-100',
+                  ? 'border-accent/80 bg-accent/10 text-accent'
+                  : 'border-divider bg-surface/60 text-caption hover:border-muted hover:text-heading',
               ].join(' ')}
             >
               {renderLabel(value)}
@@ -108,4 +126,3 @@ function FilterPillGroup<T extends string>({
     </div>
   );
 }
-

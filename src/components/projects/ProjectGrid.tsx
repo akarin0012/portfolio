@@ -11,7 +11,7 @@ export function ProjectGrid({ projects }: Props) {
       <div
         role="status"
         aria-live="polite"
-        className="rounded-xl border border-dashed border-zinc-700/80 bg-zinc-950/60 p-8 text-center text-sm text-zinc-500"
+        className="rounded-xl border border-dashed border-divider/80 bg-surface-inset/60 p-8 text-center text-sm text-muted"
       >
         条件に合致する制作物がありません。フィルター条件を変更してみてください。
       </div>
@@ -26,4 +26,3 @@ export function ProjectGrid({ projects }: Props) {
     </div>
   );
 }
-

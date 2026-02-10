@@ -28,10 +28,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = project.title;
   const description = project.summary;
   const url = absoluteUrl(`/projects/${project.id}`);
-  // サムネイルがあればそれを使用、なければデフォルトのOGP画像
-  const ogImage = project.thumbnailUrl
-    ? absoluteUrl(project.thumbnailUrl)
-    : absoluteUrl(siteConfig.ogImage);
 
   return {
     title,
@@ -49,20 +45,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: project.createdAt,
       modifiedTime: project.updatedAt,
       authors: [siteConfig.author.name],
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      // OGP画像は opengraph-image.tsx から自動生成される
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImage],
+      // Twitter画像は opengraph-image.tsx から自動生成される
     },
   };
 }

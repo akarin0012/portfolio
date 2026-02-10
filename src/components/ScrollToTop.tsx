@@ -17,8 +17,9 @@ export function ScrollToTop() {
       setIsVisible(window.scrollY > 400);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const opts: AddEventListenerOptions = { passive: true };
+    window.addEventListener('scroll', handleScroll, opts);
+    return () => window.removeEventListener('scroll', handleScroll, opts);
   }, []);
 
   const scrollToTop = () => {

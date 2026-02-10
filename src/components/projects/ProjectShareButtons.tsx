@@ -20,7 +20,21 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // フォールバック
+      // Clipboard API 非対応環境のフォールバック
+      const textArea = document.createElement('textarea');
+      textArea.value = url;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch {
+        // コピー不可の場合は何もしない
+      }
+      document.body.removeChild(textArea);
     }
   };
 

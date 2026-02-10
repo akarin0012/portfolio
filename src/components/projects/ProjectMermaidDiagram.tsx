@@ -2,15 +2,47 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Code2 } from 'lucide-react';
+import { useTheme } from '@/components/ThemeProvider';
 
 type Props = {
   diagram?: string;
 };
 
+/** ダーク/ライト別の Mermaid テーマ変数 */
+const mermaidThemes = {
+  dark: {
+    theme: 'dark' as const,
+    themeVariables: {
+      darkMode: true,
+      background: '#09090b',
+      primaryColor: '#3b82f6',
+      primaryTextColor: '#f4f4f5',
+      primaryBorderColor: '#3f3f46',
+      lineColor: '#52525b',
+      secondaryColor: '#27272a',
+      tertiaryColor: '#18181b',
+    },
+  },
+  light: {
+    theme: 'default' as const,
+    themeVariables: {
+      darkMode: false,
+      background: '#ffffff',
+      primaryColor: '#dbeafe',
+      primaryTextColor: '#18181b',
+      primaryBorderColor: '#d4d4d8',
+      lineColor: '#a1a1aa',
+      secondaryColor: '#f4f4f5',
+      tertiaryColor: '#e4e4e7',
+    },
+  },
+} as const;
+
 export function ProjectMermaidDiagram({ diagram }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
   const [rendered, setRendered] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!diagram || !containerRef.current) return;
@@ -20,19 +52,12 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
     async function render() {
       try {
         const mermaid = (await import('mermaid')).default;
+        const themeConfig = mermaidThemes[theme];
+
         mermaid.initialize({
           startOnLoad: false,
-          theme: 'dark',
-          themeVariables: {
-            darkMode: true,
-            background: '#09090b',
-            primaryColor: '#3b82f6',
-            primaryTextColor: '#f4f4f5',
-            primaryBorderColor: '#3f3f46',
-            lineColor: '#52525b',
-            secondaryColor: '#27272a',
-            tertiaryColor: '#18181b',
-          },
+          theme: themeConfig.theme,
+          themeVariables: themeConfig.themeVariables,
           fontFamily: 'var(--font-geist-sans), sans-serif',
           fontSize: 13,
         });
@@ -49,13 +74,18 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
       }
     }
 
+    // テーマ切り替え時にも再レンダリング
+    setRendered(false);
+    setError(false);
     render();
     return () => {
       cancelled = true;
     };
-  }, [diagram]);
+  }, [diagram, theme]);
 
   if (!diagram) return null;
+
+  const isDark = theme === 'dark';
 
   return (
     <section className="space-y-3 rounded-xl border border-zinc-800/80 bg-zinc-950/50 p-5">
@@ -78,7 +108,9 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
       ) : (
         <div
           ref={containerRef}
-          className="keep-dark overflow-x-auto rounded-lg bg-zinc-950/90 p-4 [&_svg]:mx-auto [&_svg]:max-w-full"
+          className={`overflow-x-auto rounded-lg p-4 [&_svg]:mx-auto [&_svg]:max-w-full ${
+            isDark ? 'keep-dark bg-zinc-950/90' : 'bg-zinc-100 border border-zinc-200'
+          }`}
         >
           {/* mermaid レンダリング中のスケルトン（レンダリング完了後は非表示） */}
           {!rendered && (

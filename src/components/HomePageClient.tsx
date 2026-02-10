@@ -5,7 +5,7 @@ import { motion, Variants, MotionConfig } from 'framer-motion';
 import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { skillCategories, certifications } from '@/data/skills';
 import { workExperiences } from '@/data/experience';
-import { siteConfig } from '@/config/site';
+import { siteConfig, obfuscateEmail } from '@/config/site';
 
 // 共通アニメーション設定
 const fadeInUp: Variants = {
@@ -57,9 +57,7 @@ export function HomePageClient() {
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const handleEmailClick = useCallback(() => {
-    const u = 'owatakbc';
-    const d = 'gmail.com';
-    window.location.href = `mailto:${u}@${d}`;
+    window.location.href = `mailto:${obfuscateEmail()}`;
   }, []);
 
   const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
@@ -82,7 +80,8 @@ export function HomePageClient() {
       } else {
         setFormStatus('error');
       }
-    } catch {
+    } catch (err) {
+      console.error('Contact form submission failed:', err);
       setFormStatus('error');
     }
   }, [handleEmailClick]);

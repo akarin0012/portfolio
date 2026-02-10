@@ -44,7 +44,6 @@ export type LiveDemoType = 'iframe' | 'external-link' | 'code-snippet';
 
 export interface Project {
   id: string;
-  slug?: string;
   title: string;
   summary: string;
   description: string;

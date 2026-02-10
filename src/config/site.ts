@@ -92,6 +92,15 @@ export const siteConfig = {
   /** 技術スタックは src/data/skills.ts に集約（getAllSkillNames() で取得） */
 } as const;
 
+/**
+ * メールアドレスをランタイムで組み立てる（スクレイピング対策）
+ * ソースコード上では分割して保持し、呼び出し時に結合する
+ */
+export function obfuscateEmail(): string {
+  const [user, domain] = siteConfig.author.email.split('@');
+  return `${user}@${domain}`;
+}
+
 /** サイトの完全なURL（パスを追加可能） */
 export function absoluteUrl(path: string = ''): string {
   return `${siteConfig.url}${path}`;

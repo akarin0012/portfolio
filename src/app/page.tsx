@@ -1,4 +1,6 @@
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { MapPin, Code, Mail } from 'lucide-react';
 import {
   siteConfig,
   absoluteUrl,
@@ -157,8 +159,10 @@ export default function Home() {
           data-header
           className="sticky top-0 z-30 border-b border-divider-subtle bg-surface/95 backdrop-blur-sm"
         >
-          <div className="container mx-auto px-4 py-6 md:px-6">
-            <span className="text-2xl font-bold">ポートフォリオ</span>
+          <div className="container mx-auto px-4 py-3 pl-14 md:px-6 md:pl-6 md:py-4">
+            <Link href="/" className="text-lg font-bold text-heading transition-colors hover:text-accent md:text-xl">
+              {siteConfig.author.name}
+            </Link>
           </div>
         </header>
 
@@ -173,9 +177,26 @@ export default function Home() {
               <p className="mb-2 text-lg text-caption md:text-xl">
                 システムエンジニア（{getCareerYear()}年目）
               </p>
-              <p className="text-base text-caption md:text-lg">
+              <p className="mb-6 inline-flex items-center gap-1 text-base text-caption md:text-lg">
+                <MapPin className="h-4 w-4" aria-hidden="true" />
                 東京都在住
               </p>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <a
+                  href="#skills"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-hover active:scale-95"
+                >
+                  <Code className="h-4 w-4" aria-hidden="true" />
+                  スキルを見る
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-divider bg-surface px-6 py-2.5 text-sm font-medium text-heading transition-all duration-300 hover:bg-surface-alt active:scale-95"
+                >
+                  <Mail className="h-4 w-4" aria-hidden="true" />
+                  お問い合わせ
+                </a>
+              </div>
             </div>
             <div className="animate-fade-in-up animation-delay-100 rounded-lg border border-divider bg-surface-alt p-6 md:p-8">
               <h2 className="mb-4 text-xl font-semibold text-heading md:text-2xl">
@@ -195,6 +216,8 @@ export default function Home() {
               </p>
             </div>
           </section>
+
+          <hr className="my-12 border-divider-subtle md:my-20" aria-hidden="true" />
 
           {/* Below-fold セクション（Client Component: framer-motion アニメーション） */}
           <HomePageClient />

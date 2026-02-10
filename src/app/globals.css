@@ -100,9 +100,8 @@ body {
   overflow-x: hidden;
 }
 
-/* スムーズスクロールと動的ヘッダーオフセット */
+/* 動的ヘッダーオフセット（スムーズスクロールはJS側で制御） */
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: var(--header-height);
   overflow-x: hidden;
 }
@@ -129,10 +128,6 @@ html {
 
 /* アクセシビリティ: モーション軽減設定を尊重 */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .animate-fade-in-up {
     animation: none;
     opacity: 1;

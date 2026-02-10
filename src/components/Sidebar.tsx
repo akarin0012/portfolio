@@ -104,7 +104,7 @@ export function Sidebar() {
         type="button"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
         className="fixed left-4 top-4 z-50 flex items-center justify-center rounded-lg border border-divider-subtle bg-surface/95 p-2 text-caption shadow-lg backdrop-blur-sm transition-colors hover:border-divider hover:text-heading md:hidden"
-        aria-label="メニューを開く"
+        aria-label={isMobileOpen ? 'メニューを閉じる' : 'メニューを開く'}
         aria-expanded={isMobileOpen}
       >
         {isMobileOpen ? (
@@ -228,7 +228,7 @@ export function Sidebar() {
                       : undefined
                   }
                   aria-current={active ? 'page' : undefined}
-                  className={`group relative flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors ${
+                  className={`flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors ${
                     active
                       ? 'bg-surface-alt text-heading'
                       : 'text-caption hover:bg-surface-alt/50 hover:text-heading'
@@ -243,11 +243,6 @@ export function Sidebar() {
                   >
                     {item.label}
                   </span>
-                  {!isDesktopExpanded && (
-                    <span className="pointer-events-none absolute left-full ml-2 hidden whitespace-nowrap rounded-lg bg-surface-alt px-2 py-1 text-xs text-heading opacity-0 transition-opacity group-hover:opacity-100 md:block">
-                      {item.label}
-                    </span>
-                  )}
                 </Link>
               );
             })}
@@ -257,7 +252,7 @@ export function Sidebar() {
               href="/skill_sheet.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
+              className="flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
               title={!isDesktopExpanded ? '技術経歴書（PDF）' : undefined}
             >
               <FileText className="h-4 w-4 flex-shrink-0" />
@@ -268,11 +263,6 @@ export function Sidebar() {
               >
                 技術経歴書（PDF）
               </span>
-              {!isDesktopExpanded && (
-                <span className="pointer-events-none absolute left-full ml-2 hidden whitespace-nowrap rounded-lg bg-surface-alt px-2 py-1 text-xs text-heading opacity-0 transition-opacity group-hover:opacity-100 md:block">
-                  技術経歴書（PDF）
-                </span>
-              )}
             </a>
           </div>
         </div>

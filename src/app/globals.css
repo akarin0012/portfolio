@@ -60,6 +60,13 @@ html {
   }
 }
 
+/* フォーカスインジケーター: キーボードナビゲーション時のみ表示 */
+:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* スキップナビゲーション */
 .skip-nav {
   position: absolute;

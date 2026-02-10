@@ -38,16 +38,18 @@ jobs:
 
       - name: Deploy to S3
         run: |
+          set -euo pipefail
+
+          # 静的アセット（長期キャッシュ: 1年）
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }} \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "*.html" \
             --exclude "*.json"
 
+          # HTML/JSON ファイル（キャッシュなし: 常に最新を取得）
           aws s3 sync out/ s3://${{ secrets.AWS_S3_BUCKET }} \
             --cache-control "public, max-age=0, must-revalidate" \
-            --include "*.html" \
-            --include "*.json" \
             --exclude "*" \
             --include "*.html" \
             --include "*.json"
@@ -131,7 +133,10 @@ jobs:
           fi
 
       - name: Invalidate CloudFront cache
+        if: ${{ secrets.CLOUDFRONT_DIST_ID != '' }}
         run: |
+          set -euo pipefail
+
           echo "Invalidation strategy: ${{ steps.changed-files.outputs.strategy }}"
           echo "Paths to invalidate: ${{ steps.changed-files.outputs.paths }}"
           

@@ -47,7 +47,8 @@ export const siteConfig = {
   /** SNSリンク */
   links: {
     github: 'https://github.com/akarin0012',
-    twitter: '', // @username 形式（任意）
+    /** X(Twitter) アカウントがある場合は '@username' 形式で設定 */
+    twitter: undefined as string | undefined,
   },
   /** ロケール設定 */
   locale: 'ja_JP',

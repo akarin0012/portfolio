@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Github } from 'lucide-react';
@@ -19,10 +20,12 @@ export function ProjectCard({ project }: Props) {
     >
       {project.thumbnailUrl && (
         <div className="relative h-40 w-full overflow-hidden bg-zinc-900/80">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={project.thumbnailUrl}
-            alt={project.title}
+            alt={`${project.title}のサムネイル画像`}
+            width={400}
+            height={160}
+            loading="lazy"
             className="h-full w-full object-cover opacity-80 transition duration-300 group-hover:scale-105 group-hover:opacity-100"
           />
           {project.featured && (
@@ -37,7 +40,7 @@ export function ProjectCard({ project }: Props) {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h3 className="text-base font-semibold text-zinc-100">
-              <Link href={href} className="inline-flex items-center gap-1">
+              <Link href={href} className="inline-flex items-center gap-1" aria-label={`${project.title}の詳細を見る`}>
                 <span className="transition-colors group-hover:text-blue-300">
                   {project.title}
                 </span>
@@ -76,7 +79,8 @@ export function ProjectCard({ project }: Props) {
             <a
               href={project.repoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              aria-label={`${project.title}のGitHubリポジトリを開く（新しいタブ）`}
               className="inline-flex items-center gap-1 text-[11px] text-zinc-400 transition-colors hover:text-zinc-100"
             >
               <Github className="h-3.5 w-3.5" />

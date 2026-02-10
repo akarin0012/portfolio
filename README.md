@@ -26,7 +26,7 @@
 
 ## 🌐 ポートフォリオサイト
 
-**👉 [ポートフォリオサイトを閲覧する](https://your-portfolio-url.com)**  
+**👉 [ポートフォリオサイトを閲覧する](https://akarin0012.com)**  
 （GitHub PagesまたはAWS S3でホスティング）
 
 このポートフォリオサイトは、Next.js 16 + TypeScript + Tailwind CSSで構築し、GitHub Actionsを使用してAWS S3に自動デプロイしています。
@@ -261,7 +261,7 @@ npm run start
 ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
 
 - **GitHub**: [@akarin0012](https://github.com/akarin0012)
-- **ポートフォリオ**: [ポートフォリオサイト](https://your-portfolio-url.com)
+- **ポートフォリオ**: [ポートフォリオサイト](https://akarin0012.com)
 - **技術経歴書**: [PDFダウンロード](/skill_sheet.pdf)
 
 ---

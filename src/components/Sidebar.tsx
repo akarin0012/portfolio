@@ -87,7 +87,7 @@ export function Sidebar() {
         ref={mobileMenuButtonRef}
         type="button"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
-        className="fixed left-4 top-20 z-50 flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/95 p-2 text-zinc-400 backdrop-blur-sm transition-colors hover:border-zinc-700 hover:text-zinc-100 md:hidden"
+        className="fixed left-4 top-4 z-50 flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/95 p-2 text-zinc-400 shadow-lg backdrop-blur-sm transition-colors hover:border-zinc-700 hover:text-zinc-100 md:hidden"
         aria-label="メニューを開く"
         aria-expanded={isMobileOpen}
       >

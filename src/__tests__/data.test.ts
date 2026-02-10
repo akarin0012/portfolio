@@ -37,7 +37,7 @@ describe('projects データ', () => {
   });
 
   it('order が定義されている場合は一意', () => {
-    const orders = projects.filter((p) => p.order != null).map((p) => p.order);
+    const orders = projects.filter((p) => p.order !== undefined && p.order !== null).map((p) => p.order);
     expect(new Set(orders).size).toBe(orders.length);
   });
 

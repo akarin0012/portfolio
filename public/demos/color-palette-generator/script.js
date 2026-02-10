@@ -92,7 +92,7 @@ class ColorPaletteGenerator {
     try {
       await navigator.clipboard.writeText(text);
       this.showToast(`カラーコード "${text}" をコピーしました！`);
-    } catch (err) {
+    } catch {
       // フォールバック: 古いブラウザ対応
       const textArea = document.createElement('textarea');
       textArea.value = text;
@@ -103,7 +103,7 @@ class ColorPaletteGenerator {
       try {
         document.execCommand('copy');
         this.showToast(`カラーコード "${text}" をコピーしました！`);
-      } catch (err) {
+      } catch {
         this.showToast('コピーに失敗しました');
       }
       document.body.removeChild(textArea);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -43,6 +43,12 @@ function getHeaderHeight(): number {
   return parseInt(value, 10) || 73;
 }
 
+/** ネストした三項演算子を避けるためのヘルパー */
+function getThemeToggleTitle(isExpanded: boolean, isDark: boolean): string | undefined {
+  if (isExpanded) return undefined;
+  return isDark ? 'ライトモード' : 'ダークモード';
+}
+
 export function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
@@ -58,9 +64,13 @@ export function Sidebar() {
   }, []);
 
   // モバイルメニューを閉じる（ページ遷移時）
-  useEffect(() => {
+  // React推奨パターン: レンダー中にprops変化を検知してstateをリセット
+  // @see https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setIsMobileOpen(false);
-  }, [pathname]);
+  }
 
   // アクティブ状態の判定（SSR と CSR で結果がズレないよう、DOM には依存しない）
   const isActive = (href: string) => {
@@ -292,7 +302,7 @@ export function Sidebar() {
               type="button"
               onClick={toggleTheme}
               className="flex min-h-11 w-full items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
-              title={!isDesktopExpanded ? (isDark ? 'ライトモード' : 'ダークモード') : undefined}
+              title={getThemeToggleTitle(isDesktopExpanded, isDark)}
               aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
             >
               {isDark ? (

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import clsx from 'clsx';
 import { ArrowUp } from 'lucide-react';
 
 /**
@@ -28,10 +29,13 @@ export function ScrollToTop() {
 
   useEffect(() => {
     const opts: AddEventListenerOptions = { passive: true };
+    // 初回チェック: requestAnimationFrame でレイアウト確定後に実行
+    const rafId = requestAnimationFrame(() => updateVisibility());
     window.addEventListener('scroll', updateVisibility, opts);
-    // 初回チェック
-    updateVisibility();
-    return () => window.removeEventListener('scroll', updateVisibility, opts);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', updateVisibility, opts);
+    };
   }, [updateVisibility]);
 
   const scrollToTop = () => {
@@ -42,11 +46,12 @@ export function ScrollToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      className={`fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-divider bg-surface/90 text-caption shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-surface-alt hover:text-heading focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+      className={clsx(
+        'fixed bottom-6 right-6 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-divider bg-surface/90 text-caption shadow-lg backdrop-blur-sm transition-all duration-300 hover:bg-surface-alt hover:text-heading focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
         isVisible
           ? 'translate-y-0 opacity-100'
-          : 'pointer-events-none translate-y-4 opacity-0'
-      }`}
+          : 'pointer-events-none translate-y-4 opacity-0',
+      )}
       aria-label="ページトップに戻る"
     >
       <ArrowUp className="h-5 w-5" />

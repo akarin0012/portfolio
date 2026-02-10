@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
+import Link from 'next/link';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
@@ -216,12 +217,12 @@ export default function RootLayout({
                       技術経歴書
                     </a>
                     <span className="text-divider-subtle" aria-hidden="true">|</span>
-                    <a
+                    <Link
                       href="/#contact"
                       className="text-sm text-caption transition-colors hover:text-heading"
                     >
                       お問い合わせ
-                    </a>
+                    </Link>
                   </nav>
                 </div>
               </div>

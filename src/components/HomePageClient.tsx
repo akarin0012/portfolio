@@ -253,7 +253,7 @@ export function HomePageClient() {
             ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
           </p>
 
-          {formStatus === 'success' ? (
+          {formStatus === 'success' && (
             <div role="status" aria-live="polite" className="flex flex-col items-center gap-3 py-8 text-center">
               <CheckCircle2 className="h-10 w-10 text-success" aria-hidden="true" />
               <p className="text-lg font-medium text-heading">
@@ -270,7 +270,9 @@ export function HomePageClient() {
                 新しいメッセージを送る
               </button>
             </div>
-          ) : FORMSPREE_ID ? (
+          )}
+
+          {formStatus !== 'success' && FORMSPREE_ID && (
             <form
               onSubmit={handleSubmit}
               className="mx-auto max-w-lg space-y-4"
@@ -345,8 +347,10 @@ export function HomePageClient() {
                 </a>
               </div>
             </form>
-          ) : (
-            /* Formspree 未設定時: ボタン表示（プライマリCTA → セカンダリの順） */
+          )}
+
+          {/* Formspree 未設定時: ボタン表示（プライマリCTA → セカンダリの順） */}
+          {formStatus !== 'success' && !FORMSPREE_ID && (
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 type="button"

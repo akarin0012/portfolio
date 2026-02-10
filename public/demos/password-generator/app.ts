@@ -326,7 +326,7 @@ clearHistoryBtn.addEventListener('click', clearHistory);
 });
 
 // グローバル関数として公開（履歴のコピーボタン用）
-(window as any).copyToClipboard = copyToClipboard;
+(window as unknown as Record<string, typeof copyToClipboard>).copyToClipboard = copyToClipboard;
 
 // 初期化
 renderHistory();

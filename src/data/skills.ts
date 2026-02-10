@@ -4,6 +4,8 @@ export interface Skill {
   name: string;
   /** 経験期間（例: "3年", "2年4ヶ月", "学習中"） */
   duration: string;
+  /** 学習進捗率（0〜100）。学習中スキルの場合に設定 */
+  progress?: number;
 }
 
 /** スキルカテゴリの定義 */
@@ -44,8 +46,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'HTML/CSS', duration: '3年' },
       { name: 'JavaScript', duration: '3年' },
       { name: 'jQuery', duration: '2年4ヶ月' },
-      { name: 'TypeScript', duration: '学習中' },
-      { name: 'Next.js', duration: '学習中' },
+      { name: 'TypeScript', duration: '学習中', progress: 60 },
+      { name: 'Next.js', duration: '学習中', progress: 50 },
     ],
   },
   {
@@ -65,8 +67,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Unity（ローコード）', duration: '8ヶ月' },
       { name: 'kintone', duration: '8ヶ月' },
       { name: 'Python', duration: '4ヶ月' },
-      { name: 'AWS', duration: '学習中' },
-      { name: 'GitHub Actions', duration: '学習中' },
+      { name: 'AWS', duration: '学習中', progress: 30 },
+      { name: 'GitHub Actions', duration: '学習中', progress: 40 },
     ],
   },
 ];

@@ -12,17 +12,23 @@ export const dynamic = 'force-static';
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url;
 
+  // 最新のプロジェクト更新日を取得（プロジェクト一覧ページの lastModified に使用）
+  const latestProjectDate = projects.reduce((latest, p) => {
+    const date = p.updatedAt || p.createdAt;
+    return date && date > latest ? date : latest;
+  }, '2024-01-01');
+
   // 静的ページ
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: new Date(latestProjectDate),
       changeFrequency: 'monthly',
       priority: 1.0,
     },
     {
       url: `${baseUrl}/projects`,
-      lastModified: new Date(),
+      lastModified: new Date(latestProjectDate),
       changeFrequency: 'weekly',
       priority: 0.9,
     },

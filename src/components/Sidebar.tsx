@@ -111,11 +111,11 @@ export function Sidebar() {
               onClick={closeMobileMenu}
             />
             <motion.div
-              initial={{ x: -280 }}
+              initial={{ x: '-100%' }}
               animate={{ x: 0 }}
-              exit={{ x: -280 }}
+              exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed left-0 top-0 z-50 h-full w-[280px] border-r border-zinc-800 bg-zinc-900/95 backdrop-blur-sm md:hidden"
+              className="fixed left-0 top-0 z-50 h-full w-[min(280px,calc(100vw-3rem))] border-r border-zinc-800 bg-zinc-900/95 backdrop-blur-sm md:hidden"
             >
               <div className="flex h-full flex-col">
                 <div className="border-b border-zinc-800 p-6">

@@ -10,6 +10,7 @@ type Props = {
 export function ProjectMermaidDiagram({ diagram }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState(false);
+  const [rendered, setRendered] = useState(false);
 
   useEffect(() => {
     if (!diagram || !containerRef.current) return;
@@ -41,6 +42,7 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
 
         if (!cancelled && containerRef.current) {
           containerRef.current.innerHTML = svg;
+          setRendered(true);
         }
       } catch {
         if (!cancelled) setError(true);
@@ -78,10 +80,12 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
           ref={containerRef}
           className="overflow-x-auto rounded-lg bg-zinc-950/90 p-4 [&_svg]:mx-auto [&_svg]:max-w-full"
         >
-          {/* mermaid レンダリング中のスケルトン */}
-          <div className="flex h-32 items-center justify-center">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-700 border-t-emerald-400" />
-          </div>
+          {/* mermaid レンダリング中のスケルトン（レンダリング完了後は非表示） */}
+          {!rendered && (
+            <div className="flex h-32 items-center justify-center">
+              <div className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-700 border-t-emerald-400" />
+            </div>
+          )}
         </div>
       )}
     </section>

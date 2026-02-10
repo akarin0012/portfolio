@@ -1,6 +1,6 @@
 # 💼 エンジニアポートフォリオ
 
-> **茅嶋 伸一郎** | 26歳 | システムエンジニア（3年目）  
+> **茅嶋 伸一郎** | システムエンジニア（2023年4月〜）  
 > レガシー技術からモダンな技術スタックまで、幅広い開発経験を持つフルスタックエンジニア
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -158,7 +158,7 @@
 ### ✨ 特徴
 
 - **モダンな技術スタック**: Next.js 16 + TypeScript + Tailwind CSS
-- **型安全性**: Zodを使用した環境変数のバリデーション
+- **型安全性**: TypeScriptによる厳密な型定義とデータ管理
 - **静的サイト生成**: AWS S3へのデプロイに対応した静的エクスポート
 - **CI/CD自動化**: GitHub Actionsによる自動デプロイパイプライン
 - **レスポンシブデザイン**: あらゆるデバイスで快適に閲覧可能
@@ -175,16 +175,26 @@ portfolio/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx          # ルートレイアウト
-│   │   ├── page.tsx             # メインページ
-│   │   ├── globals.css          # グローバルスタイル
-│   │   └── favicon.ico          # ファビコン
-│   └── env.ts                   # 環境変数バリデーション（Zod）
+│   │   ├── page.tsx            # メインページ
+│   │   ├── globals.css         # グローバルスタイル
+│   │   ├── error.tsx           # エラーページ
+│   │   ├── not-found.tsx       # 404ページ
+│   │   ├── sitemap.ts          # サイトマップ自動生成
+│   │   ├── robots.ts           # robots.txt 自動生成
+│   │   └── projects/           # 制作物ギャラリー
+│   ├── components/             # UIコンポーネント
+│   ├── config/
+│   │   └── site.ts             # サイト設定（SEO・OGP等）
+│   └── data/                   # プロジェクト・スキル・経歴データ
 ├── public/
-│   └── skill_sheet.pdf          # 技術経歴書PDF
-├── next.config.ts               # Next.js設定（静的エクスポート）
-├── tsconfig.json                # TypeScript設定
-├── package.json                 # 依存関係管理
-└── README.md                    # このファイル
+│   ├── skill_sheet.pdf         # 技術経歴書PDF
+│   ├── demos/                  # Live Demo 用静的ファイル
+│   └── thumbnails/             # プロジェクトサムネイル
+├── next.config.ts              # Next.js設定（静的エクスポート）
+├── eslint.config.mjs           # ESLint設定
+├── tsconfig.json               # TypeScript設定
+├── package.json                # 依存関係管理
+└── README.md                   # このファイル
 ```
 
 ---
@@ -207,7 +217,8 @@ portfolio/
 
 - **GitHub Actions**: CI/CDパイプラインの自動化
 - **AWS S3**: 静的サイトホスティング
-- **jakejarvis/s3-sync-action**: S3へのファイル同期アクション
+- **AWS CLI**: S3 へのファイル同期（`aws s3 sync`）
+- **AWS CloudFront**: CDN配信・キャッシュ無効化（オプション）
 
 ### 必要な環境変数
 

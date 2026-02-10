@@ -1,7 +1,8 @@
 'use client';
 
-import { useCallback } from 'react';
+import { useCallback, useState, type FormEvent } from 'react';
 import { motion, Variants, MotionConfig } from 'framer-motion';
+import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { skillCategories, certifications } from '@/data/skills';
 import { workExperiences } from '@/data/experience';
 import { siteConfig } from '@/config/site';
@@ -49,13 +50,42 @@ const staggerParentSlow: Variants = {
  * Below-fold セクション（スキル・プロジェクト・お問い合わせ）
  * ヒーローセクションはServer Componentとして page.tsx で即座にレンダリング
  */
+/** Formspree エンドポイント（環境変数で設定、未設定時はメールフォールバック） */
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+
 export function HomePageClient() {
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
   const handleEmailClick = useCallback(() => {
-    // メールアドレスをHTML上に直接公開しないためのbot対策
     const u = 'owatakbc';
     const d = 'gmail.com';
     window.location.href = `mailto:${u}@${d}`;
   }, []);
+
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!FORMSPREE_ID) {
+      handleEmailClick();
+      return;
+    }
+    setFormStatus('sending');
+    try {
+      const form = e.currentTarget;
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        setFormStatus('success');
+        form.reset();
+      } else {
+        setFormStatus('error');
+      }
+    } catch {
+      setFormStatus('error');
+    }
+  }, [handleEmailClick]);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -93,15 +123,30 @@ export function HomePageClient() {
                 {category.skills.map((skill) => (
                   <li
                     key={skill.name}
-                    className="flex items-center text-zinc-300"
+                    className="text-zinc-300"
                   >
-                    <span
-                      className={`mr-3 h-2 w-2 rounded-full ${category.dotColor}`}
-                    />
-                    <span className="font-medium">{skill.name}</span>
-                    <span className="ml-auto text-sm text-zinc-500">
-                      {skill.duration}
-                    </span>
+                    <div className="flex items-center">
+                      <span
+                        className={`mr-3 h-2 w-2 rounded-full ${category.dotColor}`}
+                      />
+                      <span className="font-medium">{skill.name}</span>
+                      <span className="ml-auto text-sm text-zinc-500">
+                        {skill.duration}
+                      </span>
+                    </div>
+                    {skill.progress !== undefined && (
+                      <div className="ml-5 mt-1.5 flex items-center gap-2">
+                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-zinc-700">
+                          <div
+                            className={`h-full rounded-full ${category.dotColor} transition-all duration-500`}
+                            style={{ width: `${skill.progress}%` }}
+                          />
+                        </div>
+                        <span className="text-[10px] tabular-nums text-zinc-500">
+                          {skill.progress}%
+                        </span>
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -191,75 +236,131 @@ export function HomePageClient() {
           お問い合わせ
         </motion.h2>
         <motion.div
-          className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 text-center md:p-8"
+          className="rounded-lg border border-zinc-700 bg-zinc-800 p-6 md:p-8"
           initial="hidden"
           whileInView="visible"
           viewport={viewportOptions}
           variants={fadeInUp}
           transition={{ delay: 0.1 }}
         >
-          <p className="mb-8 text-base text-zinc-300 md:text-lg">
+          <p className="mb-6 text-center text-base text-zinc-300 md:text-lg">
             ご興味をお持ちいただけましたら、お気軽にお問い合わせください。
           </p>
-          <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-            {/* GitHubボタン（黒ベース） */}
-            <motion.a
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 active:scale-95"
-              whileHover={{
-                scale: 1.02,
-                boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.5)',
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                <svg
-                  className="h-5 w-5"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+
+          {formStatus === 'success' ? (
+            <div className="flex flex-col items-center gap-3 py-8 text-center">
+              <CheckCircle2 className="h-10 w-10 text-emerald-400" />
+              <p className="text-lg font-medium text-zinc-100">
+                送信ありがとうございます
+              </p>
+              <p className="text-sm text-zinc-400">
+                内容を確認の上、ご連絡いたします。
+              </p>
+              <button
+                type="button"
+                onClick={() => setFormStatus('idle')}
+                className="mt-2 text-sm text-blue-400 transition-colors hover:text-blue-300"
+              >
+                新しいメッセージを送る
+              </button>
+            </div>
+          ) : FORMSPREE_ID ? (
+            <form onSubmit={handleSubmit} className="mx-auto max-w-lg space-y-4">
+              <div>
+                <label htmlFor="contact-name" className="mb-1 block text-sm font-medium text-zinc-300">
+                  お名前 <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  placeholder="山田 太郎"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact-email" className="mb-1 block text-sm font-medium text-zinc-300">
+                  メールアドレス <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  className="w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  placeholder="example@email.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="contact-message" className="mb-1 block text-sm font-medium text-zinc-300">
+                  メッセージ <span className="text-red-400">*</span>
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows={5}
+                  className="w-full resize-none rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500/60 focus:outline-none focus:ring-1 focus:ring-blue-500/30"
+                  placeholder="お問い合わせ内容をお書きください"
+                />
+              </div>
+
+              {formStatus === 'error' && (
+                <div className="flex items-center gap-2 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-sm text-red-300">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                  送信に失敗しました。しばらく経ってから再度お試しください。
+                </div>
+              )}
+
+              <div className="flex flex-col items-center gap-4 pt-2 sm:flex-row sm:justify-center">
+                <button
+                  type="submit"
+                  disabled={formStatus === 'sending'}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-medium text-zinc-900 transition-all duration-300 hover:bg-zinc-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z"
-                    clipRule="evenodd"
-                  />
+                  <Send className="h-4 w-4" />
+                  {formStatus === 'sending' ? '送信中...' : '送信する'}
+                </button>
+                <a
+                  href={siteConfig.links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
+                >
+                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </form>
+          ) : (
+            /* Formspree 未設定時: 従来のボタン表示 */
+            <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
+              <a
+                href={siteConfig.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-zinc-900 px-8 py-3.5 text-sm font-medium text-white transition-all duration-300 hover:bg-zinc-950 active:scale-95"
+              >
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.197 22 16.425 22 12.017 22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
                 GitHub
-              </span>
-            </motion.a>
-            {/* メールボタン（白ベース・bot対策のためonClickで構成） */}
-            <motion.button
-              type="button"
-              onClick={handleEmailClick}
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 active:scale-95"
-              whileHover={{
-                scale: 1.02,
-                boxShadow: '0 10px 25px -5px rgba(255, 255, 255, 0.3)',
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
+              </a>
+              <button
+                type="button"
+                onClick={handleEmailClick}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-zinc-900 transition-all duration-300 hover:bg-zinc-200 active:scale-95"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 お問い合わせ
-              </span>
-            </motion.button>
-          </div>
+              </button>
+            </div>
+          )}
         </motion.div>
       </section>
     </MotionConfig>

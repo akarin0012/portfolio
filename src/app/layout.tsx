@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { siteConfig, absoluteUrl, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
@@ -115,8 +117,9 @@ export const metadata: Metadata = {
     title: `${siteConfig.author.name} | ${siteConfig.author.jobTitle}`,
     description: getSiteDescription(),
     images: [absoluteUrl(siteConfig.ogImage)],
-    creator: siteConfig.links.twitter || undefined,
-    site: siteConfig.links.twitter || undefined,
+    ...(siteConfig.links.twitter
+      ? { creator: siteConfig.links.twitter, site: siteConfig.links.twitter }
+      : {}),
   },
 
   // その他のメタ情報
@@ -176,32 +179,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
-      {/*
-        注: Google Fonts への preconnect/dns-prefetch は削除済み
-        next/font/google がフォントをビルド時にダウンロード・インライン化するため不要
-        （Lighthouse: 未使用 preconnect ヒントとして検出されていた）
-      */}
+    <html lang="ja" className="dark" suppressHydrationWarning>
+      {/* テーマ初期化スクリプト: FOUCを防ぐためにbody描画前にクラスを設定 */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light')}else{document.documentElement.classList.remove('light');document.documentElement.classList.add('dark')}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-900 text-zinc-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-zinc-900 text-zinc-50 transition-colors duration-300`}
       >
-        <a href="#main-content" className="skip-nav">
-          メインコンテンツへスキップ
-        </a>
-        <Sidebar />
-        <div className="flex min-h-screen flex-col md:pl-[var(--sidebar-collapsed-width)]">
-          <div className="flex-1">
-            {children}
-          </div>
-          <footer className="border-t border-zinc-800">
-            <div className="container mx-auto px-6 py-6">
-              <p className="text-center text-sm text-zinc-400">
-                © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
-              </p>
+        <ThemeProvider>
+          <a href="#main-content" className="skip-nav">
+            メインコンテンツへスキップ
+          </a>
+          <Sidebar />
+          <div className="flex min-h-screen flex-col md:pl-[var(--sidebar-collapsed-width)]">
+            <div className="flex-1">
+              {children}
             </div>
-          </footer>
-        </div>
-        <ScrollToTop />
+            <footer className="border-t border-zinc-800">
+              <div className="container mx-auto px-6 py-6">
+                <p className="text-center text-sm text-zinc-400">
+                  © {getCopyrightYears()} 茅嶋 伸一郎. All rights reserved.
+                </p>
+              </div>
+            </footer>
+          </div>
+          <ThemeToggle />
+          <ScrollToTop />
         {/* Google Analytics（NEXT_PUBLIC_GA_ID が設定されている場合のみ有効） */}
         {gaId && (
           <>
@@ -214,6 +222,7 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        </ThemeProvider>
       </body>
     </html>
   );

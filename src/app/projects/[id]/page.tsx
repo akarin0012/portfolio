@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { projects } from '@/data/projects';
 import { ProjectDetailContent } from '@/components/projects/ProjectDetailContent';
+import { Breadcrumb } from '@/components/Breadcrumb';
 import { siteConfig, absoluteUrl } from '@/config/site';
 
 type Props = {
@@ -77,6 +78,12 @@ export default async function ProjectDetailPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-zinc-900 text-zinc-50">
       <main className="container mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
+        <Breadcrumb
+          items={[
+            { label: '制作物ギャラリー', href: '/projects' },
+            { label: project.title },
+          ]}
+        />
         <ProjectDetailContent project={project} />
       </main>
     </div>

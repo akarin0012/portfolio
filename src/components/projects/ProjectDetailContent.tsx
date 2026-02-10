@@ -6,6 +6,7 @@ import { ProjectDetailHeader } from './ProjectDetailHeader';
 import { ProjectContentSection } from './ProjectContentSection';
 import { ProjectMermaidDiagram } from './ProjectMermaidDiagram';
 import { ProjectLiveDemo } from './ProjectLiveDemo';
+import { ProjectShareButtons } from './ProjectShareButtons';
 
 type Props = {
   project: Project;
@@ -22,7 +23,7 @@ export function ProjectDetailContent({ project }: Props) {
     >
       <ProjectDetailHeader project={project} />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)]">
+      <div className="grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)]">
         <div className="space-y-4">
           <ProjectContentSection title="概要">
             <p>{project.description}</p>
@@ -48,6 +49,13 @@ export function ProjectDetailContent({ project }: Props) {
           />
           <ProjectMermaidDiagram diagram={project.mermaidDiagram} />
         </div>
+      </div>
+      {/* シェアボタン */}
+      <div className="flex justify-end pt-2">
+        <ProjectShareButtons
+          projectTitle={project.title}
+          projectId={project.id}
+        />
       </div>
     </motion.div>
     </MotionConfig>

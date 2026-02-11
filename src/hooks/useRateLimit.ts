@@ -18,6 +18,10 @@ interface UseRateLimitReturn {
  * クライアントサイドのレートリミットフック
  * フォーム送信のスパム防止に使用する
  *
+ * 制約: クライアントサイドのみの実装のため、ブラウザのリロードや
+ * 開発者ツールからバイパス可能。UX 向上とカジュアルなスパム防止が目的であり、
+ * 悪意のある攻撃の完全な防止にはサーバーサイドのレートリミットが必要。
+ *
  * @example
  * const { checkRateLimit, getRetryAfterSeconds } = useRateLimit({
  *   maxRequests: 3,

@@ -30,10 +30,10 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // 開発環境のみコンソール出力（本番では外部エラートラッキングに送信を推奨）
+    // 本番では外部エラートラッキングサービスへの送信を推奨
+    // 開発環境のみコンソール出力
     if (process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
-      console.error('ErrorBoundary caught an error:', error, errorInfo);
+      globalThis.console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
   }
 

@@ -115,6 +115,9 @@ export function ProjectsPageClient() {
             onClearAll={handleClearAll}
           />
 
+          <div aria-live="polite" aria-atomic="true" className="sr-only">
+            {filtered.length}件のプロジェクトが見つかりました
+          </div>
           <ProjectGrid projects={filtered} />
         </motion.section>
       </main>

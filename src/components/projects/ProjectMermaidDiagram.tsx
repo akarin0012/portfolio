@@ -8,6 +8,37 @@ type Props = {
   diagram?: string;
 };
 
+/**
+ * Mermaid が生成した SVG 文字列からスクリプト要素とイベントハンドラを除去する
+ * innerHTML への直接挿入時の XSS リスクを低減するためのサニタイズ処理
+ */
+function sanitizeSvg(svgString: string): string {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgString, 'image/svg+xml');
+
+  // <script> 要素をすべて削除
+  doc.querySelectorAll('script').forEach((el) => el.remove());
+
+  // on* イベントハンドラ属性をすべて削除
+  const allElements = doc.querySelectorAll('*');
+  for (const el of allElements) {
+    for (const attr of Array.from(el.attributes)) {
+      if (attr.name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      }
+    }
+    // javascript: スキームの href/xlink:href を除去
+    for (const hrefAttr of ['href', 'xlink:href']) {
+      const value = el.getAttribute(hrefAttr);
+      if (value && value.trim().toLowerCase().startsWith('javascript:')) {
+        el.removeAttribute(hrefAttr);
+      }
+    }
+  }
+
+  return doc.documentElement.outerHTML;
+}
+
 /** ダーク/ライト別の Mermaid テーマ変数 */
 const mermaidThemes = {
   dark: {
@@ -63,10 +94,10 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
         });
 
         const id = `mermaid-${Date.now()}`;
-        const { svg } = await mermaid.render(id, diagram!);
+        const { svg } = await mermaid.render(id, diagram ?? '');
 
         if (!cancelled && containerRef.current) {
-          containerRef.current.innerHTML = svg;
+          containerRef.current.innerHTML = sanitizeSvg(svg);
           setRendered(true);
         }
       } catch {

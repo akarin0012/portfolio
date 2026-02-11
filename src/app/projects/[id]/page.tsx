@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { projects } from '@/data/projects';
+import { projects, type Project } from '@/data/projects';
 import { ProjectDetailContent } from '@/components/projects/ProjectDetailContent';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { siteConfig, absoluteUrl } from '@/config/site';
@@ -56,6 +56,39 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * プロジェクト詳細ページの JSON-LD 構造化データ
+ * CreativeWork スキーマでプロジェクト情報を構造化
+ */
+function ProjectJsonLd({ project }: { project: Project }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.summary,
+    url: absoluteUrl(`/projects/${project.id}`),
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: siteConfig.url,
+    },
+    ...(project.createdAt && { dateCreated: project.createdAt }),
+    ...(project.updatedAt && { dateModified: project.updatedAt }),
+    ...(project.repoUrl && { codeRepository: project.repoUrl }),
+    ...(project.demoUrl && { url: project.demoUrl }),
+    programmingLanguage: project.primaryLanguage,
+    keywords: project.tags.join(', '),
+    genre: project.category,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
 export default async function ProjectDetailPage({ params }: Props) {
   const { id } = await params;
   const project = projects.find((p) => p.id === id);
@@ -65,17 +98,20 @@ export default async function ProjectDetailPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-surface text-foreground">
-      <main className="container mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
-        <Breadcrumb
-          items={[
-            { label: '制作物ギャラリー', href: '/projects' },
-            { label: project.title },
-          ]}
-        />
-        <ProjectDetailContent project={project} />
-      </main>
-    </div>
+    <>
+      <ProjectJsonLd project={project} />
+      <div className="min-h-screen bg-surface text-foreground">
+        <main className="container mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14">
+          <Breadcrumb
+            items={[
+              { label: '制作物ギャラリー', href: '/projects' },
+              { label: project.title },
+            ]}
+          />
+          <ProjectDetailContent project={project} />
+        </main>
+      </div>
+    </>
   );
 }
 

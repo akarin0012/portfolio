@@ -4,16 +4,19 @@ import { useState, useEffect, useCallback } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/** ボタンを表示するスクロール閾値（px） */
+const SCROLL_THRESHOLD = 400;
+
 /**
  * ページトップに戻るフローティングボタン
- * スクロール位置が400pxを超えるとフェードインし、
+ * スクロール位置が閾値を超えるとフェードインし、
  * フッターが画面内に見えている時は非表示にする
  */
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   const updateVisibility = useCallback(() => {
-    const scrolledEnough = window.scrollY > 400;
+    const scrolledEnough = window.scrollY > SCROLL_THRESHOLD;
 
     // フッターが画面内に見えているかチェック
     const footer = document.querySelector('footer[role="contentinfo"]');

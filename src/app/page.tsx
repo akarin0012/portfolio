@@ -185,6 +185,7 @@ export default function Home() {
               <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <a
                   href="#skills"
+                  aria-label="スキルセクションへ移動する"
                   className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-hover active:scale-95"
                 >
                   <Code className="h-4 w-4" aria-hidden="true" />
@@ -192,6 +193,7 @@ export default function Home() {
                 </a>
                 <a
                   href="#contact"
+                  aria-label="お問い合わせセクションへ移動する"
                   className="inline-flex items-center gap-2 rounded-full border border-divider bg-surface px-6 py-2.5 text-sm font-medium text-heading transition-all duration-300 hover:bg-surface-alt active:scale-95"
                 >
                   <Mail className="h-4 w-4" aria-hidden="true" />

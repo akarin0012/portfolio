@@ -1,5 +1,23 @@
 import { z } from 'zod';
 
+/**
+ * Formspree ID のバリデーション
+ * Formspree のフォーム ID は英数字のみで構成される
+ */
+export const formspreeIdSchema = z
+  .string()
+  .regex(/^[a-zA-Z0-9]+$/, 'Formspree ID の形式が不正です');
+
+/**
+ * 環境変数の Formspree ID を検証して返す（無効な場合は undefined）
+ */
+export function getValidatedFormspreeId(): string | undefined {
+  const id = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+  if (!id) return undefined;
+  const result = formspreeIdSchema.safeParse(id);
+  return result.success ? result.data : undefined;
+}
+
 /** お問い合わせフォームのバリデーションスキーマ */
 export const contactFormSchema = z.object({
   name: z

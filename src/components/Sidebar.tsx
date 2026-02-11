@@ -13,17 +13,16 @@ import {
   LayoutGrid,
   Menu,
   X,
-  FileText,
-  Sun,
-  Moon,
 } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+import { SidebarFooter } from '@/components/sidebar/SidebarFooter';
+import { CollapsibleLabel } from '@/components/sidebar/CollapsibleLabel';
 
 type NavItem = {
   href: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
-  isExternal?: boolean;
 };
 
 const navItems: NavItem[] = [
@@ -43,67 +42,109 @@ function getHeaderHeight(): number {
   return parseInt(value, 10) || 73;
 }
 
-/** ネストした三項演算子を避けるためのヘルパー */
-function getThemeToggleTitle(isExpanded: boolean, isDark: boolean): string | undefined {
-  if (isExpanded) return undefined;
-  return isDark ? 'ライトモード' : 'ダークモード';
+/** アクティブ状態の判定（SSR と CSR で結果がズレないよう、DOM には依存しない） */
+function checkIsActive(href: string, pathname: string | null): boolean {
+  if (href === '/projects') {
+    return !!pathname?.startsWith('/projects');
+  }
+  if (href.startsWith('/#')) {
+    return pathname === '/';
+  }
+  return pathname === href;
 }
+
+// ──────────────────────────────────────────
+// ナビゲーションリンク（共通）
+// ──────────────────────────────────────────
+
+type NavLinkListProps = {
+  pathname: string | null;
+  isDesktop?: boolean;
+  isDesktopExpanded?: boolean;
+  onSmoothScroll: (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => void;
+};
+
+function NavLinkList({ pathname, isDesktop, isDesktopExpanded, onSmoothScroll }: NavLinkListProps) {
+  return (
+    <>
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        const active = checkIsActive(item.href, pathname);
+        const isHashLink = item.href.startsWith('/#');
+        const shouldSmoothScroll = isHashLink && pathname === '/';
+
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={
+              shouldSmoothScroll
+                ? (e) => onSmoothScroll(e, item.href.replace('/#', ''))
+                : undefined
+            }
+            aria-current={active ? 'page' : undefined}
+            className={cn(
+              'flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors',
+              isDesktop && 'overflow-hidden',
+              active
+                ? 'bg-surface-alt text-heading'
+                : 'text-caption hover:bg-surface-alt/50 hover:text-heading',
+            )}
+            title={isDesktop && !isDesktopExpanded ? item.label : undefined}
+          >
+            <Icon className="h-4 w-4 flex-shrink-0" />
+            <CollapsibleLabel isDesktop={isDesktop} isExpanded={isDesktopExpanded}>
+              {item.label}
+            </CollapsibleLabel>
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+// ──────────────────────────────────────────
+// Sidebar 本体
+// ──────────────────────────────────────────
 
 export function Sidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopExpanded, setIsDesktopExpanded] = useState(false);
   const pathname = usePathname();
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === 'dark';
 
-  /** モバイルメニューを閉じてフォーカスをトリガーボタンに戻す */
+  // フォーカストラップ（WCAG 2.1 準拠）
+  useFocusTrap(mobileMenuRef, isMobileOpen);
+
   const closeMobileMenu = useCallback(() => {
     setIsMobileOpen(false);
     mobileMenuButtonRef.current?.focus();
   }, []);
 
-  // モバイルメニューを閉じる（ページ遷移時）
-  // React推奨パターン: レンダー中にprops変化を検知してstateをリセット
-  // @see https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  // ページ遷移時にモバイルメニューを閉じる
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
     setIsMobileOpen(false);
   }
 
-  // アクティブ状態の判定（SSR と CSR で結果がズレないよう、DOM には依存しない）
-  const isActive = (href: string) => {
-    if (href === '/projects') {
-      return pathname?.startsWith('/projects');
-    }
-    if (href.startsWith('/#')) {
-      // ページ内リンクはトップページ表示時のみ「ざっくり有効」とみなす
-      return pathname === '/';
-    }
-    return pathname === href;
-  };
-
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string,
-  ) => {
-    e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      const headerHeight = getHeaderHeight();
-      const targetPosition =
-        targetElement.getBoundingClientRect().top +
-        window.scrollY -
-        headerHeight;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth',
-      });
-    }
-    closeMobileMenu();
-  };
+  const handleSmoothScroll = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+      e.preventDefault();
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        const headerHeight = getHeaderHeight();
+        const targetPosition =
+          targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+      closeMobileMenu();
+    },
+    [closeMobileMenu],
+  );
 
   /** デスクトップサイドバー: フォーカスが外に出たら閉じる */
   const handleDesktopBlur = (e: React.FocusEvent<HTMLElement>) => {
@@ -111,6 +152,16 @@ export function Sidebar() {
       setIsDesktopExpanded(false);
     }
   };
+
+  /** Escape キーでモバイルメニューを閉じる */
+  const handleMobileKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeMobileMenu();
+      }
+    },
+    [closeMobileMenu],
+  );
 
   return (
     <>
@@ -123,14 +174,10 @@ export function Sidebar() {
         aria-label={isMobileOpen ? 'メニューを閉じる' : 'メニューを開く'}
         aria-expanded={isMobileOpen}
       >
-        {isMobileOpen ? (
-          <X className="h-5 w-5" />
-        ) : (
-          <Menu className="h-5 w-5" />
-        )}
+        {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
-      {/* モバイル: オーバーレイ */}
+      {/* モバイル: オーバーレイ + メニュー */}
       <AnimatePresence>
         {isMobileOpen && (
           <>
@@ -143,6 +190,11 @@ export function Sidebar() {
               onClick={closeMobileMenu}
             />
             <motion.div
+              ref={mobileMenuRef}
+              role="dialog"
+              aria-modal="true"
+              aria-label="ナビゲーションメニュー"
+              onKeyDown={handleMobileKeyDown}
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
@@ -151,67 +203,13 @@ export function Sidebar() {
             >
               <div className="flex h-full flex-col">
                 <div className="border-b border-divider-subtle p-6">
-                  <h2 className="text-xl font-bold text-heading">
-                    ポートフォリオ
-                  </h2>
+                  <h2 className="text-xl font-bold text-heading">ポートフォリオ</h2>
                 </div>
                 <nav aria-label="メインナビゲーション" className="flex-1 space-y-1 overflow-y-auto p-4">
-                  {navItems.map((item) => {
-                    const Icon = item.icon;
-                    const active = isActive(item.href);
-                    const isHashLink = item.href.startsWith('/#');
-                    const shouldSmoothScroll = isHashLink && pathname === '/';
-
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={
-                          shouldSmoothScroll
-                            ? (e) =>
-                                handleSmoothScroll(
-                                  e,
-                                  item.href.replace('/#', ''),
-                                )
-                            : undefined
-                        }
-                        aria-current={active ? 'page' : undefined}
-                        className={cn(
-                          'flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors',
-                          active
-                            ? 'bg-surface-alt text-heading'
-                            : 'text-caption hover:bg-surface-alt/50 hover:text-heading',
-                        )}
-                      >
-                        <Icon className="h-4 w-4 flex-shrink-0" />
-                        <span>{item.label}</span>
-                      </Link>
-                    );
-                  })}
+                  <NavLinkList pathname={pathname} onSmoothScroll={handleSmoothScroll} />
                 </nav>
                 <div className="border-t border-divider-subtle p-4">
-                  <a
-                    href="/skill_sheet.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
-                  >
-                    <FileText className="h-4 w-4 flex-shrink-0" />
-                    <span>技術経歴書（PDF）</span>
-                  </a>
-                  <button
-                    type="button"
-                    onClick={toggleTheme}
-                    className="flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
-                    aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
-                  >
-                    {isDark ? (
-                      <Sun className="h-4 w-4 flex-shrink-0" />
-                    ) : (
-                      <Moon className="h-4 w-4 flex-shrink-0" />
-                    )}
-                    <span>{isDark ? 'ライトモード' : 'ダークモード'}</span>
-                  </button>
+                  <SidebarFooter isDark={isDark} toggleTheme={toggleTheme} />
                 </div>
               </div>
             </motion.div>
@@ -242,83 +240,20 @@ export function Sidebar() {
             </h2>
           </div>
           <nav aria-label="メインナビゲーション" className="flex-1 space-y-1 overflow-y-auto p-3">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = isActive(item.href);
-              const isHashLink = item.href.startsWith('/#');
-              const shouldSmoothScroll = isHashLink && pathname === '/';
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={
-                    shouldSmoothScroll
-                      ? (e) =>
-                          handleSmoothScroll(e, item.href.replace('/#', ''))
-                      : undefined
-                  }
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors',
-                    active
-                      ? 'bg-surface-alt text-heading'
-                      : 'text-caption hover:bg-surface-alt/50 hover:text-heading',
-                  )}
-                  title={!isDesktopExpanded ? item.label : undefined}
-                >
-                  <Icon className="h-4 w-4 flex-shrink-0" />
-                  <span
-                    className={cn(
-                      'overflow-hidden whitespace-nowrap transition-all duration-300',
-                      isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
-                    )}
-                  >
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            })}
+            <NavLinkList
+              pathname={pathname}
+              isDesktop
+              isDesktopExpanded={isDesktopExpanded}
+              onSmoothScroll={handleSmoothScroll}
+            />
           </nav>
           <div className="border-t border-divider-subtle p-3">
-            <a
-              href="/skill_sheet.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
-              title={!isDesktopExpanded ? '技術経歴書（PDF）' : undefined}
-            >
-              <FileText className="h-4 w-4 flex-shrink-0" />
-              <span
-                className={cn(
-                  'overflow-hidden whitespace-nowrap transition-all duration-300',
-                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
-                )}
-              >
-                技術経歴書（PDF）
-              </span>
-            </a>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="flex min-h-11 w-full items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm text-caption transition-colors hover:bg-surface-alt/50 hover:text-subheading"
-              title={getThemeToggleTitle(isDesktopExpanded, isDark)}
-              aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
-            >
-              {isDark ? (
-                <Sun className="h-4 w-4 flex-shrink-0" />
-              ) : (
-                <Moon className="h-4 w-4 flex-shrink-0" />
-              )}
-              <span
-                className={cn(
-                  'overflow-hidden whitespace-nowrap transition-all duration-300',
-                  isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
-                )}
-              >
-                {isDark ? 'ライトモード' : 'ダークモード'}
-              </span>
-            </button>
+            <SidebarFooter
+              isDark={isDark}
+              toggleTheme={toggleTheme}
+              isDesktop
+              isDesktopExpanded={isDesktopExpanded}
+            />
           </div>
         </div>
       </aside>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { siteConfig, absoluteUrl } from '@/config/site';
 import { projects } from '@/data/projects';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Framer Motionを含むコンポーネントを遅延読み込み
 const ProjectsPageClient = dynamic(
@@ -104,7 +105,9 @@ export default function ProjectsPage() {
   return (
     <>
       <ProjectsJsonLd />
-      <ProjectsPageClient />
+      <ErrorBoundary>
+        <ProjectsPageClient />
+      </ErrorBoundary>
     </>
   );
 }

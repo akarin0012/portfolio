@@ -9,6 +9,7 @@ import {
   SITE_ESTABLISHED_YEAR,
 } from '@/config/site';
 import { getAllSkillNames, certifications } from '@/data/skills';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Below-fold セクション（スキル・プロジェクト・お問い合わせ）を遅延読み込み
 // ヒーローセクションはServer Componentとして即座にレンダリング
@@ -220,7 +221,9 @@ export default function Home() {
           <hr className="my-12 border-divider-subtle md:my-20" aria-hidden="true" />
 
           {/* Below-fold セクション（Client Component: framer-motion アニメーション） */}
-          <HomePageClient />
+          <ErrorBoundary>
+            <HomePageClient />
+          </ErrorBoundary>
         </main>
 
       </div>

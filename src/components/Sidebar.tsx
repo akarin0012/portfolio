@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import clsx from 'clsx';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -176,7 +176,7 @@ export function Sidebar() {
                             : undefined
                         }
                         aria-current={active ? 'page' : undefined}
-                        className={clsx(
+                        className={cn(
                           'flex min-h-11 items-center gap-3 rounded-lg px-3 py-3 text-sm transition-colors',
                           active
                             ? 'bg-surface-alt text-heading'
@@ -233,7 +233,7 @@ export function Sidebar() {
         <div className="flex h-full flex-col">
           <div className="overflow-hidden border-b border-divider-subtle p-4">
             <h2
-              className={clsx(
+              className={cn(
                 'overflow-hidden whitespace-nowrap font-bold text-heading transition-all duration-300',
                 isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
               )}
@@ -259,7 +259,7 @@ export function Sidebar() {
                       : undefined
                   }
                   aria-current={active ? 'page' : undefined}
-                  className={clsx(
+                  className={cn(
                     'flex min-h-11 items-center gap-3 overflow-hidden rounded-lg px-3 py-3 text-sm transition-colors',
                     active
                       ? 'bg-surface-alt text-heading'
@@ -269,7 +269,7 @@ export function Sidebar() {
                 >
                   <Icon className="h-4 w-4 flex-shrink-0" />
                   <span
-                    className={clsx(
+                    className={cn(
                       'overflow-hidden whitespace-nowrap transition-all duration-300',
                       isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
                     )}
@@ -290,7 +290,7 @@ export function Sidebar() {
             >
               <FileText className="h-4 w-4 flex-shrink-0" />
               <span
-                className={clsx(
+                className={cn(
                   'overflow-hidden whitespace-nowrap transition-all duration-300',
                   isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
                 )}
@@ -311,7 +311,7 @@ export function Sidebar() {
                 <Moon className="h-4 w-4 flex-shrink-0" />
               )}
               <span
-                className={clsx(
+                className={cn(
                   'overflow-hidden whitespace-nowrap transition-all duration-300',
                   isDesktopExpanded ? 'w-auto opacity-100' : 'w-0 opacity-0',
                 )}

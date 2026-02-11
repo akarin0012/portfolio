@@ -233,6 +233,22 @@ GitHubリポジトリのシークレットに以下を設定：
 
 ## 🏃 ローカル開発
 
+### 環境変数
+
+プロジェクトルートに `.env.local` を作成し、以下の環境変数を設定してください。
+
+| 変数名 | 必須 | 説明 |
+| --- | --- | --- |
+| `NEXT_PUBLIC_FORMSPREE_ID` | 任意 | Formspree のフォーム ID。未設定時は mailto: リンクにフォールバック |
+| `NEXT_PUBLIC_GA_ID` | 任意 | Google Analytics の Measurement ID（例: `G-XXXXXXXXXX`） |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION` | 任意 | Google Search Console の所有権確認コード |
+
+```bash
+# .env.local の例
+NEXT_PUBLIC_FORMSPREE_ID=xyzabcde
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
 ### セットアップ
 
 ```bash

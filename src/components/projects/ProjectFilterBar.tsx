@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { X } from 'lucide-react';
 import type { ProjectCategory, ProgrammingLanguage } from '@/data/projects';
 
@@ -115,7 +115,7 @@ function FilterPillGroup<T extends string>({
               onClick={() => onChange(value)}
               aria-label={`${label}: ${renderLabel(value)}`}
               aria-pressed={isActive}
-              className={clsx(
+              className={cn(
                 'min-h-9 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
                 isActive
                   ? 'border-accent/80 bg-accent/10 text-accent'

@@ -6,6 +6,8 @@ import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { skillCategories, certifications } from '@/data/skills';
 import { workExperiences } from '@/data/experience';
 import { siteConfig, obfuscateEmail } from '@/config/site';
+import { contactFormSchema, getFieldErrors, type ContactFormInput } from '@/lib/validations';
+import { useRateLimit } from '@/hooks/useRateLimit';
 
 // 共通アニメーション設定
 const fadeInUp: Variants = {
@@ -54,7 +56,12 @@ const staggerParentSlow: Variants = {
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
 
 export function HomePageClient() {
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error' | 'rate-limited'>('idle');
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof ContactFormInput, string>>>({});
+  const { checkRateLimit, getRetryAfterSeconds } = useRateLimit({
+    maxRequests: 3,
+    windowMs: 60_000, // 1分間に3回まで
+  });
 
   const handleEmailClick = useCallback(() => {
     window.location.href = `mailto:${obfuscateEmail()}`;
@@ -66,9 +73,31 @@ export function HomePageClient() {
       handleEmailClick();
       return;
     }
+
+    // Zod バリデーション
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const rawData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string,
+    };
+
+    const result = contactFormSchema.safeParse(rawData);
+    if (!result.success) {
+      setFieldErrors(getFieldErrors(result.error));
+      return;
+    }
+    setFieldErrors({});
+
+    // レートリミットチェック
+    if (!checkRateLimit()) {
+      setFormStatus('rate-limited');
+      return;
+    }
+
     setFormStatus('sending');
     try {
-      const form = e.currentTarget;
       const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         body: new FormData(form),
@@ -80,11 +109,10 @@ export function HomePageClient() {
       } else {
         setFormStatus('error');
       }
-    } catch (err) {
-      console.error('Contact form submission failed:', err);
+    } catch {
       setFormStatus('error');
     }
-  }, [handleEmailClick]);
+  }, [handleEmailClick, checkRateLimit]);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -287,9 +315,17 @@ export function HomePageClient() {
                   name="name"
                   type="text"
                   required
-                  className="w-full rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
+                  aria-invalid={!!fieldErrors.name}
+                  aria-describedby={fieldErrors.name ? 'contact-name-error' : undefined}
+                  className={`w-full rounded-lg border bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:outline-none focus:ring-1 ${fieldErrors.name ? 'border-danger focus:border-danger/60 focus:ring-danger/30' : 'border-divider focus:border-accent/60 focus:ring-accent/30'}`}
                   placeholder="山田 太郎"
+                  onChange={() => setFieldErrors((prev) => ({ ...prev, name: undefined }))}
                 />
+                {fieldErrors.name && (
+                  <p id="contact-name-error" className="mt-1 text-xs text-danger" role="alert">
+                    {fieldErrors.name}
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="contact-email" className="mb-1 block text-sm font-medium text-body">
@@ -300,9 +336,17 @@ export function HomePageClient() {
                   name="email"
                   type="email"
                   required
-                  className="w-full rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
+                  aria-invalid={!!fieldErrors.email}
+                  aria-describedby={fieldErrors.email ? 'contact-email-error' : undefined}
+                  className={`w-full rounded-lg border bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:outline-none focus:ring-1 ${fieldErrors.email ? 'border-danger focus:border-danger/60 focus:ring-danger/30' : 'border-divider focus:border-accent/60 focus:ring-accent/30'}`}
                   placeholder="example@email.com"
+                  onChange={() => setFieldErrors((prev) => ({ ...prev, email: undefined }))}
                 />
+                {fieldErrors.email && (
+                  <p id="contact-email-error" className="mt-1 text-xs text-danger" role="alert">
+                    {fieldErrors.email}
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="contact-message" className="mb-1 block text-sm font-medium text-body">
@@ -313,9 +357,17 @@ export function HomePageClient() {
                   name="message"
                   required
                   rows={5}
-                  className="w-full resize-none rounded-lg border border-divider bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30"
+                  aria-invalid={!!fieldErrors.message}
+                  aria-describedby={fieldErrors.message ? 'contact-message-error' : undefined}
+                  className={`w-full resize-none rounded-lg border bg-surface px-4 py-2.5 text-sm text-heading placeholder-muted transition-colors focus:outline-none focus:ring-1 ${fieldErrors.message ? 'border-danger focus:border-danger/60 focus:ring-danger/30' : 'border-divider focus:border-accent/60 focus:ring-accent/30'}`}
                   placeholder="お問い合わせ内容をお書きください"
+                  onChange={() => setFieldErrors((prev) => ({ ...prev, message: undefined }))}
                 />
+                {fieldErrors.message && (
+                  <p id="contact-message-error" className="mt-1 text-xs text-danger" role="alert">
+                    {fieldErrors.message}
+                  </p>
+                )}
               </div>
 
               {formStatus === 'error' && (
@@ -325,10 +377,17 @@ export function HomePageClient() {
                 </div>
               )}
 
+              {formStatus === 'rate-limited' && (
+                <div role="alert" aria-live="assertive" className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning/10 px-4 py-2.5 text-sm text-warning">
+                  <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
+                  送信回数の上限に達しました。{getRetryAfterSeconds()}秒後に再度お試しください。
+                </div>
+              )}
+
               <div className="flex flex-col items-center gap-4 pt-2 sm:flex-row sm:justify-center">
                 <button
                   type="submit"
-                  disabled={formStatus === 'sending'}
+                  disabled={formStatus === 'sending' || formStatus === 'rate-limited'}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-8 py-3 text-sm font-medium text-white shadow-sm transition-all duration-300 hover:bg-accent-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <Send className="h-4 w-4" />

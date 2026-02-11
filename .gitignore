@@ -23,6 +23,12 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
+# --- Playwright ---
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # --- AI / Editor settings ---
 # .cursorrules は共有したいのでここには書かないのが一般的です
 .vscode/

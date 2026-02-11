@@ -138,7 +138,6 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
         </>
       ) : (
         <div
-          ref={containerRef}
           className={`overflow-x-auto rounded-lg p-4 [&_svg]:mx-auto [&_svg]:max-w-full ${
             isDark ? 'keep-dark bg-surface-inset/90' : 'border border-divider-subtle bg-surface-alt'
           }`}
@@ -149,6 +148,11 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-divider border-t-success" />
             </div>
           )}
+          {/*
+           * Mermaid の SVG 出力先（innerHTML で直接操作するため、
+           * React 管理の子要素とは別の div に分離して removeChild エラーを防止）
+           */}
+          <div ref={containerRef} />
         </div>
       )}
     </section>

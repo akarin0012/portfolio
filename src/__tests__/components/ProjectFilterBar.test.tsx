@@ -3,11 +3,20 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ProjectFilterBar } from '@/components/projects/ProjectFilterBar';
 import type { ProjectCategory, ProgrammingLanguage } from '@/data/projects';
 
-// framer-motion のモック（テスト環境でアニメーション不要）
+// framer-motion のモック（motion 固有 props を除外して DOM 警告を防止）
 vi.mock('framer-motion', () => ({
   motion: {
     button: ({
       children,
+      whileHover: _wh,
+      whileTap: _wt,
+      whileFocus: _wf,
+      whileInView: _wi,
+      initial: _i,
+      animate: _a,
+      exit: _e,
+      transition: _tr,
+      variants: _v,
       ...props
     }: {
       children: React.ReactNode;

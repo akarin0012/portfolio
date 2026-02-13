@@ -75,7 +75,7 @@ function ProjectJsonLd({ project }: { project: Project }) {
     ...(project.createdAt && { dateCreated: project.createdAt }),
     ...(project.updatedAt && { dateModified: project.updatedAt }),
     ...(project.repoUrl && { codeRepository: project.repoUrl }),
-    ...(project.demoUrl && { url: project.demoUrl }),
+    ...(project.demoUrl && { sameAs: project.demoUrl }),
     programmingLanguage: project.primaryLanguage,
     keywords: project.tags.join(', '),
     genre: project.category,

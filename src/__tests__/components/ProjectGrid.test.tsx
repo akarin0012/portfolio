@@ -3,11 +3,20 @@ import { render, screen } from '@testing-library/react';
 import { ProjectGrid } from '@/components/projects/ProjectGrid';
 import type { Project } from '@/data/projects';
 
-// framer-motion のモック
+// framer-motion のモック（motion 固有 props を除外して DOM 警告を防止）
 vi.mock('framer-motion', () => ({
   motion: {
     article: ({
       children,
+      whileHover: _wh,
+      whileTap: _wt,
+      whileFocus: _wf,
+      whileInView: _wi,
+      initial: _i,
+      animate: _a,
+      exit: _e,
+      transition: _tr,
+      variants: _v,
       ...props
     }: {
       children: React.ReactNode;

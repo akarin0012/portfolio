@@ -51,8 +51,8 @@ describe('useRateLimit', () => {
     act(() => { allowed = result.current.checkRateLimit(); });
     expect(allowed!).toBe(false);
 
-    // 10秒経過
-    vi.advanceTimersByTime(10_000);
+    // 10秒経過（タイマー進行で retryCountdown の setState が発火するため act で包む）
+    act(() => { vi.advanceTimersByTime(10_000); });
 
     act(() => { allowed = result.current.checkRateLimit(); });
     expect(allowed!).toBe(true);
@@ -65,8 +65,8 @@ describe('useRateLimit', () => {
 
     act(() => { result.current.checkRateLimit(); });
 
-    // 10秒経過
-    vi.advanceTimersByTime(10_000);
+    // 10秒経過（タイマー進行で retryCountdown の setState が発火するため act で包む）
+    act(() => { vi.advanceTimersByTime(10_000); });
 
     let seconds: number;
     act(() => { seconds = result.current.getRetryAfterSeconds(); });

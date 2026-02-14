@@ -20,9 +20,9 @@ type Props = {
 
 /** お問い合わせセクション */
 export function ContactSection({ fadeInUp, viewportOptions }: Props) {
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error' | 'rate-limited'>('idle');
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof ContactFormInput, string>>>({});
-  const { checkRateLimit, getRetryAfterSeconds } = useRateLimit({
+  const { checkRateLimit, retryCountdown } = useRateLimit({
     maxRequests: 3,
     windowMs: 60_000,
   });
@@ -57,8 +57,8 @@ export function ContactSection({ fadeInUp, viewportOptions }: Props) {
     }
     setFieldErrors({});
 
+    // checkRateLimit() が false を返すとフック内でカウントダウンが自動開始される
     if (!checkRateLimit()) {
-      setFormStatus('rate-limited');
       return;
     }
 
@@ -76,7 +76,7 @@ export function ContactSection({ fadeInUp, viewportOptions }: Props) {
     }
   }, [handleEmailClick, checkRateLimit]);
 
-  const isBusy = formStatus === 'sending' || formStatus === 'rate-limited';
+  const isBusy = formStatus === 'sending' || retryCountdown > 0;
 
   return (
     <section id="contact" aria-labelledby="contact-heading" className="mb-12 md:mb-20">
@@ -120,7 +120,7 @@ export function ContactSection({ fadeInUp, viewportOptions }: Props) {
         {formStatus !== 'success' && FORMSPREE_ID && (
           <form onSubmit={handleSubmit} className="mx-auto max-w-lg space-y-4" aria-busy={formStatus === 'sending'}>
             <ContactFormFields fieldErrors={fieldErrors} onClearError={handleClearError} />
-            <ContactStatusAlerts formStatus={formStatus} retryAfterSeconds={getRetryAfterSeconds()} />
+            <ContactStatusAlerts formStatus={formStatus} retryAfterSeconds={retryCountdown} />
 
             <div className="flex flex-col items-center gap-4 pt-2 sm:flex-row sm:justify-center">
               <button

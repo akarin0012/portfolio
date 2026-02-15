@@ -13,6 +13,7 @@ ADR (Architecture Decision Record) は、ソフトウェア開発における重
 | [001](./001-mermaid-svg-container-separation.md) | Mermaid SVG 出力先の React DOM からの分離 | 採用済み | 2025-02-11 |
 | [002](./002-jsonld-url-overwrite-fix.md) | JSON-LD URL 上書きバグ修正とテストモック改善 | 採用済み | 2026-02-12 |
 | [003](./003-rate-limit-countdown-fix.md) | レートリミットのカウントダウン自動更新と自動復帰 | 採用済み | 2026-02-12 |
+| [004](./004-network-resilience-and-error-handling.md) | ネットワーク耐性の強化とエラーハンドリング改善 | 採用済み | 2026-02-15 |
 
 ## ステータスの定義
 

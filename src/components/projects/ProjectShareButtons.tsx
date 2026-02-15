@@ -14,7 +14,10 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
   const url = `${siteConfig.url}/projects/${projectId}`;
   const text = `${projectTitle} | ${siteConfig.author.name}のポートフォリオ`;
 
+  const [copyFailed, setCopyFailed] = useState(false);
+
   const handleCopyLink = async () => {
+    setCopyFailed(false);
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
@@ -32,7 +35,9 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch {
-        // コピー不可の場合は何もしない
+        console.error('クリップボードへのコピーに失敗しました');
+        setCopyFailed(true);
+        setTimeout(() => setCopyFailed(false), 3000);
       }
       document.body.removeChild(textArea);
     }
@@ -87,6 +92,11 @@ export function ProjectShareButtons({ projectTitle, projectId }: Props) {
           <LinkIcon className="h-3.5 w-3.5" />
         )}
       </button>
+      {copyFailed && (
+        <span role="alert" className="text-xs text-red-500">
+          コピーできませんでした
+        </span>
+      )}
     </div>
   );
 }

@@ -13,6 +13,18 @@ import { ContactStatusAlerts } from './ContactStatusAlerts';
 /** Formspree エンドポイント（環境変数から取得・検証、無効時はメールフォールバック） */
 const FORMSPREE_ID = getValidatedFormspreeId();
 
+/** フォーム送信タイムアウト（ミリ秒） */
+const SUBMIT_TIMEOUT_MS = 30_000;
+
+/** fetch エラーをログ出力する（タイムアウトとそれ以外を区別） */
+function logSubmitError(err: unknown): void {
+  const isTimeout = err instanceof DOMException && err.name === 'AbortError';
+  console.error(
+    isTimeout ? `フォーム送信がタイムアウトしました (${SUBMIT_TIMEOUT_MS / 1000}秒)` : 'フォーム送信エラー:',
+    isTimeout ? '' : err,
+  );
+}
+
 type Props = {
   fadeInUp: Variants;
   viewportOptions: { once: boolean; margin: string };
@@ -63,16 +75,22 @@ export function ContactSection({ fadeInUp, viewportOptions }: Props) {
     }
 
     setFormStatus('sending');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), SUBMIT_TIMEOUT_MS);
     try {
       const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
+        signal: controller.signal,
       });
       setFormStatus(res.ok ? 'success' : 'error');
       if (res.ok) form.reset();
-    } catch {
+    } catch (err) {
+      logSubmitError(err);
       setFormStatus('error');
+    } finally {
+      clearTimeout(timeoutId);
     }
   }, [handleEmailClick, checkRateLimit]);
 

@@ -1,0 +1,8 @@
+---
+description: AI応答時のインタラクションルール（コミットメッセージ提案等）
+alwaysApply: true
+---
+
+# Interaction Rules
+
+- 変更完了後、その内容を要約した Git コミットメッセージ（プレフィックス付き、例: `feat:`, `fix:`, `refactor:`, `docs:`）を日本語で提案すること。

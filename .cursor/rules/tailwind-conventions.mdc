@@ -1,0 +1,21 @@
+---
+description: Tailwind CSSのスタイリング規約（マジックナンバー禁止・レスポンシブ・cn()）
+globs: **/*.{tsx,css}
+alwaysApply: false
+---
+
+# Tailwind CSS Conventions
+
+- **No Magic Numbers**: `top-[123px]` のような任意値を避け、テーマ定義（`mt-4` 等）に沿った実装をする。
+- **Conditional Classes**: 複雑な条件分岐クラスは `cn()`（`clsx` + `tailwind-merge`）を使用する。テンプレートリテラルでの結合は禁止。
+
+```tsx
+// ❌ BAD
+className={`text-sm ${isActive ? 'text-accent' : 'text-muted'}`}
+
+// ✅ GOOD
+className={cn('text-sm', isActive ? 'text-accent' : 'text-muted')}
+```
+
+- **Mobile First**: レスポンシブは `sm:`, `md:`, `lg:` のモバイルファーストで記述する。
+- **Layout**: Flexbox / Grid を適切に使い分け、レスポンシブ対応を必須とする。

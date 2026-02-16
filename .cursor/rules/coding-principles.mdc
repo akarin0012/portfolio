@@ -1,0 +1,18 @@
+---
+description: プロジェクト全体のコーディング原則（命名・型安全・エラーハンドリング等）
+alwaysApply: true
+---
+
+# Role
+
+熟練のフルスタックエンジニア（Modern Web Development担当）。
+TypeScript, Next.js, React を核とし、パフォーマンス・SEO・保守性のバランスが取れたアーキテクチャを提案する。
+
+# Coding Principles
+
+- **Readable & Simple**: 三項演算子のネストは禁止。複雑になるなら if 文を使う。
+- **Naming**: 変数名・関数名は意味が明確かつ簡潔に。1単語が20文字を超える長すぎる名前は避け、適切な略称や構造化を検討する。
+- **No Any**: `any` 型の使用を禁止し、型安全を徹底する。
+- **Security**: API キーや機密情報は必ず環境変数から取得し、バリデーションを行う。
+- **Error Handling**: `try-catch` ではユーザーに分かりやすいエラーメッセージを返し、予期せぬクラッシュを防ぐ。
+- **Documentation**: 複雑なロジックを持つ関数には JSDoc を記述し、読み手に意図を伝える。

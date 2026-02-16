@@ -57,9 +57,9 @@ export function ContactSection({ fadeInUp, viewportOptions }: Props) {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const rawData = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      message: formData.get('message') as string,
+      name: String(formData.get('name') ?? ''),
+      email: String(formData.get('email') ?? ''),
+      message: String(formData.get('message') ?? ''),
     };
 
     const result = contactFormSchema.safeParse(rawData);

@@ -14,6 +14,7 @@ ADR (Architecture Decision Record) は、ソフトウェア開発における重
 | [002](./002-jsonld-url-overwrite-fix.md) | JSON-LD URL 上書きバグ修正とテストモック改善 | 採用済み | 2026-02-12 |
 | [003](./003-rate-limit-countdown-fix.md) | レートリミットのカウントダウン自動更新と自動復帰 | 採用済み | 2026-02-12 |
 | [004](./004-network-resilience-and-error-handling.md) | ネットワーク耐性の強化とエラーハンドリング改善 | 採用済み | 2026-02-15 |
+| [005](./005-cursorrules-compliance-refactoring.md) | .cursorrules.md 準拠のためのリファクタリング | 採用済み | 2026-02-16 |
 
 ## ステータスの定義
 

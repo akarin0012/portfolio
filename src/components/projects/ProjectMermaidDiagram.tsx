@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Code2 } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
+import { cn } from '@/lib/utils';
 
 type Props = {
   diagram?: string;
@@ -138,9 +139,10 @@ export function ProjectMermaidDiagram({ diagram }: Props) {
         </>
       ) : (
         <div
-          className={`overflow-x-auto rounded-lg p-4 [&_svg]:mx-auto [&_svg]:max-w-full ${
-            isDark ? 'keep-dark bg-surface-inset/90' : 'border border-divider-subtle bg-surface-alt'
-          }`}
+          className={cn(
+            'overflow-x-auto rounded-lg p-4 [&_svg]:mx-auto [&_svg]:max-w-full',
+            isDark ? 'keep-dark bg-surface-inset/90' : 'border border-divider-subtle bg-surface-alt',
+          )}
         >
           {/* mermaid レンダリング中のスケルトン（レンダリング完了後は非表示） */}
           {!rendered && (

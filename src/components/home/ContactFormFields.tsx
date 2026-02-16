@@ -1,4 +1,5 @@
 import type { ContactFormInput } from '@/lib/validations';
+import { cn } from '@/lib/utils';
 
 type Props = {
   fieldErrors: Partial<Record<keyof ContactFormInput, string>>;
@@ -74,7 +75,7 @@ export function ContactFormFields({ fieldErrors, onClearError }: Props) {
           rows={5}
           aria-invalid={!!fieldErrors.message}
           aria-describedby={fieldErrors.message ? 'contact-message-error' : undefined}
-          className={`${getInputClass(!!fieldErrors.message)} resize-none`}
+          className={cn(getInputClass(!!fieldErrors.message), 'resize-none')}
           placeholder="お問い合わせ内容をお書きください"
           onChange={() => onClearError('message')}
         />

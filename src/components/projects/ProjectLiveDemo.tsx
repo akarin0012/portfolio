@@ -27,7 +27,7 @@ export function ProjectLiveDemo({ type, demoUrl, repoUrl }: Props) {
         <div className="overflow-hidden rounded-lg border border-divider-subtle bg-surface">
           <iframe
             src={demoUrl}
-            className="h-[420px] w-full border-0"
+            className="aspect-video w-full border-0"
             loading="lazy"
             title="Live demo"
             sandbox="allow-scripts allow-same-origin allow-popups"

@@ -6,6 +6,7 @@ import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { cn } from '@/lib/utils';
 import { siteConfig, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
@@ -181,7 +182,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-surface text-foreground transition-colors duration-300`}
+        className={cn(geistSans.variable, geistMono.variable, 'antialiased min-h-screen bg-surface text-foreground transition-colors duration-300')}
       >
         <ThemeProvider>
           <a href="#main-content" className="skip-nav">

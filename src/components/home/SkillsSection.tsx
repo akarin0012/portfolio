@@ -1,4 +1,5 @@
 import { motion, type Variants } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { skillCategories, certifications } from '@/data/skills';
 
 type Props = {
@@ -36,7 +37,7 @@ export function SkillsSection({ fadeInUp, staggerParent, viewportOptions }: Prop
           >
             <h3 className="mb-4 flex items-center text-xl font-semibold text-subheading">
               <span
-                className={`mr-3 h-3 w-3 rounded-full ${category.dotColor}`}
+                className={cn('mr-3 h-3 w-3 rounded-full', category.dotColor)}
               />
               {category.title}
             </h3>
@@ -45,7 +46,7 @@ export function SkillsSection({ fadeInUp, staggerParent, viewportOptions }: Prop
                 <li key={skill.name} className="text-body">
                   <div className="flex items-center">
                     <span
-                      className={`mr-3 h-2 w-2 rounded-full ${category.dotColor}`}
+                      className={cn('mr-3 h-2 w-2 rounded-full', category.dotColor)}
                     />
                     <span className="font-medium">{skill.name}</span>
                     <span className="ml-auto text-sm text-muted">
@@ -56,7 +57,7 @@ export function SkillsSection({ fadeInUp, staggerParent, viewportOptions }: Prop
                     <div className="ml-5 mt-1.5 flex items-center gap-2">
                       <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-deep">
                         <div
-                          className={`h-full rounded-full ${category.dotColor} transition-all duration-500`}
+                          className={cn('h-full rounded-full transition-all duration-500', category.dotColor)}
                           style={{ width: `${skill.progress}%` }}
                         />
                       </div>

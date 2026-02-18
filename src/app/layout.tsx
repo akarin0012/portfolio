@@ -8,7 +8,7 @@ import { ScrollToTop } from '@/components/ScrollToTop';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { SocialShare } from '@/components/SocialShare';
 import { cn } from '@/lib/utils';
-import { siteConfig, getSiteDescription, getCopyrightYears } from '@/config/site';
+import { siteConfig, absoluteUrl, getSiteDescription, getCopyrightYears } from '@/config/site';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -94,7 +94,6 @@ export const metadata: Metadata = {
   },
 
   // Open Graph（Facebook, LINE, Discord など）
-  // OGP画像は opengraph-image.tsx から自動生成される
   openGraph: {
     type: 'website',
     locale: siteConfig.locale,
@@ -103,14 +102,22 @@ export const metadata: Metadata = {
     description: getSiteDescription(),
     siteName: siteConfig.name,
     countryName: 'Japan',
+    images: [
+      {
+        url: absoluteUrl(siteConfig.ogImage),
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.author.name} - ${siteConfig.author.jobTitle}`,
+      },
+    ],
   },
 
   // Twitter(X) Card
-  // OGP画像は opengraph-image.tsx から自動生成される
   twitter: {
     card: 'summary_large_image',
     title: `${siteConfig.author.name} | ${siteConfig.author.jobTitle}`,
     description: getSiteDescription(),
+    images: [absoluteUrl(siteConfig.ogImage)],
     ...(siteConfig.links.twitter
       ? { creator: siteConfig.links.twitter, site: siteConfig.links.twitter }
       : {}),

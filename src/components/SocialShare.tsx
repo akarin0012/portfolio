@@ -3,7 +3,6 @@
 import { useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { Check, Link as LinkIcon } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
 
 const XIcon = () => (
@@ -18,8 +17,12 @@ const LineIcon = () => (
   </svg>
 );
 
-const btnClass =
-  'inline-flex items-center gap-2 rounded-full border border-divider/80 bg-surface/70 px-4 py-2 text-xs font-medium text-caption transition-colors hover:border-muted hover:text-heading';
+const btnBase =
+  'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-colors';
+const btnDefault =
+  `${btnBase} border-divider/80 bg-surface/70 text-caption hover:border-muted hover:text-heading`;
+const btnSuccess =
+  `${btnBase} border-success/60 bg-surface/70 text-success`;
 
 /** フッター向けSNSシェアボタン（現在のページURLを共有） */
 export function SocialShare() {
@@ -60,7 +63,7 @@ export function SocialShare() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="X（Twitter）でシェアする"
-        className={btnClass}
+        className={btnDefault}
       >
         <XIcon />
         <span>ポスト</span>
@@ -70,7 +73,7 @@ export function SocialShare() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LINEでシェアする"
-        className={btnClass}
+        className={btnDefault}
       >
         <LineIcon />
         <span>LINE</span>
@@ -79,7 +82,7 @@ export function SocialShare() {
         type="button"
         onClick={handleCopyLink}
         aria-label="リンクをコピー"
-        className={cn(btnClass, copied && 'border-success/60 text-success')}
+        className={copied ? btnSuccess : btnDefault}
       >
         {copied ? (
           <>

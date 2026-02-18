@@ -6,6 +6,7 @@ import './globals.css';
 import { Sidebar } from '@/components/Sidebar';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { SocialShare } from '@/components/SocialShare';
 import { cn } from '@/lib/utils';
 import { siteConfig, getSiteDescription, getCopyrightYears } from '@/config/site';
 
@@ -195,36 +196,39 @@ export default function RootLayout({
             </div>
             <footer className="border-t border-divider-subtle" role="contentinfo">
               <div className="container mx-auto px-6 py-8">
-                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-                  <p className="text-sm text-caption">
-                    © {getCopyrightYears()} {siteConfig.author.name}
-                  </p>
-                  <nav aria-label="フッターナビゲーション" className="flex items-center gap-4">
-                    <a
-                      href={siteConfig.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-caption transition-colors hover:text-heading"
-                    >
-                      GitHub
-                    </a>
-                    <span className="text-divider-subtle" aria-hidden="true">|</span>
-                    <a
-                      href="/skill_sheet.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-caption transition-colors hover:text-heading"
-                    >
-                      技術経歴書
-                    </a>
-                    <span className="text-divider-subtle" aria-hidden="true">|</span>
-                    <Link
-                      href="/#contact"
-                      className="text-sm text-caption transition-colors hover:text-heading"
-                    >
-                      お問い合わせ
-                    </Link>
-                  </nav>
+                <div className="flex flex-col items-center gap-6">
+                  <SocialShare />
+                  <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-between">
+                    <p className="text-sm text-caption">
+                      © {getCopyrightYears()} {siteConfig.author.name}
+                    </p>
+                    <nav aria-label="フッターナビゲーション" className="flex items-center gap-4">
+                      <a
+                        href={siteConfig.links.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-caption transition-colors hover:text-heading"
+                      >
+                        GitHub
+                      </a>
+                      <span className="text-divider-subtle" aria-hidden="true">|</span>
+                      <a
+                        href="/skill_sheet.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-caption transition-colors hover:text-heading"
+                      >
+                        技術経歴書
+                      </a>
+                      <span className="text-divider-subtle" aria-hidden="true">|</span>
+                      <Link
+                        href="/#contact"
+                        className="text-sm text-caption transition-colors hover:text-heading"
+                      >
+                        お問い合わせ
+                      </Link>
+                    </nav>
+                  </div>
                 </div>
               </div>
             </footer>

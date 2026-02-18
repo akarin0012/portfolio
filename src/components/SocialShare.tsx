@@ -81,20 +81,11 @@ export function SocialShare() {
       <button
         type="button"
         onClick={handleCopyLink}
-        aria-label="リンクをコピー"
+        aria-label={copied ? 'コピー済み' : 'リンクをコピー'}
         className={copied ? btnSuccess : btnDefault}
       >
-        {copied ? (
-          <>
-            <Check className="h-4 w-4" />
-            <span>コピー済み</span>
-          </>
-        ) : (
-          <>
-            <LinkIcon className="h-4 w-4" />
-            <span>リンクをコピー</span>
-          </>
-        )}
+        {copied ? <Check className="h-4 w-4" /> : <LinkIcon className="h-4 w-4" />}
+        <span>リンクをコピー</span>
       </button>
     </div>
   );

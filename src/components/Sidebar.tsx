@@ -28,9 +28,9 @@ type NavItem = {
 const navItems: NavItem[] = [
   { href: '/#profile', label: 'プロフィール', icon: User },
   { href: '/#skills', label: 'スキル', icon: Code },
-  { href: '/#projects', label: 'プロジェクト', icon: FolderKanban },
+  { href: '/#projects', label: '職務経験', icon: FolderKanban },
   { href: '/#contact', label: 'お問い合わせ', icon: Mail },
-  { href: '/projects', label: '制作物プラットフォーム', icon: LayoutGrid },
+  { href: '/projects', label: '制作物ギャラリー', icon: LayoutGrid },
 ];
 
 /**

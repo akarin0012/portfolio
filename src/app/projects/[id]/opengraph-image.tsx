@@ -5,7 +5,7 @@ import { siteConfig } from '@/config/site';
 // 静的書き出し（output: 'export'）に必要
 export const dynamic = 'force-static';
 
-export const alt = 'Project OG Image';
+export const alt = 'プロジェクト詳細 - OGP画像';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 

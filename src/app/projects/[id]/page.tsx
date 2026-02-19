@@ -45,13 +45,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       publishedTime: project.createdAt,
       modifiedTime: project.updatedAt,
       authors: [siteConfig.author.name],
-      // OGP画像は opengraph-image.tsx から自動生成される
+      images: [
+        {
+          url: absoluteUrl(`/projects/${project.id}/opengraph-image`),
+          width: 1200,
+          height: 630,
+          alt: `${project.title} - ${siteConfig.author.name}の制作物`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      // Twitter画像は opengraph-image.tsx から自動生成される
+      images: [
+        {
+          url: absoluteUrl(`/projects/${project.id}/opengraph-image`),
+          alt: `${project.title} - ${siteConfig.author.name}の制作物`,
+        },
+      ],
     },
   };
 }

@@ -17,8 +17,16 @@ export function ProjectDetailHeader({ project }: Props) {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="flex items-center justify-between gap-4"
+        className="space-y-4"
       >
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs text-body transition-colors hover:border-muted hover:text-foreground"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          一覧に戻る
+        </Link>
+
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent/80">
             Project
@@ -30,14 +38,6 @@ export function ProjectDetailHeader({ project }: Props) {
             {project.summary}
           </p>
         </div>
-
-        <Link
-          href="/projects"
-          className="hidden items-center gap-2 rounded-full border border-divider/80 bg-surface/70 px-3 py-1.5 text-xs text-body transition-colors hover:border-muted hover:text-foreground md:inline-flex"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          一覧に戻る
-        </Link>
       </motion.div>
 
       <motion.div

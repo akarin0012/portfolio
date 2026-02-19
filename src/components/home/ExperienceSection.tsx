@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { motion, type Variants } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { workExperiences } from '@/data/experience';
 
 type Props = {
@@ -57,6 +59,22 @@ export function ExperienceSection({ fadeInUp, staggerParentSlow, viewportOptions
             </div>
           </motion.div>
         ))}
+      </motion.div>
+
+      <motion.div
+        className="mt-8 text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOptions}
+        variants={fadeInUp}
+      >
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-hover active:scale-95"
+        >
+          制作物ギャラリーを見る
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </motion.div>
     </section>
   );

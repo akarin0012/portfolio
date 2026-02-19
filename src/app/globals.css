@@ -33,6 +33,7 @@ html.dark {
   --accent: #60a5fa;
   --accent-hover: #93c5fd;
   --danger: #f87171;
+  --warning: #fbbf24;
   --success: #34d399;
 }
 
@@ -60,6 +61,7 @@ html.light {
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --danger: #dc2626;
+  --warning: #d97706;
   --success: #059669;
 }
 
@@ -90,6 +92,7 @@ html.light {
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-danger: var(--danger);
+  --color-warning: var(--warning);
   --color-success: var(--success);
 }
 

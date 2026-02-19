@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { motion, type Variants } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { skillCategories, certifications } from '@/data/skills';
 
@@ -90,6 +92,25 @@ export function SkillsSection({ fadeInUp, staggerParent, viewportOptions }: Prop
             </li>
           ))}
         </ul>
+      </motion.div>
+
+      <motion.div
+        className="mt-8 text-center"
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOptions}
+        variants={fadeInUp}
+      >
+        <p className="mb-4 text-sm text-caption">
+          これらのスキルを活かした制作物をご覧ください
+        </p>
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 rounded-full border border-divider bg-surface px-6 py-2.5 text-sm font-medium text-heading transition-all duration-300 hover:bg-surface-alt active:scale-95"
+        >
+          制作物ギャラリーを見る
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </motion.div>
     </section>
   );

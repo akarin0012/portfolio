@@ -47,6 +47,19 @@ export function ExperienceSection({ fadeInUp, staggerParentSlow, viewportOptions
               {exp.title}
             </h3>
             <p className="mb-4 text-body">{exp.description}</p>
+            {exp.achievements && exp.achievements.length > 0 && (
+              <ul className="mb-4 space-y-1.5">
+                {exp.achievements.map((achievement) => (
+                  <li
+                    key={achievement}
+                    className="flex items-start gap-2 text-sm text-accent"
+                  >
+                    <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                    <span className="text-body">{achievement}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             <div className="flex flex-wrap gap-2">
               {exp.techStack.map((tech) => (
                 <span

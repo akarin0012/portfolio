@@ -172,9 +172,12 @@ export default function Home() {
           {/* ヒーローセクション（Server Component + CSSアニメーション: LCP最適化） */}
           <section id="profile" aria-labelledby="profile-heading" className="mb-12 md:mb-20">
             <div className="animate-fade-in-up mb-8 text-center md:mb-12">
-              <h1 id="profile-heading" className="mb-4 text-3xl font-bold text-heading md:text-5xl">
+              <h1 id="profile-heading" className="mb-3 text-3xl font-bold text-heading md:text-5xl">
                 茅嶋 伸一郎
               </h1>
+              <p className="mb-4 text-base leading-relaxed text-body md:text-lg">
+                レガシーからモダンまで、設計・開発・運用を一貫して担う
+              </p>
               <p className="mb-2 text-lg text-caption md:text-xl">
                 システムエンジニア（{getCareerYear()}年目）
               </p>

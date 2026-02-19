@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { MapPin, Code, Mail } from 'lucide-react';
+import { MapPin, Code, Mail, LayoutGrid } from 'lucide-react';
 import {
   siteConfig,
   absoluteUrl,
@@ -182,11 +182,19 @@ export default function Home() {
                 <MapPin className="h-4 w-4" aria-hidden="true" />
                 東京都在住
               </p>
-              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+                <Link
+                  href="/projects"
+                  aria-label="制作物ギャラリーを見る"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-hover active:scale-95"
+                >
+                  <LayoutGrid className="h-4 w-4" aria-hidden="true" />
+                  制作物を見る
+                </Link>
                 <a
                   href="#skills"
                   aria-label="スキルセクションへ移動する"
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-hover active:scale-95"
+                  className="inline-flex items-center gap-2 rounded-full border border-divider bg-surface px-6 py-2.5 text-sm font-medium text-heading transition-all duration-300 hover:bg-surface-alt active:scale-95"
                 >
                   <Code className="h-4 w-4" aria-hidden="true" />
                   スキルを見る

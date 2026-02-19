@@ -70,27 +70,54 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /**
  * プロジェクト詳細ページの JSON-LD 構造化データ
- * CreativeWork スキーマでプロジェクト情報を構造化
+ * CreativeWork + BreadcrumbList を @graph で構造化
  */
 function ProjectJsonLd({ project }: { project: Project }) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    name: project.title,
-    description: project.summary,
-    url: absoluteUrl(`/projects/${project.id}`),
-    author: {
-      '@type': 'Person',
-      name: siteConfig.author.name,
-      url: siteConfig.url,
-    },
-    ...(project.createdAt && { dateCreated: project.createdAt }),
-    ...(project.updatedAt && { dateModified: project.updatedAt }),
-    ...(project.repoUrl && { codeRepository: project.repoUrl }),
-    ...(project.demoUrl && { sameAs: project.demoUrl }),
-    programmingLanguage: project.primaryLanguage,
-    keywords: project.tags.join(', '),
-    genre: project.category,
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'ホーム',
+            item: siteConfig.url,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: '制作物ギャラリー',
+            item: absoluteUrl('/projects'),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: project.title,
+            item: absoluteUrl(`/projects/${project.id}`),
+          },
+        ],
+      },
+      {
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.summary,
+        url: absoluteUrl(`/projects/${project.id}`),
+        author: {
+          '@type': 'Person',
+          name: siteConfig.author.name,
+          url: siteConfig.url,
+        },
+        ...(project.createdAt && { dateCreated: project.createdAt }),
+        ...(project.updatedAt && { dateModified: project.updatedAt }),
+        ...(project.repoUrl && { codeRepository: project.repoUrl }),
+        ...(project.demoUrl && { sameAs: project.demoUrl }),
+        programmingLanguage: project.primaryLanguage,
+        keywords: project.tags.join(', '),
+        genre: project.category,
+      },
+    ],
   };
 
   return (

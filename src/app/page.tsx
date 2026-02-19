@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { MapPin, Code, Mail, LayoutGrid } from 'lucide-react';
@@ -10,6 +11,14 @@ import {
 } from '@/config/site';
 import { getAllSkillNames, certifications } from '@/data/skills';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+
+export const metadata: Metadata = {
+  title: `${siteConfig.author.name} | ${siteConfig.author.jobTitle}のポートフォリオ`,
+  description: getSiteDescription(),
+  alternates: {
+    canonical: '/',
+  },
+};
 
 // Below-fold セクション（スキル・プロジェクト・お問い合わせ）を遅延読み込み
 // ヒーローセクションはServer Componentとして即座にレンダリング
